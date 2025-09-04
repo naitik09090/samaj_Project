@@ -18,6 +18,7 @@ import News from "./components/News.js";
 function App() {
 
   return (
+
     <>
       <Router>
         <Navbar />
