@@ -1,0 +1,350 @@
+.Contact_Us_Bg_COlor,
+.F_NAv,
+.LOgo_ICon,
+.Second_BG,
+.Second_BG_2 {
+    background-color: #057c71
+}
+
+.F_NAv,
+.Nav_P,
+.card-body {
+    font-weight: 500
+}
+
+.LOgo_ICon {
+    height: auto;
+    width: 45px;
+    color: #fff;
+    padding: 5px;
+    border-radius: 20px
+}
+
+.F_NAv {
+    border: 1px solid #057c71;
+    border-radius: 0 0 20px 20px
+}
+
+.MSg_Icon {
+    height: 20px;
+    width: 30px
+}
+
+.LiNK_Icon {
+    margin: 10px;
+    height: 25px
+}
+
+.Contact_Us_Bg_COlor {
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px
+}
+
+.Nav_P {
+    font-size: 10px;
+    position: relative;
+    right: 670px;
+    top: 20px
+}
+
+.Second_BG {
+    padding: 150px;
+    border-radius: 30px 0 0 30px
+}
+
+.Second_BG_2 {
+    border-radius: 0 30px 30px 0;
+    height: 718px
+}
+
+.Second_BG_2 img {
+    height: 605px;
+    width: 600px;
+    border: 1px inset solid;
+    border-radius: inset 20px;
+    position: relative;
+    top: 150px;
+    left: 50px
+}
+
+.Second_BG h5 h1 {
+    font-size: 64px
+}
+
+.Second_BG h5 {
+    position: relative;
+    left: 150px;
+    bottom: 50px
+}
+
+.Second_BG button {
+    padding: 10px;
+    width: 170px;
+    height: 50px;
+    border: 1px solid #fff;
+    border-radius: 15px;
+    background-color: transparent;
+    color: #fff
+}
+
+.hero-section {
+    background-color: #fff;
+    padding: 20px
+}
+
+.BG_COlor,
+.bg_KRishna {
+    background-color: #faf4e6;
+    bottom: 50px;
+    position: relative
+}
+
+.image-wrapper {
+    position: relative;
+    display: inline-block;
+    height: 600px
+}
+
+.img-fluid {
+    z-index: 1;
+    height: auto;
+    width: 300px;
+    position: relative;
+    top: 50px
+}
+
+.bg_KRishna {
+    height: 300px;
+    z-index: -2;
+    border-radius: 30px 0 0;
+    left: 100px
+}
+
+.BG_COlor img {
+    border-radius: 20px;
+    width: 400px !important;
+    height: auto !important;
+    position: relative;
+    left: 100px;
+    top: 50px
+}
+
+.BG_COlor {
+    height: 250px;
+    width: 350px;
+    border-radius: 0 30px 0 0
+}
+
+.krishna-image {
+    height: 100%;
+    width: auto
+}
+
+@media (max-width:768px) {
+    .krishna-image {
+        width: 340px;
+        bottom: -250px
+    }
+}
+
+@media (max-width:320px) {
+    .krishna-image {
+        width: 340px;
+        bottom: -250px;
+        left: 200px
+    }
+
+    .img-fluid {
+        width: 140px !important;
+        bottom: -250px;
+        left: -50px !important
+    }
+}
+
+.Building_Icon {
+    width: auto;
+    height: 40px
+}
+
+.img_2_Bg,
+.info-banner {
+    border-radius: 16px;
+    width: 100%
+}
+
+.info-banner {
+    height: auto;
+    background: linear-gradient(90deg, #fbc02d 0, #fdd835 100%);
+    opacity: .8
+}
+
+.img_2_Bg {
+    height: 150px;
+    object-fit: cover;
+    z-index: -1;
+    position: relative;
+    bottom: 340px
+}
+
+@media (max-width:767.98px) {
+    .krishna-img {
+        position: absolute;
+        bottom: -20px;
+        left: 100px;
+        height: auto;
+        width: 140px
+    }
+
+    .info-banner {
+        text-align: center
+    }
+}
+
+.F_SliDer,
+.bG_2,
+.buid_ICon1,
+.floating-box {
+    position: relative
+}
+
+.card,
+.card-img-top {
+    height: auto;
+    width: auto
+}
+
+.slider-wrapper {
+    background: #00796b;
+    color: #fff
+}
+
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 50px
+}
+
+.card-img-top {
+    border-radius: 20px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee
+}
+
+.card-body {
+    background: #fff;
+    color: #000
+}
+
+.btn-light {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem
+}
+
+.bG_2 {
+    background: linear-gradient(#004c4c, #00796b);
+    padding-top: 100px;
+    padding-bottom: 100px;
+    width: 100%
+}
+
+.floating-box {
+    background-color: #efa30a;
+    margin-bottom: 40px;
+    margin-top: -150px;
+    z-index: 1;
+    border-radius: 12px
+}
+
+.BuiLD_BG,
+.F_SliDer,
+.p_12 {
+    margin-bottom: 50px;
+}
+
+.custom-divider {
+    height: 2px;
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 0 6px rgba(0, 255, 210, .5)
+}
+
+.custom-divider2 {
+    height: 2px;
+    width: 100%;
+    background: #d8d8d8;
+    box-shadow: 0 0 6px rgba(119, 138, 134, .5)
+}
+
+.FT_1,
+.F_SliDer {
+    background: linear-gradient(#058479, #037167);
+    color: #fff
+}
+
+.Youtube_Link {
+    border-radius: 30px;
+    width: 100%;
+    height: 1000px
+}
+
+.F_SliDer {
+    border-radius: 50px;
+    height: auto;
+    width: 1800px;
+    left: 50px
+}
+
+.Documentary_H1 {
+    margin-bottom: 20px
+}
+
+.FT_1 {
+    padding: 20px;
+    border-radius: 20px
+}
+
+.buid_ICon,
+.buid_ICon1 {
+    height: 80px;
+    width: 80px;
+    padding: 10px;
+    background-color: #efa30a;
+    color: #fff;
+    border-radius: 50px
+}
+
+.H1_F_SliDer {
+    font-size: 64px;
+    font-weight: 700
+}
+
+.buid_ICon1 {
+    right: 100px;
+    top: 70px
+}
+
+.CoL_B {
+    border-left: 1px solid #000
+}
+
+@media (max-width:767px) {
+    .CoL_B {
+        border: none !important
+    }
+}
+
+.Card_Logo {
+    z-index: 5 !important
+}
+
+.email {
+    color: #000;
+    background: linear-gradient(#058479, #037167)
+}

@@ -1,0 +1,10 @@
+.footer-links a {
+    display: block;
+    min-height: 48px;
+    line-height: 1.5;
+    border-radius: 6px
+}
+
+.footer-links li+li {
+    margin-top: 8px
+}

@@ -1,0 +1,39 @@
+.carousel-item {
+  min-height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+img {
+  max-width: 100%;
+  height: auto
+}
+
+.slick-slide[aria-hidden=true] a,
+.slick-slide[aria-hidden=true] button {
+  pointer-events: none;
+  visibility: hidden
+}
+
+p.text-start {
+  min-height: 1.5rem
+}
+.Row_Bottom{
+  width: 280px !important;
+  border-bottom: 1px solid black;
+}
+.SHlok_1{
+  width: 160px !important;
+  height: auto;
+  padding: 10px;
+  border-radius:20px;
+  background-color: #EFA30A;
+}
+.SHlok_2{
+  width: 102px !important;
+  height: auto;
+  padding: 10px;
+  border-radius:20px;
+  background-color: #EFA30A;
+}

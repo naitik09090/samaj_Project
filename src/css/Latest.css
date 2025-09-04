@@ -1,0 +1,32 @@
+.img_121 {
+  width: auto;
+  height: auto;
+  border-radius: 8px
+}
+
+.ABout_ImG p {
+  color: #606163;
+  width: auto
+}
+
+.About_ImG_text {
+  border-right: 10px solid #000;
+  height: auto
+}
+
+.vertical-line {
+  width: 1px;
+  background-color: #e0e0e0;
+  height: 100%;
+  margin-left: 80px
+}
+
+.img_51 {
+  border-radius: 20px 20px 10px 10px !important;
+  object-fit: cover
+}
+
+.boderd-bottom {
+  border-bottom: 1px solid #000;
+  width: auto
+}
