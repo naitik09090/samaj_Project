@@ -569,6 +569,7 @@ const Home = () => {
                                                                         maxWidth: "100%",
                                                                         objectFit: "contain",
                                                                     }}
+                                                                    loading='lazy'
                                                                 />
                                                             </div>
 
