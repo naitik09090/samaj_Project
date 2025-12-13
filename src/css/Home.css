@@ -1,3 +1,19 @@
+.SHlok_1,
+.SHlok_2 {
+  height: auto;
+  padding: 10px;
+  border-radius: 20px;
+  background-color: #efa30a
+}
+
+.claendar_Icon,
+.img_1_Main img,
+.img_1_Main1 img,
+.learn_BTn,
+.text121 {
+  position: relative
+}
+
 .carousel-item {
   min-height: 250px;
   display: flex;
@@ -19,21 +35,151 @@ img {
 p.text-start {
   min-height: 1.5rem
 }
-.Row_Bottom{
+
+.Row_Bottom {
   width: 280px !important;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #fff
 }
-.SHlok_1{
-  width: 160px !important;
-  height: auto;
-  padding: 10px;
-  border-radius:20px;
-  background-color: #EFA30A;
+
+.SHlok_1 {
+  width: 160px !important
 }
-.SHlok_2{
-  width: 102px !important;
+
+.SHlok_2 {
+  width: 102px !important
+}
+
+.bg_Slock {
+  background-color: #03746AF7;
+  padding: 50px;
+  border-radius: 50px 0 0 50px;
+  color: #fff
+}
+
+.slock_Bg,
+.slock_Bg1 {
+  border-radius: 50px;
+  color: #fff
+}
+
+.clamp-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis
+}
+
+.NandRBtn,
+.NandRBtn1 {
+  background: linear-gradient(#ffff, #ffff);
+  color: #004c4c;
+  margin: 1px
+}
+
+.img_1_Main img,
+.img_1_Main1 img,
+.slock_Bg,
+.slock_Bg1 {
+  background: linear-gradient(#058479, #037167)
+}
+
+.slock_Bg {
+  height: 400px
+}
+
+.slock_Bg1 {
   height: auto;
-  padding: 10px;
-  border-radius:20px;
-  background-color: #EFA30A;
+  width: 280px !important
+}
+
+.h2_Tages,
+.p_Tages,
+.slock_Bg .b_Tages {
+  margin-left: 140px
+}
+
+.slock_Bg .b_Tages,
+.slock_Bg1 .b_Tages1 {
+  background-color: #efa30a;
+  padding: 5px;
+  border-radius: 10px
+}
+
+.img_1_Main img {
+  border: 1px solid #fff;
+  width: auto;
+  height: 300px;
+  border-radius: 30px;
+  left: 170px
+}
+
+.img_1_Main1 img {
+  border: 1px solid #fff;
+  width: auto;
+  height: 100%;
+  border-radius: 30px;
+  left: 0 !important;
+  top: -10px !important
+}
+
+.Main-Card_1 {
+  min-width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: 22px;
+  border: 1px solid #d8d8d8
+}
+
+.Main-Card_1 button {
+  background-color: #058378;
+  color: #fff
+}
+
+.Main-Card_2 {
+  background-color: #fff !important;
+  width: 100%;
+  height: 200px
+}
+
+.claendar_Icon {
+  bottom: 5px
+}
+
+.card-body1 {
+  padding-left: 10px;
+  padding-right: 10px
+}
+
+.learn_BTn {
+  border: none;
+  background-color: transparent !important;
+  color: #000 !important;
+  bottom: 10px
+}
+
+.title-line-1 {
+  font-weight: 600;
+  font-size: 18px;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden
+}
+
+.text-limit,
+.title-content-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden
+}
+
+.title-content-2 {
+  font-size: 10px
+}
+
+.text121 {
+  left: 110px
 }

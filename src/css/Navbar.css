@@ -1,4 +1,19 @@
+.F_NAv,
+.Nav_Menus,
+.Nav_P,
+.card-body,
+.card-body1 {
+    font-weight: 500
+}
+
+.content-box,
+.content-box1 {
+    display: flex;
+    text-align: center
+}
+
 .Contact_Us_Bg_COlor,
+.Contact_Us_Bg_COlor_Mobile,
 .F_NAv,
 .LOgo_ICon,
 .Second_BG,
@@ -6,38 +21,106 @@
     background-color: #057c71
 }
 
-.F_NAv,
-.Nav_P,
-.card-body {
-    font-weight: 500
+.Nav_Menus {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px
 }
 
 .LOgo_ICon {
     height: auto;
     width: 45px;
     color: #fff;
-    padding: 5px;
+    padding: 2px;
     border-radius: 20px
 }
 
 .F_NAv {
-    border: 1px solid #057c71;
-    border-radius: 0 0 20px 20px
+    border-radius: 0 0 22px 22px
+}
+
+.F_NAv.hide {
+    opacity: 0;
+    height: 0;
+    overflow: hidden
+}
+
+.mobile-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 12px;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #f0f0f0;
+    transition: none
+}
+
+.mobile-card:hover {
+    background: #fafafa
+}
+
+.content-box {
+    flex-direction: column;
+    align-items: center
+}
+
+.content-box1 {
+    border: 1px solid #00796b;
+    border-radius: 22px;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: auto
+}
+
+.content-box2 {
+    border: 1px solid #00796b;
+    border-radius: 22px;
+    padding: 100px;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: auto
+}
+
+.mobile-card .title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #222;
+    margin: 4px 0
+}
+
+.mobile-card .description {
+    font-size: 12px;
+    color: #6c757d;
+    margin: 0
+}
+
+.rounded-card {
+    border-radius: 14px !important
 }
 
 .MSg_Icon {
-    height: 20px;
-    width: 30px
+    height: 22px;
+    width: 30px;
+    border-radius: 10px
 }
 
 .LiNK_Icon {
-    margin: 10px;
-    height: 25px
+    margin: 3px;
+    height: 20px;
+    width: 25px;
+    color: #fff
 }
 
 .Contact_Us_Bg_COlor {
     color: #fff;
     padding: 10px;
+    border-radius: 10px
+}
+
+.Contact_Us_Bg_COlor_Mobile {
+    color: #fff;
+    padding: 10px 85px;
     border-radius: 10px
 }
 
@@ -66,6 +149,12 @@
     position: relative;
     top: 150px;
     left: 50px
+}
+
+.BG_COlor img,
+.img-fluid {
+    top: 50px;
+    position: relative
 }
 
 .Second_BG h5 h1 {
@@ -109,9 +198,7 @@
 .img-fluid {
     z-index: 1;
     height: auto;
-    width: 300px;
-    position: relative;
-    top: 50px
+    width: 300px
 }
 
 .bg_KRishna {
@@ -125,9 +212,7 @@
     border-radius: 20px;
     width: 400px !important;
     height: auto !important;
-    position: relative;
-    left: 100px;
-    top: 50px
+    left: 100px
 }
 
 .BG_COlor {
@@ -204,8 +289,13 @@
 .F_SliDer,
 .bG_2,
 .buid_ICon1,
-.floating-box {
+.krishna-img1,
+.language-select {
     position: relative
+}
+
+.krishna-img1 {
+    bottom: 50px !important
 }
 
 .card,
@@ -236,6 +326,12 @@
     color: #000
 }
 
+.bG_2,
+.bG_3 {
+    background: linear-gradient(#058479, #037167);
+    margin-bottom: 50px
+}
+
 .btn-light {
     border-radius: 50%;
     width: 40px;
@@ -248,24 +344,48 @@
 }
 
 .bG_2 {
-    background: linear-gradient(#004c4c, #00796b);
     padding-top: 100px;
-    padding-bottom: 100px;
-    width: 100%
+    padding-bottom: 10px;
+    border-radius: 22px;
+    width: 100%;
+    height: auto
 }
 
-.floating-box {
+.card-zoom {
+    transition: transform .25s, box-shadow .25s
+}
+
+.card-zoom:hover {
+    transform: scale(1.06);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+    z-index: 10
+}
+
+.bG_3 {
+    padding-bottom: 100px;
+    width: 100%;
+    height: 500px
+}
+
+.floating-box,
+.floating-box1 {
     background-color: #efa30a;
-    margin-bottom: 40px;
-    margin-top: -150px;
+    margin-top: -145px;
     z-index: 1;
     border-radius: 12px
 }
 
-.BuiLD_BG,
+.floating-box {
+    margin-bottom: 40px
+}
+
+.floating-box1 {
+    margin-bottom: 45px
+}
+
 .F_SliDer,
 .p_12 {
-    margin-bottom: 50px;
+    margin-bottom: 50px
 }
 
 .custom-divider {
@@ -288,10 +408,20 @@
     color: #fff
 }
 
-.Youtube_Link {
-    border-radius: 30px;
+.Youtube_Wrapper {
     width: 100%;
-    height: 1000px
+    max-width: 1100px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 16/9
+}
+
+@media (max-width:576px) {
+    .Youtube_Wrapper {
+        max-width: 560px;
+        aspect-ratio: 16/9
+    }
 }
 
 .F_SliDer {
@@ -307,7 +437,7 @@
 
 .FT_1 {
     padding: 20px;
-    border-radius: 20px
+    border-radius: 25px
 }
 
 .buid_ICon,
@@ -345,6 +475,30 @@
 }
 
 .email {
-    color: #000;
-    background: linear-gradient(#058479, #037167)
+    color: #fff;
+    font-weight: 400
+}
+
+.language-select {
+    width: 180px
+}
+
+.language-select select {
+    width: 100%;
+    padding: 8px 35px 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    appearance: none;
+    background: #fff;
+    font-size: 16px
+}
+
+.language-select::after {
+    content: "🔍";
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 18px
 }

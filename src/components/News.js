@@ -1,39 +1,25 @@
-// News.js
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
-function News() {
-  const [newsData, setNewsData] = useState(null);
+export default function LatestDetails() {
+    const { id } = useParams();                  // GET ID FROM URL
+    const [data, setData] = useState(null);
 
-  useEffect(() => {
-    fetch("https://ahirsamajorg-bmhwcceqdtggcsc2.centralindia-01.azurewebsites.net/api/v1/history/histories/")
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
-          setNewsData(data[0]); // use first item
-        }
-      })
-      .catch(err => console.error(err));
-  }, []);
+    const URL = "https://ahirsamajbe-gnapdbcbbzdcabc2.centralindia-01.azurewebsites.net";           // 🔥 Replace with your BASE URL
 
-  if (!newsData) {
-    return <p>Loading...</p>;
-  }
+    useEffect(() => {
+        fetch(`${URL}/api/v1/news/${id}`)
+            .then(res => res.json())
+            .then(result => {
+                console.log(result);
+                setData(result?.data);                 // Most APIs use { data: {...} }
+            })
+            .catch(err => console.error(err));
+    }, [id]);
 
-  return (
-    <div className="container mt-4">
-      <h2>{newsData.title}</h2>
-      <img
-        src={newsData.images}
-        alt={newsData.title}
-        style={{ width: "100%", maxHeight: "400px", objectFit: "cover" }}
-      />
-      <p>{newsData.description}</p>
-      <p><b>Category:</b> {newsData.categories}</p>
-      <p><b>Tags:</b> {newsData.tags}</p>
-      <p><b>Created At:</b> {new Date(newsData.created_at).toLocaleString()}</p>
-      <p><b>Updated At:</b> {new Date(newsData.updated_at).toLocaleString()}</p>
-    </div>
-  );
+    if (!data) return <h3>Loading...</h3>;
+
+    return (
+        <div></div>
+    );
 }
-
-export default News;

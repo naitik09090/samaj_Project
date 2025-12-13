@@ -6,31 +6,71 @@ import "./css/Home.css";
 import "./css/Latest.css";
 import "./css/About.css";
 import "./css/Footer.css";
+import "./css/School.css";
+import "./css/Apno_Etiyas.css";
 import Navbar from "./components/Navbar.js";
 import HomePage from "./components/Home.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Footer from "./components/Footer.js";
 import Latest from "./components/Latest.js";
-import About from "./components/About.js";
+import School from "./components/School.js";
+// import Schools_1 from "./components/Schools_1.js";
 import Cards from "./components/Cards.js";
+// import News from "./components/News.js";
+import Privacy from "./components/Privacy.js";
+import About from "./components/About.js";
 import News from "./components/News.js";
+import Terms from "./components/Terms.js";
+import Contact from "./components/Contact.js";
+import ImageSlider from "./components/ImageSlider.js";
+import LatestNews from "./components/LatestNews.js";
+import ApnoEtiyas from "./components/Apno_Etiyas.js";
+import { useEffect } from "react";
 
 function App() {
+
+  useEffect(() => {
+    // Disable text selection for elements
+    // with class "no-select"
+    const noSelectElements = document.querySelectorAll(".no-select");
+    noSelectElements.forEach((element) => {
+      element.style.webkitUserSelect = "none";
+      element.style.mozUserSelect = "none";
+      element.style.msUserSelect = "none";
+      element.style.userSelect = "none";
+    });
+  }, []);
+
 
   return (
 
     <>
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/latest" element={<Latest />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/cards" element={<Cards />} />
-          <Route path="/news" element={<News />} />
-        </Routes>
-      </Router>
-      <Footer />
+      <div className="no-select">
+        <Router>
+          <div className="d-flex flex-column min-vh-100">
+            <Navbar />
+
+            <main className="flex-grow-1">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/news" element={<News />} />
+                <Route path="/LatestNews" element={<LatestNews />} />
+                <Route path="/latest/:id" element={<Latest />} />
+                <Route path="/school/:id" element={<School />} />
+                <Route path="/ImageSlider" element={<ImageSlider />} />
+                <Route path="/cards" element={<Cards />} />
+                <Route path="/privacy-policy" element={<Privacy />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/Apno_Etiyas" element={<ApnoEtiyas />} />
+              </Routes>
+            </main>
+
+            <Footer />
+          </div>
+        </Router>
+      </div>
     </>
   );
 }

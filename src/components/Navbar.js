@@ -1,86 +1,191 @@
-import React, { useState } from 'react';
-import { GiFemaleVampire } from "react-icons/gi";
-import { TfiEmail } from "react-icons/tfi";
+import React, { useState, useEffect } from "react";
+import { FiMail, FiFacebook } from "react-icons/fi";
 import { LuLinkedin } from "react-icons/lu";
 import { TfiTwitter } from "react-icons/tfi";
 import { FaInstagram } from "react-icons/fa";
-import { FiFacebook } from "react-icons/fi";
-// import img1 from '../images/img_1.jpg'
+import { BiWorld } from "react-icons/bi";
 
 const Navbar = () => {
-    const [menuOpen, setMenuOpen] = useState(false);
-    // const [currentIndex, setCurrentIndex] = useState(0);
-    // const divRef = useRef(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const [language, setLanguage] = useState("English");
+  const [isScrolled, setIsScrolled] = useState(false);
 
-    return (
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+
+
+  const navStyle = {
+    top: isScrolled ? 0 : 60,
+    left: 0,
+    right: 0,
+    zIndex: 3000,
+    position: "fixed",
+    backgroundColor: isScrolled ? "#067C71" : "#ffffff",
+    border: "1px solid #057c71",
+    borderRadius: isScrolled ? "0px" : "22px",
+    paddingLeft: "16px",
+    paddingRight: "20px",
+    transition: "all 0.3s ease"
+  };
+
+
+
+
+
+  const linkBaseClass =
+    "text-dark Nav_Menus text-decoration-none d-inline-block position-relative";
+
+  return (
+    <div className="container-fluid">
+
+      {/* ---------------------- TOP BAR (EMAIL + SOCIAL ICONS) ---------------------- */}
+      <div className="row F_NAv py-1">
+
+        {/* Email */}
+        <div className="col-12 col-md-2 d-flex align-items-center">
+          <b className="email p-2">
+            <FiMail className="MSg_Icon" /> contact@ahirsamaj.in
+          </b>
+        </div>
+
+        <div className="col-md-8 d-none d-md-block"></div>
+
+        {/* Desktop icons (HIDE ON MOBILE) */}
+        <div className="col-md-2 d-none d-md-flex justify-content-end py-2">
+
+          <LuLinkedin className="LiNK_Icon" />
+          <TfiTwitter className="LiNK_Icon" />
+          <FaInstagram className="LiNK_Icon" />
+          <FiFacebook className="LiNK_Icon" />
+
+          {/* Language Button */}
+          <div className="position-relative">
+            <button
+              type="button"
+              className="border-0 bg-transparent py-0"
+              onClick={() => setLangOpen(!langOpen)}
+            >
+              <BiWorld className="LiNK_Icon" />
+            </button>
+
+            {langOpen && (
+              <div
+                className="position-absolute bg-white shadow-sm rounded"
+                style={{ top: "100%", left: "-100px", zIndex: 5000 }}
+              >
+                <select
+                  className="form-select"
+                  value={language}
+                  onChange={(e) => {
+                    setLanguage(e.target.value);
+                    setLangOpen(false);
+                  }}
+                >
+                  <option>English</option>
+                  <option>Gujarati</option>
+                  <option>Hindi</option>
+                </select>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* ---------------------- MOBILE BACKDROP ---------------------- */}
+      <div
+        className={`position-fixed h-100 top-0 start-0 d-md-none`}
+        style={{
+          zIndex: menuOpen ? 2999 : -1000,
+          opacity: menuOpen ? 1 : 0,
+          visibility: menuOpen ? "visible" : "hidden",
+          backgroundColor: "rgba(0,0,0,0.15)",
+          transition: "opacity 0.25s ease",
+        }}
+        onClick={() => setMenuOpen(false)}
+      />
+
+      {/* ---------------------- MAIN NAVBAR ---------------------- */}
+      <nav
+        className="position-fixed"
+        style={navStyle}
+      >
         <div className="container-fluid">
-            <div className="row F_NAv py-1">
-                <div className='col-md-2'>
-                    <b className="email"><TfiEmail className='MSg_Icon' />info14@gmail.com</b>
-                </div>
-                <div className='col-md-8'></div>
-                <div className='col-md-2'>
-                    {/* LinkedIn */}
-                    <LuLinkedin className='LiNK_Icon' />
+          <div className="row align-items-center">
 
-                    {/* Twitter */}
-                    <TfiTwitter className='LiNK_Icon' />
-
-                    <FaInstagram className='LiNK_Icon' />
-
-                    <FiFacebook className='LiNK_Icon' />
-                </div>
+            {/* LOGO */}
+            <div className="col-6 col-md-3 d-flex align-items-center">
+              <a href="/" className="text-decoration-none">
+                <h2 className="h5 m-0">
+                  <span style={{ color: isScrolled ? "#000000" : "#000000", fontWeight: 600 }}>આહિર</span>
+                  <span style={{ color: isScrolled ? "#FFFFFF" : "#067C71", fontWeight: 600, marginLeft: 6 }}>સમાજ</span>
+                </h2>
+              </a>
             </div>
 
-            <nav className="position-relative d-flex align-items-center justify-content-between py-2 px-md-5 bg-white text-dark">
-                {/* Logo & Title */}
-                <div className="d-flex flex-column">
-                    <h2 className="text-black m-0 d-flex align-items-center gap-1">
-                        <GiFemaleVampire className="LOgo_ICon" />
-                        કન્યા <span className="text-danger">છાત્રાલય</span>
-                        {/* <p className="Nav_P m-0 small">Lorem Ipsum is simply dummy</p> */}
-                    </h2>
-                </div>
+            {/* ---------------------- DESKTOP MENU ---------------------- */}
+            <div className="col-md-9 d-none d-md-flex justify-content-end">
+              <ul className="d-flex gap-3 list-unstyled py-3 m-0 me-3">
 
-                {/* Desktop Menu */}
-                <div className="d-flex flex-column">
-                    <ul className="d-none d-md-flex align-items-center gap-3 list-unstyled">
-                        <li><a href="/" className="text-dark text-decoration-none py-2">Home</a></li>
-                        <li><a href="latest" className="text-dark text-decoration-none">Latest News</a></li>
-                        <li><a href="about" className="text-dark text-decoration-none">About us</a></li>
-                        <li><a href="#" className="Contact_Us_Bg_COlor text-decoration-none">Contact Us</a></li>
-                    </ul>
-                </div>
-                {/* Mobile Menu Toggle */}
-                <button
-                    aria-label="menu-btn"
-                    type="button"
-                    className="d-inline d-md-none border-0 bg-transparent"
-                    onClick={() => setMenuOpen(!menuOpen)}
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
-                        <path d="M3 7a1 1 0 1 0 0 2h24a1 1 0 1 0 0-2zm0 7a1 1 0 1 0 0 2h24a1 1 0 1 0 0-2zm0 7a1 1 0 1 0 0 2h24a1 1 0 1 0 0-2z" fill="#000" />
-                    </svg>
-                </button>
+                <li><a href="/" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>હોમ</a></li>
+                <li><a href="/ImageSlider" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>સ્કૂલ</a></li>
+                <li><a href="/LatestNews" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>લેટેસ્ટ ન્યૂઝ</a></li>
+                <li><a href="/about" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>અબાઉટ</a></li>
+                <li><a href="/Apno_Etiyas" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>આપણો ઈતિહાસ</a></li>
 
-                {/* Mobile Dropdown Menu */}
-                {menuOpen && (
-                    <div className="position-absolute top-100 start-0 w-100 bg-white shadow-sm p-4 d-md-none z-3">
-                        <ul className="list-unstyled mb-4">
-                            <li className="mb-2"><a href="/" className="text-dark text-decoration-none">Home</a></li>
-                            <li className="mb-2"><a href="latest" className="text-dark text-decoration-none">Latest News</a></li>
-                            <li className="mb-2"><a href="about" className="text-dark text-decoration-none">About us</a></li>
-                            <li className="mb-2"><a href="#" className="text-dark text-decoration-none">Contact Us</a></li>
-                        </ul>
+              </ul>
+            </div>
 
-                        <button className="btn btn-outline-secondary w-100 rounded-pill">
-                            Get started
-                        </button>
-                    </div>
-                )}
-            </nav>
+            {/* ---------------------- MOBILE HAMBURGER ---------------------- */}
+            <div className="col-6 d-flex justify-content-end d-md-none">
+              <button
+                type="button"
+                className="border-0 bg-transparent"
+                onClick={() => setMenuOpen(!menuOpen)}
+                aria-label="Open menu"
+              >
+                <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
+                  <path d="M3 7h24M3 14h24M3 21h24" stroke="black" strokeWidth="2" />
+                </svg>
+              </button>
+
+            </div>
+
+            {/* ---------------------- MOBILE DROPDOWN ---------------------- */}
+            <div className="col-12 d-md-none">
+              <div
+                className="text-center p-4"
+                style={{
+                  display: menuOpen ? "block" : "none",
+                  borderTopLeftRadius: 10,
+                  borderTopRightRadius: 10,
+                }}
+              >
+                <ul className="list-unstyled mb-2">
+                  <li className="mb-2"><a href="/" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>હોમ</a></li>
+                  <li className="mb-2"><a href="/ImageSlider" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>સ્કૂલ</a></li>
+                  <li className="mb-2"><a href="/LatestNews" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>લેટેસ્ટ ન્યૂઝ</a></li>
+                  <li className="mb-2"><a href="/about" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>અબાઉટ</a></li>
+                  <li className="mb-2"><a href="/Apno_Etiyas" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>આપણો ઈતિહાસ</a></li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
         </div>
-    );
+      </nav>
+
+      {/* SPACER */}
+      <div style={{ height: 90 }}></div>
+    </div>
+  );
 };
 
 export default Navbar;

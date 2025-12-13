@@ -1,0 +1,11 @@
+.sidebar-scrollable {
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none
+}
+
+.sidebar-scrollable::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: 0 0
+}
