@@ -3,13 +3,13 @@
 // import img5 from '../images/img_5.jpg'
 import { useState } from 'react';
 // import DOMPurify from 'dompurify';
-import { FaBars, FaTimes } from "react-icons/fa";
+// import { FaBars, FaTimes } from "react-icons/fa";
 
 
 const About_us = () => {
     const [data4, setData4] = useState([]);
     const [featuredId, setFeaturedId] = useState(null);
-    const [openDropdown, setOpenDropdown] = useState(false);
+    // const [openDropdown, setOpenDropdown] = useState(false);
     const [openSidebar, setOpenSidebar] = useState(true);
 
     // const URL = "https://ahirsamajbe-gnapdbcbbzdcabc2.centralindia-01.azurewebsites.net";
