@@ -71,9 +71,10 @@ const Navbar = () => {
             <button
               type="button"
               className="border-0 bg-transparent py-0"
+              aria-label="Share"
               onClick={() => setLangOpen(!langOpen)}
             >
-              <BiWorld className="LiNK_Icon" />
+              <BiWorld className="LiNK_Icon" aria-hidden="true" />
             </button>
 
             {langOpen && (

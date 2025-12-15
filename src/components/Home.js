@@ -769,14 +769,16 @@ const Home = () => {
                                                 {/* ALWAYS BOTTOM BUTTON */}
                                                 <div className="mt-auto">
                                                     <hr />
-                                                    <div className="d-flex align-items-center justify-content-between px-3 bg-opacity-10 border border-white border-opacity-25 rounded">
-                                                        <p className="text-black ">Learn More</p>
-                                                        <Link to={`/latest/${data.id}`} className="text-decoration-none text-dark" aria-label={`Learn more about ${data.title}`}>
-                                                            <button type="button" className="learn_BTn">
-                                                                <FaArrowRightLong />
-                                                            </button>
-                                                        </Link>
-                                                    </div>
+                                                    <Link
+                                                        to={`/latest/${data.id}`}
+                                                        className="text-decoration-none w-100"
+                                                        aria-label={`Read full article: ${data.title}`}
+                                                    >
+                                                        <div className="d-flex align-items-center justify-content-between px-2 py-3">
+                                                            <span className="text-dark fw-semibold">Learn More</span>
+                                                            <FaArrowRightLong className="text-dark" aria-hidden="true" />
+                                                        </div>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>
@@ -830,7 +832,7 @@ const Home = () => {
                                                     <div className="d-flex align-items-center justify-content-between px-2">
                                                         <Link
                                                             to={`/latest/${data.id}`}
-                                                            className="learn_BTn text-decoration-none"
+                                                            className="learn_BTn1 text-decoration-none"
                                                             aria-label={`Learn more about ${data.title}`}
                                                         >
                                                             Learn More <FaArrowRightLong />
