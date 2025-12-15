@@ -518,16 +518,17 @@ const About_us = () => {
                                                     <div className="Main-Card_1 p-1 shadow-sm d-flex flex-column">
                                                         <img
                                                             src={secureUrl(newsItem.images?.[0]?.image)}
-                                                            className="Main-Card_2 mb-1"
-                                                            alt={`${newsItem.title}`}
+                                                            className="Main-Card_2"
+                                                            width="320"
+                                                            height="80"
+                                                            loading="lazy"
                                                             style={{
-                                                                objectFit: "contain",
-                                                                backgroundColor: "#067C71",
-                                                                borderRadius: "22px",
-                                                                width: "100%",
-                                                                height: 110,
+                                                                objectFit:"contain",
+                                                                borderRadius:'22px'
                                                             }}
+                                                            alt={newsItem.title || ""}
                                                         />
+
                                                         <div className="card-body1 d-flex flex-column" style={{ padding: "8px" }}>
                                                             <p className="text-start text-muted mb-1" style={{ fontSize: 12 }}>
                                                                 <img src={calendar} className="claendar_Icon" height={16} width={16} alt="" />

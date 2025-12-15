@@ -9,7 +9,7 @@ const ImageSlider = () => {
     const [selectedOption, setSelectedOption] = useState("All");
     const [subOption, setSubOption] = useState("");
     const [mobileOpen, setMobileOpen] = useState(false);
-    const [value, setValue] = useState("");
+    // const [value, setValue] = useState("");
 
     const carouselRef = useRef(null);
     const { id } = useParams();
@@ -42,9 +42,9 @@ const ImageSlider = () => {
     }, [id]);
 
     // Extract data array (your API returns { data: [...] })
-    const allData = data1?.data || [];
 
     useEffect(() => {
+        const allData = data1?.data || [];
         const all = allData;
 
         if (selectedOption === "All") {
@@ -296,6 +296,7 @@ const ImageSlider = () => {
                                                         {data.logo ? (
                                                             <img
                                                                 src={secureUrl(data.logo)}
+                                                                alt="logo School"
                                                                 className="rounded-1 mb-3"
                                                                 style={{ height: "150px", objectFit: "contain" }}
                                                                 loading="lazy"

@@ -133,7 +133,6 @@ p.text-start {
 
 .Main-Card_1 {
   min-width: 100%;
-  height: auto;
   display: flex;
   flex-direction: column;
   border-radius: 22px;
