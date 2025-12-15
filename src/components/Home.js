@@ -23,7 +23,6 @@ const Home = () => {
     const handleNext = () => {
         setIndex((prev) => (prev + 1) % filteredData.length);
     };
-
     // ⏳ Auto-slide every 10 secs
     useEffect(() => {
         const timer = setInterval(() => {
