@@ -336,7 +336,8 @@
 // export default About_us;
 
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import calendar from "../images/calendar.png"
 import { FaArrowRightLong } from "react-icons/fa6";
 
@@ -423,6 +424,7 @@ const About_us = () => {
                                                                 src={secureUrl(newsItem.images?.[0]?.image)}
                                                                 className="mb-2"
                                                                 alt={`${newsItem.title}`}
+                                                                loading='lazy'
                                                                 style={{
                                                                     height: "180px",
                                                                     width: "100%",
@@ -512,15 +514,13 @@ const About_us = () => {
                                     for (let i = 0; i < flat.length; i += 2) rows.push(flat.slice(i, i + 2));
 
                                     return rows.map((pair, rowIndex) => (
-                                        <div key={`mobile-row-${rowIndex}`} className="row gx-2 gy-3 py-3">
+                                        <div key={`mobile-row-${rowIndex}`} className="row gx-2 gy-3 py-1">
                                             {pair.map((newsItem) => (
                                                 <div className="col-6" key={newsItem.id}>
-                                                    <div className="Main-Card_1 p-1 shadow-sm d-flex flex-column">
+                                                    <div className="Main-Card_1 p-1 h-100 shadow-sm d-flex flex-column">
                                                         <img
                                                             src={secureUrl(newsItem.images?.[0]?.image)}
                                                             className="Main-Card_2"
-                                                            width="320"
-                                                            height="80"
                                                             loading="lazy"
                                                             style={{
                                                                 objectFit:"contain",
@@ -586,6 +586,7 @@ const About_us = () => {
                                     src={secureUrl(data?.images?.[0]?.image)}
                                     className="img-fluid mb-4"
                                     alt={data?.title || "News article"}
+                                    loading='lazy'
                                     style={{
                                         width: "100%",
                                         maxHeight: "600px",
@@ -620,6 +621,7 @@ const About_us = () => {
                                                 src={secureUrl(newsItem.images?.[0]?.image)}
                                                 className="card-img-top mb-2"
                                                 alt={`${newsItem.title}`}
+                                                loading='lazy'
                                                 style={{
                                                     height: "195px",
                                                     width: "100%",

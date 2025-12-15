@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRef } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Kano from '../images/Kano.webp'
 // import { Carousel } from 'react-bootstrap';
 import { PiBuildingsBold } from "react-icons/pi";

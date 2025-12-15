@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdOutlineNavigateNext } from "react-icons/md";
-import { Link, useParams } from "react-router";
+import { Link } from "react-router";
+import { useParams } from "react-router";
 
 const ImageSlider = () => {
     const [data1, setData1] = useState([]);

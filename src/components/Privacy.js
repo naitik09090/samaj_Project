@@ -184,7 +184,6 @@ export default function PrivacyPolicy() {
       background: 'transparent',
       minHeight: '100vh'
     }}>
-
       {/* Main Content */}
       <main className="py-5">
         <article className="container" style={{ maxWidth: '1300px' }}>

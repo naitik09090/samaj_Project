@@ -2,7 +2,8 @@
 // import { FaRegCalendarAlt } from 'react-icons/fa';
 // import img5 from '../images/img_5.jpg'
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import calendar from "../images/calendar.png"
 import { FaArrowRightLong } from "react-icons/fa6";
 
