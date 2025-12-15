@@ -9,7 +9,6 @@
 .claendar_Icon,
 .img_1_Main img,
 .img_1_Main1 img,
-.learn_BTn,
 .text121 {
   position: relative
 }
@@ -100,11 +99,20 @@ p.text-start {
 }
 
 .slock_Bg .b_Tages,
-.slock_Bg1 .b_Tages1 {
+.slock_Bg1 {
   background-color: #efa30a;
   padding: 5px;
   border-radius: 10px
 }
+
+.b_Tages1 {
+  font-weight: 600;
+  background-color: #efa30a;
+  color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
 
 .img_1_Main img {
   border: 1px solid #fff;
@@ -154,10 +162,18 @@ p.text-start {
 
 .learn_BTn {
   border: none;
-  background-color: transparent !important;
-  color: #000 !important;
-  bottom: 10px
+  background-color: transparent;
+  color: #000;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 5px 0px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
 }
+
+
 
 .title-line-1 {
   font-weight: 600;

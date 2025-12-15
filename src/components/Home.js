@@ -505,7 +505,7 @@ const Home = () => {
                     <div className="floating-box1 container p-3 rounded shadow d-block d-md-none">
                         <div className="row text-center">
                             <div className="col-12 mb-2">
-                                <h1 className="fw-bold h2 fs-5 text-white m-0">
+                                <h1 className="fw-bold h2 fs-5 m-0">
                                     આપણી સંસ્થા
                                 </h1>
                             </div>
@@ -517,6 +517,7 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
+
 
                     {/* ------------------ MOBILE: 2 cards per slide carousel ------------------ */}
                     <div className="d-block d-md-none w-100">
@@ -771,7 +772,7 @@ const Home = () => {
                                                     <hr />
                                                     <div className="d-flex align-items-center justify-content-between px-3 bg-opacity-10 border border-white border-opacity-25 rounded">
                                                         <p className="text-black ">Learn More</p>
-                                                        <Link to={`/latest/${data.id}`} className="text-decoration-none text-dark">
+                                                        <Link to={`/latest/${data.id}`} className="text-decoration-none text-dark" aria-label={`Learn more about ${data.title}`}>
                                                             <button type="button" className="learn_BTn">
                                                                 <FaArrowRightLong />
                                                             </button>
@@ -828,13 +829,14 @@ const Home = () => {
                                                 <div className="mt-auto">
                                                     <hr />
                                                     <div className="d-flex align-items-center justify-content-between px-2">
-                                                        <Link to={`/latest/${data.id}`} className="text-decoration-none text-dark">
-                                                            <button type="button" className="learn_BTn btn-sm">
-                                                                <p className="text-black mb-0 small">Learn More
-                                                                    <FaArrowRightLong />
-                                                                </p>
-                                                            </button>
+                                                        <Link
+                                                            to={`/latest/${data.id}`}
+                                                            className="learn_BTn text-decoration-none"
+                                                            aria-label={`Learn more about ${data.title}`}
+                                                        >
+                                                            Learn More <FaArrowRightLong />
                                                         </Link>
+
                                                     </div>
                                                 </div>
                                             </div>

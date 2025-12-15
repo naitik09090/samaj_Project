@@ -959,7 +959,7 @@ const About_us = () => {
                         <h1 className='text-center py-2' style={{ color: '#067C71', fontWeight: '600', fontSize: '45px' }}>આહિરોમાં પેટા વિભાગોની કુલ અટકો ૭૩૬ નીચે પ્રમાણે છે.</h1>
                     </div>
                     <div className='col-12 col-md-12 col-lg-12'>
-                        <h3 className='text-center py-2' style={{ color: '#067C71', fontSize: '20px' }}>જ્યોત અંક ૧ માંથી માહિતી લીધેલ છે.</h3>
+                        <h2 className='text-center py-2 h3' style={{ color: '#067C71', fontSize: '20px' }}>જ્યોત અંક ૧ માંથી માહિતી લીધેલ છે.</h2>
                     </div>
                     <div className='col-12 col-md-12 col-lg-12'>
                         <p className='text-center' style={{ color: '#067C71', fontSize: '18px' }}>બ્રહ્માની પેઢીથી ૬૫મી પેઢીએ શ્રી કૃષ્ણનો જન્મ થાય છે તેવું તારણ છે
