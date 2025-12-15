@@ -370,13 +370,13 @@
 .floating-box,
 .floating-box1 {
     background-color: #efa30a;
-    color: #1a1a1a;
     margin-top: -145px;
     z-index: 1;
     border-radius: 12px;
 }
 
 .floating-box1 {
+    color:white;
     margin-bottom: 45px;
 }
 

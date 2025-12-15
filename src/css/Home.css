@@ -99,20 +99,12 @@ p.text-start {
 }
 
 .slock_Bg .b_Tages,
-.slock_Bg1 {
-  background-color: #efa30a;
-  padding: 5px;
-  border-radius: 10px
-}
-
-.b_Tages1 {
+.slock_Bg1 .b_Tages1 {
   font-weight: 600;
   background-color: #efa30a;
-  color: #ffffff;
   padding: 5px 10px;
-  border-radius: 10px;
+  border-radius: 10px
 }
-
 
 .img_1_Main img {
   border: 1px solid #fff;

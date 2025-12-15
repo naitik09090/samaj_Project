@@ -379,7 +379,7 @@ const Home = () => {
 
                                         <div className="col-12 col-sm-12 h-100">
                                             <div className="slock_Bg1 text-center p-4 mx-auto">
-                                                <b className="b_Tages1 d-block mb-2">
+                                                <b className="b_Tages1 mb-2">
                                                     (अध्याय {data.chapter}, श्लोक {data.verse})
                                                 </b>
 
@@ -394,7 +394,7 @@ const Home = () => {
                                                     />
                                                 </div>
 
-                                                <b className="b_Tages1 d-block mb-2">:: अनुवाद ::</b>
+                                                <b className="b_Tages1 mb-2">:: अनुवाद ::</b>
 
                                                 <p className="p_Tages1 mb-2">{data.sloka_guj}</p>
                                                 <p className="p_Tages1 mb-3">{data.sloka_eng}</p>
