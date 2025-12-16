@@ -26,6 +26,7 @@ const ImageSlider = () => {
             .then((json) => {
                 setData1(json);
                 setFilteredData(json);
+                console.log(setSelectedOption);
             })
             .catch((err) => console.error(err));
     }, []);
@@ -34,6 +35,7 @@ const ImageSlider = () => {
     useEffect(() => {
         if (!id) {
             setSchool(null);
+            console.log(school);
             return;
         }
         fetch(`${URL}/api/v1/schools/schools/${id}`)
@@ -54,6 +56,8 @@ const ImageSlider = () => {
         }
 
         if (!subOption) return; // wait until user selects sub option
+
+        console.log(setSubOption);
 
         const filtered = all.filter(
             (item) => item[selectedOption] === subOption
