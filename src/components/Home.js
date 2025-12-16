@@ -218,7 +218,7 @@ const Home = () => {
                     {Array.isArray(data2) &&
                         data2.map((data, index) => (
                             <div className="d-flex flex-column justify-content-center align-items-center"
-                                style={{ height: "auto" }} key={index.id}>
+                                style={{ height: "100%" }} key={index.id}>
 
                                 <img
                                     src={secureUrl(data.image)}
@@ -702,7 +702,7 @@ const Home = () => {
                     <div className="col-12 d-flex justify-content-center">
                         <div className="ratio ratio-16x9" style={{ maxWidth: '1600px', width: '100%', borderRadius: '12px', overflow: 'hidden' }}>
                             <iframe
-                                src="https://www.youtube.com/embed/xby0-Ecnjw0?list=RDxby0-Ecnjw0"
+                                src="https://www.youtube-nocookie.com/embed/xby0-Ecnjw0?list=RDxby0-Ecnjw0"
                                 title="Aditya Gadhavi | Shamaliyo"
                                 FrameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

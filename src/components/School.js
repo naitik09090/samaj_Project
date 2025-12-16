@@ -27,6 +27,7 @@ const ImageSlider = () => {
     const carouselRef = useRef(null);
     const { id } = useParams();
     const [school, setSchool] = useState(null);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     const secureUrl = (url) => url?.replace(/^http:\/\//i, "https://");
 
     const URL = "https://ahirsamajbe-gnapdbcbbzdcabc2.centralindia-01.azurewebsites.net";
@@ -38,6 +39,14 @@ const ImageSlider = () => {
         Subject: "",
         Message: "",
     });
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -191,13 +200,13 @@ const ImageSlider = () => {
         return result;
     };
 
-    const chunkMobileCards = (arr) => {
-        const result = [];
-        for (let i = 0; i < arr.length; i += 2) {
-            result.push(arr.slice(i, i + 2));
-        }
-        return result;
-    };
+    // const chunkMobileCards = (arr) => {
+    //     const result = [];
+    //     for (let i = 0; i < arr.length; i += 2) {
+    //         result.push(arr.slice(i, i + 2));
+    //     }
+    //     return result;
+    // };
 
     const cardChunks = chunkArray1(data1.data || [], 5);
     const mobileChunks = chunkArray1(data1.data || [], 2);
@@ -229,7 +238,10 @@ const ImageSlider = () => {
                                                 className="slide-media w-100 F_Slider1"
                                                 src={item.image}
                                                 alt={item.caption || `photo-${item.id}`}
-                                            // style={style}
+                                                style={{
+                                                    height: isMobile ? "260px" : "760px",
+                                                    objectFit: "cover",
+                                                }}
                                             />
                                         </Carousel.Item>
                                     );
@@ -250,9 +262,12 @@ const ImageSlider = () => {
                                         <Carousel.Item key={item._key}>
                                             <iframe
                                                 title={"yt-" + ytId}
-                                                src={`https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1&stop=1&mute=1`}
-                                                // style={{ width: "100%", height: "760px" }}
-                                                className="F_Slider11 slide-media"
+                                                src={`https://www.youtube.com/embed/${ytId}?rel=0&modestbranding=1&mute=1`}
+                                                className="slide-media"
+                                                style={{
+                                                    width: "100%",
+                                                    height: isMobile ? "260px" : "760px",
+                                                }}
                                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                                 allowFullScreen
                                             />
@@ -265,13 +280,16 @@ const ImageSlider = () => {
                                     <Carousel.Item key={item._key}>
                                         <video
                                             className="w-100"
-                                            style={{ width: "100%", height: "760px" }}
                                             src={url}
                                             controls
                                             autoPlay
                                             muted
                                             loop
                                             playsInline
+                                            style={{
+                                                height: isMobile ? "260px" : "760px",
+                                                objectFit: "cover",
+                                            }}
                                         />
                                     </Carousel.Item>
                                 );
@@ -289,36 +307,39 @@ const ImageSlider = () => {
                                     <video
                                         src={item.video_url}
                                         onClick={() => handleThumbnailClick(idx)}
-                                        alt={`Thumb ${idx}`}
                                         style={{
-                                            width: "60px",
-                                            height: "90px",
-                                            background: "black",
-                                            borderRadius: "10px",
-                                            objectFit: "cover", //contain
+                                            width: isMobile ? "35px" : "60px",
+                                            height: isMobile ? "60px" : "90px",
+                                            borderRadius: "8px",
+                                            objectFit: "cover",
                                             border: idx === index ? "2px solid #007bff" : "2px solid white",
+                                            backgroundColor: "black",
                                             cursor: "pointer",
                                             position: "relative",
-                                            bottom: "120px",
+                                            bottom: isMobile ? "80px" : "120px",
+                                            right: isMobile ? "35px" : "20px",
                                         }}
                                     />
+
                                 ) : (
                                     /* IMAGE THUMBNAIL */
                                     <img
                                         src={item.image}
-                                        onClick={() => handleThumbnailClick(idx.id)}
-                                        alt={`Thumb ${idx.id}`}
+                                        onClick={() => handleThumbnailClick(idx)}
+                                        alt={`Thumb ${idx}`}
                                         style={{
-                                            width: "60px",
-                                            height: "90px",
-                                            borderRadius: "10px",
-                                            objectFit: "cover", //contain
+                                            width: isMobile ? "35px" : "60px",
+                                            height: isMobile ? "60px" : "90px",
+                                            borderRadius: "8px",
+                                            objectFit: "cover",
                                             border: idx === index ? "2px solid #007bff" : "2px solid white",
                                             cursor: "pointer",
                                             position: "relative",
-                                            bottom: "120px",
+                                            bottom: isMobile ? "80px" : "120px",
+                                            right: isMobile ? "35px" : "20px",
                                         }}
                                     />
+
                                 )}
                             </div>
                         ))}
