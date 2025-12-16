@@ -9,41 +9,24 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import calendar from "../images/calendar.png"
 
 const Home = () => {
-    const [data1, setData1] = useState([]);
-    const [data2, setData2] = useState([]);
-    const [slock, setSlock] = useState([]);
-    const carouselRef = useRef(null);
-    const [index, setIndex] = useState(0);
-    const [data4, setData4] = useState([]);
-    const { id } = useParams();
+    const [data1, setData1] = useState([]),
+        [data2, setData2] = useState([]),
+        [slock, setSlock] = useState([]),
+        carouselRef = useRef(null),
+        [index, setIndex] = useState(0),
+        [data4, setData4] = useState([]),
+        { id } = useParams();
 
     // 👉 NEXT
     const handleNext = () => {
-        setIndex((prev) => (prev + 1) % filteredData.length);
+        setIndex(e => (e + 1) % filteredData.length)
     };
-    // ⏳ Auto-slide every 10 secs
-    // useEffect(() => {
-    //     const timer = setInterval(() => {
-    //         handleNext();
-    //     }, 10000);
 
-    //     return () => clearInterval(timer);
-    // }, [handleNext]);
-
-    const filteredData = slock?.data?.filter(item => item.id >= 1 && item.id <= 4) ?? [];
+    const filteredData = slock?.data?.filter(t => t.id >= 1 && t.id <= 4) ?? [];
     // 👉 PREV
     const handlePrev = () => {
-        setIndex((prev) =>
-            prev === 0 ? filteredData.length - 1 : prev - 1
-        );
+        setIndex(e => 0 === e ? filteredData.length - 1 : e - 1)
     };
-    // const navigate = useNavigate()
-
-    // { data: [] }
-
-    // const handleSelect = (selectedIndex) => {
-    //     setIndex(selectedIndex);
-    // };
 
     const URL = "https://ahirsamajbe-gnapdbcbbzdcabc2.centralindia-01.azurewebsites.net";
 
@@ -57,13 +40,10 @@ const Home = () => {
                 .then((json) => setData2(json.data))
                 .catch((err) => console.error(err));
         };
-
         // fetch on first load
         fetchSlides();
-
         // fetch again when screen size changes
         window.addEventListener("resize", fetchSlides);
-
         return () => window.removeEventListener("resize", fetchSlides);
     }, []);
 
@@ -102,25 +82,6 @@ const Home = () => {
             .catch((err) => console.error(err));
     }, []);
 
-    // useEffect(() => {
-    //     fetch(`${URL}/api/v1/history/histories/?id=1`)
-    //         .then((res) => res.json())
-    //         .then((json) => setData3(json))
-    //         .catch((err) => console.error(err));
-    //     console.log(data3);
-    // }, []);
-
-    // Chunk into groups of 4
-    // const chunkArray = (arr, size) => {
-    //     const result = [];
-    //     for (let i = 0; i < arr.length; i += size) {
-    //         result.push(arr.slice(i, i + size));
-    //     }
-    //     return result;
-    // };
-
-    // const logoChunks = chunkArray(data3?.data || [], 4);
-
     // school api call
     useEffect(() => {
         fetch(`${URL}/api/v1/schools/schools/`)
@@ -130,28 +91,22 @@ const Home = () => {
     }, []);
 
     // const secureUrl = (url) => url?.replace(/^http:\/\//i, "https://");
-    const secureUrl = (url) => {
-        if (!url) return "";
-        return url.replace(/^http:\/\//i, ".webp");
-    };
+    const secureUrl = e => e ? e.replace(/^http:\/\//i, ".webp") : "";
 
     // const handleClick = (data) => {
     //     navigate("/news", { state: { newsData: data } }); // ✅ state pass
     // };
 
     // Chunk data into sets of 3
-    const chunkArray1 = (arr, size) => {
-        const result = [];
-        for (let i = 0; i < arr.length; i += size) {
-            result.push(arr.slice(i, i + size));
-        }
-        return result;
+    const chunkArray1 = (e, r) => {
+        let t = [];
+        for (let l = 0; l < e.length; l += r)
+            t.push(e.slice(l, l + r));
+        return t
     };
 
-    // Desktop view school slider
-    const cardChunks = chunkArray1(data1.data || [], 5);
-    // mobile view school slider
-    const cardChunks1 = chunkArray1(data1.data || [], 2);
+    const cardChunks = chunkArray1(data1.data || [], 5),
+        cardChunks1 = chunkArray1(data1.data || [], 2);
 
     // apno_Etiyas no data
     const ideologyData = [
@@ -177,44 +132,14 @@ const Home = () => {
         }
     ];
 
-    // const [expanded, setExpanded] = useState(() => ideologyData.map(() => false));
-
-    // const toggleExpand = (idx) => {
-    //     setExpanded((prev) => {
-    //         const copy = [...prev];
-    //         copy[idx] = !copy[idx];
-    //         return copy;
-    //     });
-    // };
-    const truncate = (str, n) => (str && str.length > n ? str.slice(0, n) + "…" : str || "");
-    const items = Array.isArray(data4?.data) ? data4.data : [];
+    const truncate = (t, a) => t && t.length > a ? t.slice(0, a) + "…" : t || "",
+        items = Array.isArray(data4?.data) ? data4.data : [];
 
     return (
         <>
             <div className='container-fluid'>
                 {/* img_Slider */}
                 <div className="container-fluid mb-3">
-                    {/* <Carousel fade activeIndex={index} onSelect={handleSelect} controls={false} indicators={false} interval={3000}>
-                        {Array.isArray(data2) &&
-                            data2.map((data, index) => (
-                                <Carousel.Item key={data.id ?? index}>
-                                    <div
-                                        className="d-flex flex-column justify-content-center align-items-center"
-                                        style={{ height: "auto" }}
-                                    >
-                                        <img
-                                            src={data.image?.replace("http://", "https://")}
-                                            alt={data.title || "Slideshow image"}
-                                            className="d-block"
-                                            width={1600}
-                                            height={800}
-                                            style={{ maxHeight: "auto", objectFit: "cover", borderRadius: "22px" }}
-                                        />
-                                    </div>
-                                </Carousel.Item>
-                            ))}
-                    </Carousel> */}
-
                     {Array.isArray(data2) &&
                         data2.map((data, index) => (
                             <div className="d-flex flex-column justify-content-center align-items-center"
@@ -842,250 +767,6 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <div className='container-fluid'>
-                <div className="container">
-                    {/* <div className='row'>
-                        {cardChunks.map((chunk, index) => (
-                            <div
-                                key={`chunk-${index}`}
-                                className={`carousel-item ${index === 0 ? "active" : ""}`}
-                            >
-                                <div className="row justify-content-center">
-                                    {chunk.map((data) => (
-                                        <div key={data.id} className="col-md-3 col-sm-6 p-3">
-                                            <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
-                                                    <div className="col-md-12">
-                                                        <button className="btn btn-primary mb-3 w-100">
-                                                            {data.name}
-                                                        </button>
-                                                    </div>
-                                            </Link>
-                                        </div>
-
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
-                    </div> */}
-                    <div className="container my-5">
-                        {/* Carousel */}
-                        {/* <div id="schoolCarousel1" className="carousel slide" data-bs-ride="carousel" data-bs-interval="10000" ref={carouselRef}>
-                            <div
-                                id="schoolCarousel1"
-                                className="carousel slide"
-                                data-bs-ride="carousel"
-                            >
-                                <div className="carousel-inner">
-                                    {selectedCard && (
-                                        <div
-                                            className="modal fade show"
-                                            style={{ display: "block", background: "rgba(0,0,0,0.5)" }}
-                                            onClick={() => setSelectedCard(null)}
-                                        >
-                                            <div className="modal-dialog modal-lg" onClick={(e) => e.stopPropagation()}>
-                                                <div className="modal-content">
-                                                    <div className="modal-header">
-                                                        <h5 className="modal-title">{selectedCard.categories}</h5>
-                                                        <button className="btn-close" onClick={() => setSelectedCard(null)}></button>
-                                                    </div>
-
-                                                    <div className="modal-body">
-                                                        <p><b>Description:</b> {selectedCard.description}</p>
-                                                        <p><b>Categories:</b> {selectedCard.categories}</p>
-                                                        <p><b>Tags:</b> {selectedCard.tags}</p>
-                                                        <p><b>Created:</b> {selectedCard.created_at}</p>
-                                                        <p><b>Updated:</b> {selectedCard.updated_at}</p>
-                                                    </div>
-
-                                                    <div className="modal-footer">
-                                                        <button className="btn btn-secondary" onClick={() => setSelectedCard(null)}>Close</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        </div> */}
-                        {/* <div className='row justify-content-center text-center mb-5'>
-                            <div className="col-md-3 m-4 position-relative d-flex align-items-center justify-content-center text-white rounded shadow-sm" style={{ maxWidth: '30rem' }}>
-                                <div
-                                    className="position-absolute bottom-0 d-flex align-items-center justify-content-around px-2 py-2 bg-white bg-opacity-10 border border-white border-opacity-25 rounded"
-                                    style={{ backdropFilter: 'blur(10px)', width: '95%' }}
-                                >
-                                    <p className="mb-0 text-center text-light">Learn More</p>
-                                    <button type="button" className="btn btn-dark btn-md px-5 rounded-pill" aria-label="Start free trial" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                                        <FaArrowRightLong />
-                                    </button>
-                                </div>
-                                <img
-                                    className="rounded"
-                                    src={img1?.replace(/^http:\/\//i, "https://")}
-                                    alt="girlWithHeadphone"
-                                    width={800}    // ✅ actual width
-                                    height={600}   // ✅ actual height
-                                    loading="lazy" // ✅ lazy load
-                                    style={{ width: "800px", height: "auto", borderRadius: "0.375rem" }}
-                                />
-
-                            </div>
-                            <div className="col-md-3 m-4 position-relative d-flex align-items-center justify-content-center text-white rounded shadow-sm" style={{ maxWidth: '30rem' }}>
-                                <div
-                                    className="position-absolute bottom-0 d-flex align-items-center justify-content-around px-2 py-2 bg-white bg-opacity-10 border border-white border-opacity-25 rounded"
-                                    style={{ backdropFilter: 'blur(10px)', width: '95%' }}
-                                >
-                                    <p className="mb-0 text-center text-light">Learn More</p>
-                                    <button type="button" className="btn btn-dark btn-md px-5 rounded-pill" aria-label="Start free trial" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                                        <FaArrowRightLong />
-                                    </button>
-                                </div>
-                                <img
-                                    className="rounded"
-                                    src={img1?.replace(/^http:\/\//i, "https://")}
-                                    alt="girlWithHeadphone"
-                                    width={800}    // ✅ actual width
-                                    height={600}   // ✅ actual height
-                                    loading="lazy" // ✅ lazy load
-                                    style={{ width: "800px", height: "auto", borderRadius: "0.375rem" }}
-                                />
-
-                            </div>
-                            <div className="col-md-3 m-4 position-relative d-flex align-items-center justify-content-center text-white rounded shadow-sm" style={{ maxWidth: '30rem' }}>
-                                <div
-                                    className="position-absolute bottom-0 d-flex align-items-center justify-content-around px- py-2 bg-white bg-opacity-10 border border-white border-opacity-25 rounded"
-                                    style={{ backdropFilter: 'blur(10px)', width: '95%' }}
-                                >
-                                    <p className="mb-0 text-center text-light">Learn More</p>
-                                    <button type="button" className="btn btn-dark btn-md px-5 rounded-pill" aria-label="Start free trial" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                                        <FaArrowRightLong />
-                                    </button>
-                                </div>
-                                <img
-                                    className="rounded"
-                                    src={img1?.replace(/^http:\/\//i, "https://")}
-                                    alt="girlWithHeadphone"
-                                    width={800}    // ✅ actual width
-                                    height={600}   // ✅ actual height
-                                    loading="lazy" // ✅ lazy load
-                                    style={{ width: "800px", height: "auto", borderRadius: "0.375rem" }}
-                                />
-
-                            </div>
-                        </div> */}
-
-                        {/* Custom Prev/Next Buttons */}
-                        {/* <div className="d-flex justify-content-center gap-2 mt-4">
-                            <button
-                                className="btn btn-light rounded shadow"
-                                type="button"
-                                data-bs-target="#schoolCarousel1"
-                                data-bs-slide="prev"
-                            >
-                                <GrFormPrevious aria-hidden="true" />
-                                <span className="visually-hidden">Previous</span>
-                            </button>
-
-                            <button
-                                className="btn btn-light rounded shadow"
-                                type="button"
-                                data-bs-target="#schoolCarousel1"
-                                data-bs-slide="next"
-                            >
-                                <MdOutlineNavigateNext aria-hidden="true" />
-                                <span className="visually-hidden">Next</span>
-                            </button>
-                        </div> */}
-                    </div>
-
-                </div>
-
-            </div>
-            {/* <div className="container-fluid">
-                <div className='row justify-content-center text-center py-3'>
-                    <div className="col-md-3 position-relative d-flex align-items-center justify-content-center text-white rounded">
-                        <div
-                            className="position-absolute bottom-0 d-flex align-items-center justify-content-around px-2 py-2 bg-white bg-opacity-10 border border-white border-opacity-25 rounded"
-                            style={{ backdropFilter: 'blur(10px)', width: '95%' }}
-                        >
-                            <p className="mb-0 text-center text-light">Learn More</p>
-                            <button type="button" className="btn btn-dark btn-md px-5 rounded-pill" aria-label="Start free trial" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                                <FaArrowRightLong />
-                            </button>
-                        </div>
-                        <img
-                            className="rounded"
-                            src={img1?.replace(/^http:\/\//i, "https://")}
-                            alt="girlWithHeadphone"
-                            loading="lazy"
-                            style={{ width: "auto", height: "auto", borderRadius: "0.375rem" }}
-                        />
-                        <img
-                                                    src={secureUrl(data.images[0].image)}
-                                                    className="card-img-top"
-                                                    alt={`${data.name} image`}
-                                                    style={{ height: "300px" }}
-                                                />
-
-                    </div>
-                    <div className="col-md-3 position-relative d-flex align-items-center justify-content-center text-white rounded">
-                        <div
-                            className="position-absolute bottom-0 d-flex align-items-center justify-content-around px-2 py-2 bg-white bg-opacity-10 border border-white border-opacity-25 rounded"
-                            style={{ backdropFilter: 'blur(10px)', width: '95%' }}
-                        >
-                            <p className="mb-0 text-center text-light">Learn More</p>
-                            <button type="button" className="btn btn-dark btn-md px-5 rounded-pill" aria-label="Start free trial" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                                <FaArrowRightLong />
-                            </button>
-                        </div>
-                        <img
-                            className="rounded"
-                            src={img1?.replace(/^http:\/\//i, "https://")}
-                            alt="girlWithHeadphone"
-                            loading="lazy"
-                            style={{ width: "auto", height: "auto", borderRadius: "0.375rem" }}
-                        />
-
-                    </div>
-                    <div className="col-md-3 position-relative d-flex align-items-center justify-content-center text-white rounded">
-                        <div
-                            className="position-absolute bottom-0 d-flex align-items-center justify-content-around px-2 py-2 bg-white bg-opacity-10 border border-white border-opacity-25 rounded"
-                            style={{ backdropFilter: 'blur(10px)', width: '95%' }}
-                        >
-                            <p className="mb-0 text-center text-light">Learn More</p>
-                            <button type="button" className="btn btn-dark btn-md px-5 rounded-pill" aria-label="Start free trial" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                                <FaArrowRightLong />
-                            </button>
-                        </div>
-                        <img
-                            className="rounded"
-                            src={img1?.replace(/^http:\/\//i, "https://")}
-                            alt="girlWithHeadphone"
-                            loading="lazy"
-                            style={{ width: "auto", height: "auto", borderRadius: "0.375rem" }}
-                        />
-
-                    </div>
-                    <div className="col-md-3 position-relative d-flex align-items-center justify-content-center text-white rounded">
-                        <div
-                            className="position-absolute bottom-0 d-flex align-items-center justify-content-around px-2 py-2 bg-white bg-opacity-10 border border-white border-opacity-25 rounded"
-                            style={{ backdropFilter: 'blur(10px)', width: '95%' }}
-                        >
-                            <p className="mb-0 text-center text-light">Learn More</p>
-                            <button type="button" className="btn btn-dark btn-md px-5 rounded-pill" aria-label="Start free trial" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                                <FaArrowRightLong />
-                            </button>
-                        </div>
-                        <img
-                            className="rounded"
-                            src={img1?.replace(/^http:\/\//i, "https://")}
-                            alt="girlWithHeadphone"
-                            loading="lazy"
-                            style={{ width: "auto", height: "auto", borderRadius: "0.375rem" }}
-                        />
-
-                    </div>
-                </div>
-            </div> */}
         </>
     )
 }

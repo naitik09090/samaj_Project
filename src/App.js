@@ -74,6 +74,8 @@
 //   );
 // }
 
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/js/bootstrap.bundle.min.js";
 // export default App;
 import "./App.scss";
 import "./css/Navbar.scss";
