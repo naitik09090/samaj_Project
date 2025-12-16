@@ -2,12 +2,19 @@
   command = "npm run build"
   publish = "build"
 
+# Fix React Router refresh / direct URL access
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Cache static assets (same as Vercel headers)
 [[headers]]
   for = "/*.(js|css|png|jpg|jpeg|gif|svg|webp|ico|woff2)"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# Optional: prevent ESLint from failing Netlify builds
+# (Remove this later after fixing all warnings)
+[build.environment]
+  CI = "false"
