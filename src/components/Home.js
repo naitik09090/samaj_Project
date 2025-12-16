@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import Kano from '../images/Kano.webp'
-// import { Carousel } from 'react-bootstrap';
 import { PiBuildingsBold } from "react-icons/pi";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
@@ -16,7 +14,6 @@ const Home = () => {
     const [slock, setSlock] = useState([]);
     const carouselRef = useRef(null);
     const [index, setIndex] = useState(0);
-    // const [selectedCard, setSelectedCard] = useState(null);
     const [data4, setData4] = useState([]);
     const { id } = useParams();
 
@@ -25,13 +22,13 @@ const Home = () => {
         setIndex((prev) => (prev + 1) % filteredData.length);
     };
     // ⏳ Auto-slide every 10 secs
-    useEffect(() => {
-        const timer = setInterval(() => {
-            handleNext();
-        }, 10000);
+    // useEffect(() => {
+    //     const timer = setInterval(() => {
+    //         handleNext();
+    //     }, 10000);
 
-        return () => clearInterval(timer);
-    }, [handleNext]);
+    //     return () => clearInterval(timer);
+    // }, [handleNext]);
 
     const filteredData = slock?.data?.filter(item => item.id >= 1 && item.id <= 4) ?? [];
     // 👉 PREV
@@ -50,18 +47,6 @@ const Home = () => {
 
     const URL = "https://ahirsamajbe-gnapdbcbbzdcabc2.centralindia-01.azurewebsites.net";
 
-
-    // useEffect(() => {
-    //     fetch(`${URL}/api/v1/slideshow/`)
-    //         .then((res) => res.json())
-    //         .then((json) => {
-    //             console.log("data2",json.data);
-    //             setData2(json.data);
-    //         })
-    //         .catch((err) => console.error(err));
-    // }, []);
-
-    // first slider api call
     useEffect(() => {
         const fetchSlides = () => {
             const isMobile = window.innerWidth < 768;
@@ -144,7 +129,11 @@ const Home = () => {
             .catch((err) => console.error(err));
     }, []);
 
-    const secureUrl = (url) => url?.replace(/^http:\/\//i, "https://");
+    // const secureUrl = (url) => url?.replace(/^http:\/\//i, "https://");
+    const secureUrl = (url) => {
+        if (!url) return "";
+        return url.replace(/^http:\/\//i, ".webp");
+    };
 
     // const handleClick = (data) => {
     //     navigate("/news", { state: { newsData: data } }); // ✅ state pass
@@ -232,14 +221,14 @@ const Home = () => {
                                 style={{ height: "auto" }} key={index.id}>
 
                                 <img
-                                    src={data.image.replace("http://", "https://")}
+                                    src={secureUrl(data.image)}
                                     alt={data.title}
                                     className="d-block"
-                                    width="1700"
+                                    width="auto"
                                     height="600"
+                                    loading="eager"   // 🔥 important
+                                    fetchpriority="high"
                                     style={{
-                                        maxWidth: "100%",
-                                        height: "100%",
                                         objectFit: "cover",
                                         borderRadius: "22px"
                                     }}
@@ -451,7 +440,7 @@ const Home = () => {
                                         <div className="row justify-content-center">
                                             {chunk.map((data) => (
                                                 <div key={data.id} className="col-md-2 col-sm-6 col-6 p-3">
-                                                    <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
+                                                    <a href={`/school/${data.id}`} className="text-decoration-none text-dark">
                                                         <div
                                                             className="shadow-sm h-100 d-flex flex-column justify-content-between align-items-center text-center"
                                                             style={{
@@ -488,7 +477,7 @@ const Home = () => {
                                                             )}
                                                             <span className="fw-bold text-dark text-center" style={{ fontSize: 14 }}>{data.name}</span>
                                                         </div>
-                                                    </Link>
+                                                    </a>
                                                 </div>
                                             ))}
                                         </div>
@@ -543,8 +532,8 @@ const Home = () => {
 
                                             {pair.map((data) => (
                                                 <div key={data.id} className="col-6">
-                                                    <Link
-                                                        to={`/school/${data.id}`}
+                                                    <a
+                                                        href={`/school/${data.id}`}
                                                         className="text-decoration-none text-dark d-block h-100"
                                                     >
                                                         <div
@@ -588,7 +577,7 @@ const Home = () => {
                                                             {/* Name */}
                                                             <span className="fw-bold text-dark text-center" style={{ fontSize: 14 }}>{data.name}</span>
                                                         </div>
-                                                    </Link>
+                                                    </a>
                                                 </div>
                                             ))}
 
@@ -769,8 +758,8 @@ const Home = () => {
                                                 {/* ALWAYS BOTTOM BUTTON */}
                                                 <div className="mt-auto">
                                                     <hr />
-                                                    <Link
-                                                        to={`/latest/${data.id}`}
+                                                    <a
+                                                        href={`/latest/${data.id}`}
                                                         className="text-decoration-none w-100"
                                                         aria-label={`Learn more about article ${data.id}`}
                                                     >
@@ -778,7 +767,7 @@ const Home = () => {
                                                             <span className="text-dark fw-semibold">Learn More</span>
                                                             <FaArrowRightLong className="text-dark" aria-hidden="true" />
                                                         </div>
-                                                    </Link>
+                                                    </a>
 
                                                 </div>
                                             </div>
@@ -831,13 +820,13 @@ const Home = () => {
                                                 <div className="mt-auto">
                                                     <hr />
                                                     <div className="d-flex align-items-center justify-content-between px-2">
-                                                        <Link
-                                                            to={`/latest/${data.id}`}
+                                                        <a
+                                                            href={`/latest/${data.id}`}
                                                             className="learn_BTn1 text-decoration-none"
                                                             aria-label={`Learn more about ${data.id}`}
                                                         >
                                                             Learn More <FaArrowRightLong />
-                                                        </Link>
+                                                        </a>
 
                                                     </div>
                                                 </div>
