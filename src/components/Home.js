@@ -232,14 +232,19 @@ const Home = () => {
                                 style={{ height: "auto" }} key={index.id}>
 
                                 <img
-                                    src={data.image?.replace("http://", "https://")}
+                                    src={data.image.replace("http://", "https://")}
                                     alt={data.title}
                                     className="d-block"
-                                    width={1600}
-                                    height={800}
-                                    style={{ maxHeight: "auto", objectFit: "cover", borderRadius: "22px" }}
-                                    loading="lazy"
+                                    width="1700"
+                                    height="600"
+                                    style={{
+                                        maxWidth: "100%",
+                                        height: "100%",
+                                        objectFit: "cover",
+                                        borderRadius: "22px"
+                                    }}
                                 />
+
                             </div>
                         ))}
 
