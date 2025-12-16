@@ -456,7 +456,7 @@ const About_us = () => {
                                                                     <Link
                                                                         to={`/latest/${newsItem.id}`}
                                                                         className="text-decoration-none w-100"
-                                                                        aria-label={`Read full article: ${newsItem.title}`}
+                                                                        aria-label={`Read full article: ${newsItem.id}`}
                                                                     >
                                                                         <div className="d-flex align-items-center justify-content-between px-3 py-2">
                                                                             <span className="text-dark fw-semibold">Learn More</span>
@@ -551,7 +551,7 @@ const About_us = () => {
                                                                 <Link
                                                                     to={`/latest/${newsItem.id}`}
                                                                     className="text-decoration-none w-100"
-                                                                    aria-label={`Read full article: ${newsItem.title}`}
+                                                                    aria-label={`Read full article: ${newsItem.id}`}
                                                                 >
                                                                     <div className="d-flex align-items-center justify-content-between">
                                                                         <span className="text-dark fw-semibold">Learn More</span>
@@ -647,7 +647,7 @@ const About_us = () => {
                                                         <Link
                                                             to={`/latest/${newsItem.id}`}
                                                             className="text-decoration-none w-100"
-                                                            aria-label={`Read full article: ${newsItem.title}`}
+                                                            aria-label={`Read full article: ${newsItem.id}`}
                                                         >
                                                             <div className="d-flex align-items-center justify-content-between">
                                                                 <span className="text-dark fw-semibold">Learn More</span>

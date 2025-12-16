@@ -552,42 +552,36 @@ const Home = () => {
                                                         >
 
                                                             {/* Logo */}
-                                                            <div
-                                                                style={{
-                                                                    height: "90px",
-                                                                    width: "100%",
-                                                                    display: "flex",
-                                                                    alignItems: "center",
-                                                                    justifyContent: "center",
-                                                                    marginBottom: "6px",
-                                                                }}
-                                                            >
+                                                            {data.logo ? (
                                                                 <img
                                                                     src={secureUrl(data.logo)}
-                                                                    alt="logo"
+                                                                    className="rounded-1 mb-1"
+                                                                    alt={"Ahir Samaj"}
                                                                     style={{
                                                                         maxHeight: "80px",
                                                                         maxWidth: "100%",
                                                                         objectFit: "contain",
                                                                     }}
-                                                                    loading='lazy'
+                                                                    loading="lazy"
                                                                 />
-                                                            </div>
+                                                            ) : (
+                                                                <div
+                                                                    className="rounded-1 h-100 mb-1 d-flex align-items-center justify-content-center"
+                                                                    style={{
+                                                                        width: "100%",
+                                                                        background: "#ffffff",
+                                                                        color: "#067C71",
+                                                                        fontWeight: 700,
+                                                                        fontSize: "20px",
+                                                                        borderRadius: "8px"
+                                                                    }}
+                                                                >
+                                                                    Ahir Samaj
+                                                                </div>
+                                                            )}
 
                                                             {/* Name */}
-                                                            <div
-                                                                className="fw-bold"
-                                                                style={{
-                                                                    fontSize: "12px",
-                                                                    minHeight: "36px",
-                                                                    display: "flex",
-                                                                    alignItems: "center",
-                                                                    justifyContent: "center",
-                                                                }}
-                                                            >
-                                                                {data.name}
-                                                            </div>
-
+                                                            <span className="fw-bold text-dark text-center" style={{ fontSize: 14 }}>{data.name}</span>
                                                         </div>
                                                     </Link>
                                                 </div>
@@ -773,13 +767,14 @@ const Home = () => {
                                                     <Link
                                                         to={`/latest/${data.id}`}
                                                         className="text-decoration-none w-100"
-                                                        aria-label={`Read full article: ${data.title}`}
+                                                        aria-label={`Learn more about article ${data.id}`}
                                                     >
                                                         <div className="d-flex align-items-center justify-content-between px-2 py-3">
                                                             <span className="text-dark fw-semibold">Learn More</span>
                                                             <FaArrowRightLong className="text-dark" aria-hidden="true" />
                                                         </div>
                                                     </Link>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -834,7 +829,7 @@ const Home = () => {
                                                         <Link
                                                             to={`/latest/${data.id}`}
                                                             className="learn_BTn1 text-decoration-none"
-                                                            aria-label={`Learn more about ${data.title}`}
+                                                            aria-label={`Learn more about ${data.id}`}
                                                         >
                                                             Learn More <FaArrowRightLong />
                                                         </Link>

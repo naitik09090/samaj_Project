@@ -231,7 +231,7 @@ const About_us = () => {
                                                     <Link
                                                         to={`/latest/${item.id}`}
                                                         className="text-decoration-none w-100"
-                                                        aria-label={`Learn more about ${item.title}`}
+                                                        aria-label={`Learn more about ${item.id}`}
                                                     >
                                                         <div className="d-flex align-items-center justify-content-between px-3 py-2">
                                                             <span className="text-dark fw-semibold">Learn More</span>
@@ -297,7 +297,7 @@ const About_us = () => {
                                                         <Link
                                                             to={`/latest/${item.id}`}
                                                             className="text-decoration-none w-100"
-                                                            aria-label={`Learn more about ${item.title}`}
+                                                            aria-label={`Learn more about ${item.id}`}
                                                         >
                                                             <div className="d-flex align-items-center justify-content-between">
                                                                 <span className="text-dark fw-semibold">Learn More</span>
