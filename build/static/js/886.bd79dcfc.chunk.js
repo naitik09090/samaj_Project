@@ -1,0 +1,1 @@
+(self.webpackChunksamaj=self.webpackChunksamaj||[]).push([[886],{886:()=>{}}]);

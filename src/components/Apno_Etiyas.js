@@ -1,14 +1,14 @@
 // import img6 from '../images/img_6.jpg'
 // import { FaRegCalendarAlt } from 'react-icons/fa';
 // import img5 from '../images/img_5.jpg'
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 // import DOMPurify from 'dompurify';
 // import { FaBars, FaTimes } from "react-icons/fa";
 
 
 const About_us = () => {
-    const [data4, setData4] = useState([]);
-    const [featuredId, setFeaturedId] = useState(null);
+    // const [data4, setData4] = useState([]);
+    // const [featuredId, setFeaturedId] = useState(null);
     // const [openDropdown, setOpenDropdown] = useState(false);
     const [openSidebar, setOpenSidebar] = useState(true);
 
@@ -917,31 +917,32 @@ const About_us = () => {
     ]
 
     const [selectedId, setSelectedId] = useState(Data_Main[0]?.id || null);
-    const selectedItem = Data_Main.find(d => d.id === selectedId) || Data_Main[0];
-    const getListItems = (html = '') => {
-        const matches = [...(html.matchAll(/<li>(.*?)<\/li>/gi))];
+
+    const selectedItem =
+        Data_Main.find(d => d.id === selectedId) || Data_Main[0];
+
+    const getListItems = (html = "") => {
+        const matches = [...html.matchAll(/<li>(.*?)<\/li>/gi)];
         return matches.map(m => m[1].trim()).filter(Boolean);
     };
+
     const makeColumns = (items, cols = 4) => {
-        if (!items || items.length === 0) return Array.from({ length: cols }, () => []);
+        if (!items?.length) return Array.from({ length: cols }, () => []);
         const perCol = Math.ceil(items.length / cols);
-        const result = [];
-        for (let i = 0; i < cols; i++) {
-            result.push(items.slice(i * perCol, (i + 1) * perCol));
-        }
-        return result;
+        return Array.from({ length: cols }, (_, i) =>
+            items.slice(i * perCol, (i + 1) * perCol)
+        );
     };
-    const listItems = getListItems(selectedItem?.content || '');
-    const columns = makeColumns(listItems, 4);
-    // Prepare news list with featured item first
-    const newsList = Array.isArray(data4?.data) ? [...data4.data] : [];
-    if (featuredId) {
-        const idx = newsList.findIndex(n => n.id === featuredId);
-        if (idx > 0) {
-            const [item] = newsList.splice(idx, 1);
-            newsList.unshift(item);
-        }
-    }
+
+    const listItems = useMemo(
+        () => getListItems(selectedItem?.content),
+        [selectedItem]
+    );
+
+    const columns = useMemo(
+        () => makeColumns(listItems, 4),
+        [listItems]
+    );
 
     // if (!data) return <h3>Loading...</h3>;
 
