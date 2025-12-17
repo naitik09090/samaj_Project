@@ -763,13 +763,10 @@ const Home = () => {
                                                     <div className="d-flex align-items-center justify-content-between px-2">
                                                         <a
                                                             href={`/latest/${data.id}`}
-                                                            className="text-decoration-none w-100"
-                                                            aria-labelledby={`link-desc-${data.id}`}
+                                                            className="learn_BTn1 text-decoration-none"
+                                                            aria-label={`Learn more about ${data.id}`}
                                                         >
-                                                            <div className="d-flex align-items-center justify-content-between px-2 py-3">
-                                                                <span className="text-dark fw-semibold">Learn More</span>
-                                                                <FaArrowRightLong className="text-dark" aria-hidden="true" />
-                                                            </div>
+                                                            Learn More <FaArrowRightLong />
                                                         </a>
 
                                                     </div>
