@@ -152,7 +152,7 @@ const Home = () => {
                                     width="auto"
                                     height="600"
                                     loading="eager"   // 🔥 important
-                                    fetchpriority="high"
+                                    // fetchpriority="high"
                                     style={{
                                         objectFit: "cover",
                                         borderRadius: "22px"
@@ -629,7 +629,7 @@ const Home = () => {
                             <iframe
                                 src="https://www.youtube-nocookie.com/embed/xby0-Ecnjw0?list=RDxby0-Ecnjw0"
                                 title="Aditya Gadhavi | Shamaliyo"
-                                FrameBorder="0"
+                                frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 referrerPolicy="strict-origin-when-cross-origin"
                                 allowFullScreen

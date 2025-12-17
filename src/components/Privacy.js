@@ -163,18 +163,18 @@ import React, { useEffect } from "react";
 
 export default function PrivacyPolicy() {
   // Inject Bootstrap 5 and Google Font
-  useEffect(() => {
-    const addLink = (href, id) => {
-      if (document.getElementById(id)) return;
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = href;
-      link.id = id;
-      document.head.appendChild(link);
-    };
+  // useEffect(() => {
+  //   const addLink = (href, id) => {
+  //     if (document.getElementById(id)) return;
+  //     const link = document.createElement("link");
+  //     link.rel = "stylesheet";
+  //     link.href = href;
+  //     link.id = id;
+  //     document.head.appendChild(link);
+  //   };
 
-    addLink("https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css", "bs5");
-  }, []);
+  //   addLink("https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css", "bs5");
+  // }, []);
 
   const fontFamily = `"Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial`;
 

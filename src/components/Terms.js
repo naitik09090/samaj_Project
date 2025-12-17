@@ -2,19 +2,19 @@ import React, { useEffect } from "react";
 
 export default function TermsConditions() {
   // Inject Bootstrap 5 and Google Font
-  useEffect(() => {
-    const addLink = (href, id) => {
-      if (document.getElementById(id)) return;
-      const link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.href = href;
-      link.id = id;
-      document.head.appendChild(link);
-    };
+  // useEffect(() => {
+  //   const addLink = (href, id) => {
+  //     if (document.getElementById(id)) return;
+  //     const link = document.createElement("link");
+  //     link.rel = "stylesheet";
+  //     link.href = href;
+  //     link.id = id;
+  //     document.head.appendChild(link);
+  //   };
 
-    addLink("https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css", "bs5");
-    // addLink("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap", "font-inter");
-  }, []);
+  //   addLink("https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css", "bs5");
+  //   // addLink("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap", "font-inter");
+  // }, []);
 
   const fontFamily = `"Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial`;
 
