@@ -395,20 +395,20 @@ const ImageSlider = () => {
             {/* DESKTOP — visible on md+ */}
             <div className="d-none d-md-block">
                 <div className="container-fluid py-5">
-                    <div className="row justify-content-center g-4">
+                    <div className="row justify-content-center g-2">
                         {[{ img: wifi, title: 'Unlimited Wifi' }, { img: food, title: 'Best Food' }, { img: security1, title: 'Best Security' }, { img: library, title: 'Library' }].map((card, idx) => (
                             <div className="col-md-3" key={idx.id}>
-                                <div className="text-center p-4 icon_11 border rounded-4">
-                                    <div className="icon-circle mb-3 mx-auto">
+                                <div className="text-center p-3 icon_11 border rounded-4">
+                                    <div className="icon-circle mx-auto">
                                         <img
                                             src={card.img}
                                             alt={card.title}
                                             className="icon-img"
-                                            style={{ width: "auto", height: "60px", objectFit: "contain" }}
+                                            style={{ width: "auto", height: "50px", objectFit: "contain" }}
                                         />
                                     </div>
-                                    <b className="h2 card_Data_1 w-100 h-100">{card.title}</b>
-                                    <p className="text-muted small card_Data_1"></p>
+                                    <b className="card_Data_1">{card.title}</b>
+                                    {/* <p className="text-muted small card_Data_1"></p> */}
                                 </div>
                             </div>
                         ))}
@@ -422,7 +422,7 @@ const ImageSlider = () => {
                     <div className="row gx-2 gy-3 justify-content-center">
                         {[{ img: wifi, title: 'Unlimited Wifi' }, { img: food, title: 'Best Food' }, { img: security1, title: 'Best Security' }, { img: library, title: 'Library' }].map((card, idx) => (
                             <div className="col-6" key={idx}>
-                                <div className="text-center p-3 mb-5 border rounded-3">
+                                <div className="text-center p-3 mb-5 icon_11 border rounded-3">
                                     <div className="icon-circle mx-auto">
                                         <img
                                             src={card.img}

@@ -43,13 +43,13 @@ const Navbar = () => {
       <div className="row F_NAv py-1">
 
         {/* Email */}
-        <div className="col-12 col-md-2 d-flex align-items-center">
+        <div className="col-12 col-md-4 d-flex align-items-center">
           <b className="email p-2">
             <FiMail className="MSg_Icon" /> contact@ahirsamaj.in
           </b>
         </div>
 
-        <div className="col-md-8 d-none d-md-block"></div>
+        <div className="col-md-6 d-none d-md-block"></div>
 
         {/* Desktop icons (HIDE ON MOBILE) */}
         <div className="col-md-2 d-none d-md-flex justify-content-end py-2">

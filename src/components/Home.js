@@ -241,12 +241,12 @@ const Home = () => {
 
                                             <b className="b_Tages mb-2">:: अनुवाद ::</b>
 
-                                            <p className="p_Tages mb-2">{data.sloka_guj}</p>
-                                            <p className="p_Tages mb-3">{data.sloka_eng}</p>
+                                            <p className="p_Tages mb-2 py-2">{data.sloka_guj}</p>
+                                            <p className="p_Tages mb-1">{data.sloka_eng}</p>
 
                                             <hr />
 
-                                            <p className="p_Tages mb-0">
+                                            <p className="p_Tages">
                                                 {data.sloka_origin} — Chapter {data.chapter}, Verse {data.verse}
                                             </p>
                                             <div className="col-12 d-flex justify-content-end py-2">
@@ -366,9 +366,11 @@ const Home = () => {
                             </div>
 
                             <div className="col-md-2 text-end">
-                                <button type="button" className="btn btn-success">
-                                    View All
-                                </button>
+                                <a href='/ImageSlider'>
+                                    <button type="button" className="btn btn-success">
+                                        View All
+                                    </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -446,9 +448,11 @@ const Home = () => {
                             </div>
 
                             <div className="col-12">
-                                <button type="button" className="btn btn-success">
-                                    View All
-                                </button>
+                                <a href='/ImageSlider'>
+                                    <button type="button" className="btn btn-success">
+                                        View All
+                                    </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -578,13 +582,10 @@ const Home = () => {
                                 {ideologyData.map((item, index) => (
                                     <div className="col-md-6 d-flex justify-content-center" key={index.id}>
                                         <div
-                                            className="card shadow-sm rounded-4 border-0"
+                                            className="card_Ideology border-0"
                                             style={{ width: "100%", maxWidth: "300px" }}
                                         >
-                                            <div className="card-body d-flex flex-column text-center">
-
-                                                <h5 className="fw-bold mb-2">{item.title}</h5>
-                                            </div>
+                                            <h5 className="text-center fw-bold mb-2">{item.title}</h5>
                                         </div>
                                     </div>
                                 ))}

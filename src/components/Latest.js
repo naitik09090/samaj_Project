@@ -183,6 +183,9 @@ const About_us = () => {
                     </div> */}
                 {/* Replace the narrow sidebar block with a full-width grid showing 4 cards per row */}
                 <div className='col-12'>
+                    <h1 className='text-center mb-4' style={{fontWeight:'500'}}>મોર ન્યૂઝ</h1>
+                </div>
+                <div className='col-12'>
 
                     {/* ------------------ DESKTOP VIEW (md and up) ------------------ */}
                     <div className="d-none d-md-block">
@@ -251,7 +254,6 @@ const About_us = () => {
 
                         </div>
                     </div>
-
 
                     {/* ------------------ MOBILE VIEW (xs–sm) ------------------ */}
                     <div className="d-block d-md-none">

@@ -288,7 +288,7 @@ const ImageSlider = () => {
                                     </div>
                                     <div className="row justify-content-center">
                                         {chunk.map((data) => (
-                                            <div key={data.id} className="col-md-2 p-3">
+                                            <div key={data.id} className="col-md-2 p-1 mb-5">
                                                 <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
                                                     <div
                                                         className="shadow-sm h-100 d-flex flex-column justify-content-between align-items-center text-center"
