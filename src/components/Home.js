@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useRef } from 'react';
+// import { useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Kano from '../images/Kano.webp'
 import { PiBuildingsBold } from "react-icons/pi";
@@ -12,7 +12,7 @@ const Home = () => {
     const [data1, setData1] = useState([]),
         [data2, setData2] = useState([]),
         [slock, setSlock] = useState([]),
-        carouselRef = useRef(null),
+        // carouselRef = useRef(null),
         [index, setIndex] = useState(0),
         [data4, setData4] = useState([]),
         { id } = useParams();
@@ -50,25 +50,37 @@ const Home = () => {
 
 
     // news api call
-    useEffect(() => {
-        fetch(`${URL}/api/v1/news/${id}`).then((res) => res.json())
-            .then((json) => {
-                console.log(json);
-                setData4(json);
-                console.log("News Data:-", json.data[0])
-            })
-            .catch((err) => console.error(err));
-    }, [id]);
+    /* The above code is written in JavaScript and utilizes the useEffect hook from React. */
+    // useEffect(() => {
+    //     fetch(`${URL}/api/v1/news/${id}`).then((res) => res.json())
+    //         .then((json) => {
+    //             console.log(json);
+    //             setData4(json);
+    //             console.log("News Data:-", json.data[0])
+    //         })
+    //         .catch((err) => console.error(err));
+    // }, [id]);
+
+    // useEffect(() => {
+    //     fetch(`${URL}/api/v1/news/`)
+    //         .then((res) => res.json())
+    //         .then((json) => {
+    //             console.log("News list:", json);
+    //             setData4(json);
+    //         })
+    //         .catch((err) => console.error(err));
+    // }, []);
 
     useEffect(() => {
-        fetch(`${URL}/api/v1/news/`)
-            .then((res) => res.json())
-            .then((json) => {
-                console.log("News list:", json);
-                setData4(json);
-            })
-            .catch((err) => console.error(err));
-    }, []);
+        const endpoint = id
+            ? `${URL}/api/v1/news/${id}`
+            : `${URL}/api/v1/news/`;
+
+        fetch(endpoint)
+            .then(res => res.json())
+            .then(json => setData4(json))
+            .catch(console.error);
+    }, [id]);
 
 
     // slock api call
@@ -91,7 +103,11 @@ const Home = () => {
     }, []);
 
     // const secureUrl = (url) => url?.replace(/^http:\/\//i, "https://");
-    const secureUrl = e => e ? e.replace(/^http:\/\//i, ".webp") : "";
+    // const secureUrl = e => e ? e.replace(/^http:\/\//i, ".webp") : "";
+    const secureUrl = (url = "") =>
+        url.startsWith("http://")
+            ? url.replace("http://", "https://")
+            : url;
 
     // const handleClick = (data) => {
     //     navigate("/news", { state: { newsData: data } }); // ✅ state pass
@@ -358,7 +374,7 @@ const Home = () => {
                     </div>
                     {/* Desktop view */}
                     <div className="d-none d-md-block mb-3">
-                        <div id="schoolCarousel" className="carousel slide" data-bs-ride="carousel" data-bs-interval="10000" ref={carouselRef}>
+                        <div id="schoolCarousel" className="carousel slide" data-bs-ride="carousel" data-bs-interval="10000">
                             <div className="carousel-inner">
                                 {cardChunks.map((chunk, index) => (
                                     <div key={`chunk-${index}`} className={`carousel-item ${index === 0 ? "active" : ""}`}>
