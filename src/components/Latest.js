@@ -140,7 +140,7 @@ const About_us = () => {
 
                     {/* DATE */}
                     <p className="text-start text-muted mt-2">
-                        <img src={calendar} className="m-1 claendar_Icon" height={20} width={20} />
+                        <img src={calendar} className="m-1 claendar_Icon" alt='Date' height={20} width={20} />
                         {new Date(data?.published_at).toLocaleDateString("en-GB", {
                             day: "2-digit",
                             month: "short",

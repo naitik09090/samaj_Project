@@ -531,7 +531,7 @@ const About_us = () => {
 
                                                         <div className="card-body1 d-flex flex-column" style={{ padding: "8px" }}>
                                                             <p className="text-start text-muted mb-1" style={{ fontSize: 12 }}>
-                                                                <img src={calendar} className="claendar_Icon" height={16} width={16} alt="" />
+                                                                <img src={calendar} className="claendar_Icon" height={16} width={16} alt="calender" />
                                                                 {new Date(newsItem?.published_at).toLocaleDateString("en-GB", {
                                                                     day: "2-digit",
                                                                     month: "short",
@@ -598,7 +598,7 @@ const About_us = () => {
                             </div>
 
                             <p className="text-start text-muted mt-2">
-                                <img src={calendar} className="m-1 claendar_Icon" height={20} width={20} alt="" />
+                                <img src={calendar} className="m-1 claendar_Icon" height={20} width={20} alt="calender" />
                                 {new Date(data?.published_at).toLocaleDateString("en-GB", {
                                     day: "2-digit",
                                     month: "short",
@@ -632,7 +632,7 @@ const About_us = () => {
                                             />
                                             <div className="card-body1 d-flex flex-column">
                                                 <p className="text-start text-muted mt-1">
-                                                    <img src={calendar} className="m-1 claendar_Icon" height={20} width={20} alt="" />
+                                                    <img src={calendar} className="m-1 claendar_Icon" height={20} width={20} alt="calender" />
                                                     {new Date(newsItem?.published_at).toLocaleDateString("en-GB", {
                                                         day: "2-digit",
                                                         month: "short",

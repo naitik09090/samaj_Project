@@ -36,13 +36,6 @@ const Navbar = () => {
     transition: "all 0.3s ease"
   };
 
-
-
-
-
-  const linkBaseClass =
-    "text-dark Nav_Menus text-decoration-none d-inline-block position-relative";
-
   return (
     <div className="container-fluid">
 

@@ -367,8 +367,7 @@
     height: 500px
 }
 
-.floating-box,
-.floating-box1 {
+.floating-box {
     background-color: #efa30a;
     margin-top: -145px;
     z-index: 1;
@@ -376,7 +375,11 @@
 }
 
 .floating-box1 {
-    color:white;
+    background-color: #efa30a;
+    color: #ffffff;
+    margin-top: -145px;
+    z-index: 1;
+    border-radius: 12px;
     margin-bottom: 45px;
 }
 
