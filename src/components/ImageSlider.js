@@ -16,8 +16,8 @@ const ImageSlider = () => {
     const { id } = useParams();
     const [school, setSchool] = useState(null);
 
-    const secureUrl = (url) => url?.replace(/^http:\/\//i, "https://");
     const URL = "https://ahirsamajbe-gnapdbcbbzdcabc2.centralindia-01.azurewebsites.net";
+    const secureUrl = (url) => url?.replace(/^http:\/\//i, "https://");
 
     // Fetch ALL schools
     useEffect(() => {
