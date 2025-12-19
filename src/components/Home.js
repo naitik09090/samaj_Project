@@ -237,19 +237,19 @@ const Home = () => {
                                                 (अध्याय {data.chapter}, श्लोक {data.verse})
                                             </b>
 
-                                            <h2 className="h2_Tages mb-3">{data.sloka_sans}</h2>
+                                            <h2 className="h2_Tages mb-2">{data.sloka_sans}</h2>
 
-                                            <b className="b_Tages mb-2">:: अनुवाद ::</b>
+                                            <b className="b_Tages mb-1">:: अनुवाद ::</b>
 
-                                            <p className="p_Tages mb-2 py-2">{data.sloka_guj}</p>
-                                            <p className="p_Tages mb-1">{data.sloka_eng}</p>
+                                            <p className="p_Tages mb-0 py-2">{data.sloka_guj}</p>
+                                            <p className="p_Tages mb-0">{data.sloka_eng}</p>
 
                                             <hr />
 
-                                            <p className="p_Tages">
+                                            <p className="p_Tages mb-0">
                                                 {data.sloka_origin} — Chapter {data.chapter}, Verse {data.verse}
                                             </p>
-                                            <div className="col-12 d-flex justify-content-end py-2">
+                                            <div className="col-12 d-flex m-0 justify-content-end">
                                                 <button className="btn NandRBtn me-2" onClick={handlePrev}>⟵</button>
                                                 <button className="btn NandRBtn" onClick={handleNext}>⟶</button>
                                             </div>

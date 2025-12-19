@@ -101,7 +101,7 @@ const School = lazy(() => import("./components/School"));
 const ImageSlider = lazy(() => import("./components/ImageSlider"));
 const Cards = lazy(() => import("./components/Cards"));
 const Privacy = lazy(() => import("./components/Privacy"));
-const About = lazy(() => import("./components/About"));
+// const About = lazy(() => import("./components/About"));
 const Terms = lazy(() => import("./components/Terms"));
 const Contact = lazy(() => import("./components/Contact"));
 const ApnoEtiyas = lazy(() => import("./components/Apno_Etiyas"));
@@ -132,7 +132,7 @@ function App() {
                 <Route path="/ImageSlider" element={<ImageSlider />} />
                 <Route path="/cards" element={<Cards />} />
                 <Route path="/privacy-policy" element={<Privacy />} />
-                <Route path="/about" element={<About />} />
+                {/* <Route path="/about" element={<About />} /> */}
                 <Route path="/terms" element={<Terms />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/Apno_Etiyas" element={<ApnoEtiyas />} />

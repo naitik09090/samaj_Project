@@ -54,10 +54,10 @@ const Navbar = () => {
         {/* Desktop icons (HIDE ON MOBILE) */}
         <div className="col-md-2 d-none d-md-flex justify-content-end py-2">
 
-          <LuLinkedin className="LiNK_Icon" />
-          <TfiTwitter className="LiNK_Icon" />
-          <FaInstagram className="LiNK_Icon" />
-          <FiFacebook className="LiNK_Icon" />
+          <LuLinkedin className="LiNK_Icon py-0" />
+          <TfiTwitter className="LiNK_Icon py-0" />
+          <FaInstagram className="LiNK_Icon py-0" />
+          <FiFacebook className="LiNK_Icon py-0" />
 
           {/* Language Button */}
           <div className="position-relative">
@@ -131,7 +131,7 @@ const Navbar = () => {
                 <li><a href="/" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>હોમ</a></li>
                 <li><a href="/ImageSlider" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>સ્કૂલ</a></li>
                 <li><a href="/LatestNews" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>લેટેસ્ટ ન્યૂઝ</a></li>
-                <li><a href="/about" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>અબાઉટ</a></li>
+                {/* <li><a href="/about" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>અબાઉટ</a></li> */}
                 <li><a href="/Apno_Etiyas" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>આપણો ઈતિહાસ</a></li>
 
               </ul>
@@ -166,7 +166,7 @@ const Navbar = () => {
                   <li className="mb-2"><a href="/" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>હોમ</a></li>
                   <li className="mb-2"><a href="/ImageSlider" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>સ્કૂલ</a></li>
                   <li className="mb-2"><a href="/LatestNews" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>લેટેસ્ટ ન્યૂઝ</a></li>
-                  <li className="mb-2"><a href="/about" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>અબાઉટ</a></li>
+                  {/* <li className="mb-2"><a href="/about" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>અબાઉટ</a></li> */}
                   <li className="mb-2"><a href="/Apno_Etiyas" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>આપણો ઈતિહાસ</a></li>
                 </ul>
               </div>
