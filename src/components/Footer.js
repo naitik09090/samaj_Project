@@ -30,7 +30,7 @@ const Footer = () => {
                                 <li><a href="/" className="text-white text-decoration-none">હોમ</a></li>
                                 <li><a href="/ImageSlider" className="text-white text-decoration-none">સ્કૂલ</a></li>
                                 <li><a href="/LatestNews" className="text-white text-decoration-none">લેટેસ્ટ ન્યૂઝ</a></li>
-                                <li><a href="/about" className="text-white text-decoration-none">અબાઉટ</a></li>
+                                {/* <li><a href="/about" className="text-white text-decoration-none">અબાઉટ</a></li> */}
                                 <li><a href="/Apno_Etiyas" className="text-white text-decoration-none">આપણો ઈતિહાસ</a></li>
                             </ul>
                         </div>
@@ -63,7 +63,7 @@ const Footer = () => {
                             <li className="mb-2"><a href="/" className="text-white text-decoration-none">હોમ</a></li>
                             <li className="mb-2"><a href="/ImageSlider" className="text-white text-decoration-none">સ્કૂલ</a></li>
                             <li className="mb-2"><a href="/LatestNews" className="text-white text-decoration-none">લેટેસ્ટ ન્યૂઝ</a></li>
-                            <li className="mb-2"><a href="/about" className="text-white text-decoration-none">અબાઉટ</a></li>
+                            {/* <li className="mb-2"><a href="/about" className="text-white text-decoration-none">અબાઉટ</a></li> */}
                             <li className="mb-2"><a href="/Apno_Etiyas" className="text-white text-decoration-none">આપણો ઈતિહાસ</a></li>
                         </ul>
                         <hr />
