@@ -190,7 +190,6 @@ p.text-start {
   border-radius: 10px;
 }
 
-
 .img_1_Main img {
   border: 1px solid #fff;
   width: auto;
@@ -268,15 +267,11 @@ p.text-start {
   overflow: hidden
 }
 
-.text-limit,
 .title-content-2 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  overflow: hidden
-}
-
-.title-content-2 {
+  overflow: hidden;
   font-size: 10px
 }
 
