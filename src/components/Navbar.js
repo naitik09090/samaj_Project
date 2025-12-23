@@ -119,7 +119,7 @@ const Navbar = () => {
             {/* LOGO */}
             <div className="col-6 col-md-3 d-flex align-items-center">
               <a href="/" className="text-decoration-none">
-                <img src={SamajLogo} alt='Samaj Logo' height={40} width={140} style={{borderRadius:'30px', paddingTop:isScrolled?'5px':'0px'}} />
+                <img src={SamajLogo} alt='Samaj Logo' height={40} width={105} style={{borderRadius:'30px', paddingTop:isScrolled?'5px':'0px'}} />
               </a>
             </div>
 

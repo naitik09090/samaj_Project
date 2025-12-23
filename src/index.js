@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+// Bootstrap is loaded via CDN/preload in public/index.html to avoid
+// duplicating the CSS/JS in the webpack bundle and reduce unused bytes.
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

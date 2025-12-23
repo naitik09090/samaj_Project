@@ -234,11 +234,14 @@ const About_us = () => {
                                                     <Link
                                                         to={`/latest/${item.id}`}
                                                         className="text-decoration-none w-100"
-                                                        aria-label={`Learn more about ${item.id}`}
+                                                        aria-label={`Read article: ${item.title}`}
                                                     >
                                                         <div className="d-flex align-items-center justify-content-between px-3 py-2">
-                                                            <span className="text-dark fw-semibold">Learn More</span>
-                                                            <FaArrowRightLong className="text-dark" />
+                                                            <span className="text-dark fw-semibold">
+                                                                Learn More
+                                                                <span className="visually-hidden"> about {item.title}</span>
+                                                            </span>
+                                                            <FaArrowRightLong className="text-dark" aria-hidden="true" />
                                                         </div>
                                                     </Link>
                                                 </div>
@@ -299,11 +302,14 @@ const About_us = () => {
                                                         <Link
                                                             to={`/latest/${item.id}`}
                                                             className="text-decoration-none w-100"
-                                                            aria-label={`Learn more about ${item.id}`}
+                                                            aria-label={`Read article: ${item.title}`}
                                                         >
                                                             <div className="d-flex align-items-center justify-content-between">
-                                                                <span className="text-dark fw-semibold">Learn More</span>
-                                                                <FaArrowRightLong className="text-dark" />
+                                                                <span className="text-dark fw-semibold">
+                                                                    Learn More
+                                                                    <span className="visually-hidden"> about {item.title}</span>
+                                                                </span>
+                                                                <FaArrowRightLong className="text-dark" aria-hidden="true" />
                                                             </div>
                                                         </Link>
                                                     </div>

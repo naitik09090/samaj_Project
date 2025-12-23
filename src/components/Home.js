@@ -331,19 +331,18 @@ const Home = () => {
                 {/* img_Slider */}
                 <div className="container-fluid mb-3">
                     {Array.isArray(data2) &&
-                        data2.map((data, index) => (
+                        data2.map((data, idx) => (
                             <div className="d-flex flex-column justify-content-center align-items-center"
-                                style={{ height: "100%" }} key={index.id}>
+                                style={{ height: "100%" }} key={data?.id ?? idx}>
 
                                 <img
                                     src={secureUrl(data.image)}
                                     alt={data.title}
                                     className="d-block"
-                                    width="auto"
-                                    height="600"
-                                    loading="eager"   // 🔥 important
-                                    // fetchpriority="high"
+                                    loading="eager"
                                     style={{
+                                        width: "100%",
+                                        height: "auto",
                                         objectFit: "cover",
                                         borderRadius: "22px"
                                     }}
@@ -628,8 +627,8 @@ const Home = () => {
                                         </div>
 
                                         {/* School Type Buttons */}
-                                        {schoolTypes.length > 0 ? schoolTypes.map((type, i) => (
-                                            <div className="col-md-1" key={i}>
+                                        {schoolTypes.length > 0 ? schoolTypes.map((type) => (
+                                            <div className="col-md-1" key={type}>
                                                 <button
                                                     onClick={() => setSelectedSchoolType(type)}
                                                     className="btn text-white w-100 d-flex justify-content-center align-items-center text-center"
@@ -774,9 +773,9 @@ const Home = () => {
 
 
                                             {/* School Type Buttons */}
-                                            {schoolTypes.map((type, i) => (
+                                            {schoolTypes.map((type) => (
                                                 <button
-                                                    key={i}
+                                                    key={type}
                                                     onClick={() => setSelectedSchoolType(type)}
                                                     className="btn text-white flex-shrink-0"
                                                     style={{
@@ -898,7 +897,7 @@ const Home = () => {
                 </div>
             </div >
             {/* Ideology Section */}
-            <div div className="container-fluid" >
+            <div className="container-fluid">
                 <div className="row align-items-center">
                     {/* LEFT TEXT SECTION */}
                     <div className="col-md-8">
@@ -909,7 +908,7 @@ const Home = () => {
                         <div className="d-none d-md-block">
                             <div className="row g-4 justify-content-center">
                                 {ideologyData.map((item, index) => (
-                                    <div className="col-md-5 d-flex justify-content-center" key={index.id}>
+                                    <div className="col-md-5 d-flex justify-content-center" key={index}>
                                         <div
                                             className="card_Ideology"
                                             style={{ width: "100%", maxWidth: "470px" }}
@@ -931,7 +930,7 @@ const Home = () => {
                         <div className="d-block d-md-none">
                             <div className="row g-3 justify-content-center">
                                 {ideologyData.map((item, index) => (
-                                    <div className="col-6" key={index.id}>
+                                    <div className="col-6" key={index}>
                                         <div className="mobile-card">
                                             <div className="content-box">
                                                 <h1
@@ -989,7 +988,7 @@ const Home = () => {
                 </div>
             </div>
             {/* Latest News Section */}
-            <div div className='container' >
+            <div className='container'>
                 <div className='row'>
                     <div className='col-md-12 justify-content-center text-center'>
                         <h1>લેટેસ્ટ ન્યૂઝ</h1>
@@ -1035,10 +1034,13 @@ const Home = () => {
                                                     <a
                                                         href={`/latest/${data.id}`}
                                                         className="text-decoration-none w-100"
-                                                        aria-label={`Learn more about article ${data.id}`}
+                                                        aria-label={`Read article: ${data.title}`}
                                                     >
                                                         <div className="d-flex align-items-center justify-content-between px-2 py-3">
-                                                            <span className="text-dark fw-semibold">Learn More</span>
+                                                            <span className="text-dark fw-semibold">
+                                                                Learn More
+                                                                <span className="visually-hidden"> about {data.title}</span>
+                                                            </span>
                                                             <FaArrowRightLong className="text-dark" aria-hidden="true" />
                                                         </div>
                                                     </a>
@@ -1097,9 +1099,12 @@ const Home = () => {
                                                         <a
                                                             href={`/latest/${data.id}`}
                                                             className="learn_BTn1 text-decoration-none"
-                                                            aria-label={`Learn more about ${data.id}`}
+                                                            aria-label={`Read article: ${data.title}`}
                                                         >
-                                                            Learn More <FaArrowRightLong />
+                                                            <span>
+                                                                Learn More <FaArrowRightLong aria-hidden="true" />
+                                                                <span className="visually-hidden"> about {data.title}</span>
+                                                            </span>
                                                         </a>
 
                                                     </div>
