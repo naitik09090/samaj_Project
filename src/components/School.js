@@ -22,6 +22,7 @@ const ImageSlider = () => {
     const [data1, setData1] = useState([]);
     const [selectedData, setSelectedData] = useState([]);
     const [index, setIndex] = useState(0);
+    const [filteredData, setFilteredData] = useState([]);
     // const [autoSlide, setAutoSlide] = useState(true);
     // const sliderRef = useRef(null);
     const carouselRef = useRef(null);
@@ -29,6 +30,28 @@ const ImageSlider = () => {
     const [school, setSchool] = useState(null);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     const secureUrl = (url) => url?.replace(/^http:\/\//i, "https://");
+    const [schoolTypes, setSchoolTypes] = useState([]);
+    const [selectedSchoolType, setSelectedSchoolType] = useState(null);
+    const [activeDesktopIndex, setActiveDesktopIndex] = useState(0);
+    const [activeMobileIndex, setActiveMobileIndex] = useState(0);
+    const [searchTerm, setSearchTerm] = useState("");
+    // Mapping of API school types to Gujarati display names
+    const schoolTypeLabels = {
+        "Ahir Boarding": "આહીર બોર્ડિંગ",
+        "Ahir Charitable Trust": "આહિર ચેરિટેબલ ટ્રસ્ટ",
+        "Ahir Samaj": "આહીર સમાજ વાડી",
+        "KANYA CHHATRALAYA": "કન્યા છત્રાલય",
+        "Kanya Chhatra Alaya": "કન્યા છત્રાલય",
+        "CHHATRALAYA": "છત્રાલય",
+        "Chhatra Alaya": "છત્રાલય",
+        "Ahir Kalyan Mandal": "આહિર કેળવણી મંડળ",
+    };
+
+    // const getSchoolLabel = (type) => {
+    //     if (!type) return "";
+    //     const foundKey = Object.keys(schoolTypeLabels).find(k => k.toLowerCase() === String(type).toLowerCase());
+    //     return schoolTypeLabels[foundKey] || type;
+    // };
 
     const URL = "https://ahirsamajbe-gnapdbcbbzdcabc2.centralindia-01.azurewebsites.net";
 
@@ -104,9 +127,51 @@ const ImageSlider = () => {
     useEffect(() => {
         fetch(`${URL}/api/v1/schools/schools/`)
             .then((res) => res.json())
-            .then((json) => setData1(json))
+            .then((json) => {
+                setData1(json);
+                setFilteredData(json);
+                // extract unique school_type values for filter buttons
+                const types = [...new Set(json.data?.map(s => s.school_type).filter(Boolean))].sort();
+                setSchoolTypes(types);
+            })
             .catch((err) => console.error(err));
     }, []);
+
+    useEffect(() => {
+        const all = data1?.data || [];
+        if (selectedSchoolType == null) {
+            setFilteredData({ ...data1, data: all });
+            return;
+        }
+        const filtered = all.filter(item => item.school_type === selectedSchoolType);
+        setFilteredData({ ...data1, data: filtered });
+    }, [selectedSchoolType, data1]);
+
+    // Search API call with school_type and search term
+    useEffect(() => {
+        if (!searchTerm.trim()) {
+            // If no search term, use the type filter logic
+            const all = data1?.data || [];
+            if (selectedSchoolType == null) {
+                setFilteredData({ ...data1, data: all });
+            } else {
+                const filtered = all.filter(item => item.school_type === selectedSchoolType);
+                setFilteredData({ ...data1, data: filtered });
+            }
+            return;
+        }
+
+        // Call search API with school_type parameter
+        let searchUrl = `${URL}/api/v1/schools/schools/?search=${encodeURIComponent(searchTerm)}`;
+        if (selectedSchoolType != null) {
+            searchUrl += `&school_type=${encodeURIComponent(selectedSchoolType)}`;
+        }
+
+        fetch(searchUrl)
+            .then(res => res.json())
+            .then(json => setFilteredData(json))
+            .catch(err => console.error("Search error:", err));
+    }, [searchTerm, selectedSchoolType]);
 
     // 1) Fetch single school by id (safer than fetching whole list and .find)
     // useEffect(() => {
@@ -208,9 +273,70 @@ const ImageSlider = () => {
     //     return result;
     // };
 
-    const cardChunks = chunkArray1(data1.data || [], 5);
-    const mobileChunks = chunkArray1(data1.data || [], 2);
+    // compute filtered list (null = show all)
+    // Filter schools by selected school type - if null, show all
+    const filteredSchools = selectedSchoolType
+        ? data1.data?.filter(school => school.school_type === selectedSchoolType) || []
+        : data1.data || [];
 
+    // sliding windows helper (wrap-around) — we will render windows that shift by 1
+    // const makeSlidingWindows = (arr = [], size = 5) => {
+    //     const items = Array.isArray(arr) ? arr : [];
+    //     if (!items.length) return [];
+    //     const ext = items.concat(items.slice(0, Math.max(0, size - 1)));
+    //     const windows = [];
+    //     for (let i = 0; i < items.length; i++) {
+    //         windows.push(ext.slice(i, i + size));
+    //     }
+    //     return windows;
+    // };
+
+    // sliding windows helper (shift by 1). If items <= window size, return single window without duplication.
+    const makeSlidingWindows = (arr = [], size = 5) => {
+        const items = Array.isArray(arr) ? arr : [];
+        if (!items.length) return [];
+        if (items.length <= size) return [items.slice()];
+        const ext = items.concat(items.slice(0, Math.max(0, size - 1)));
+        const windows = [];
+        for (let i = 0; i < items.length; i++) {
+            windows.push(ext.slice(i, i + size));
+        }
+        return windows;
+    };
+
+    const itemsArr = filteredData?.data || [];
+    const cardWindowsDesktop = makeSlidingWindows(itemsArr, 5);
+    const cardWindowsMobile = makeSlidingWindows(itemsArr, 4);
+
+    // Handlers for desktop and mobile carousel navigation (move by one card)
+    const handleNextDesktop = () => {
+        if (!cardWindowsDesktop.length) return;
+        setActiveDesktopIndex(i => (i + 1) % cardWindowsDesktop.length);
+    };
+
+    const handlePrevDesktop = () => {
+        if (!cardWindowsDesktop.length) return;
+        setActiveDesktopIndex(i => (i - 1 + cardWindowsDesktop.length) % cardWindowsDesktop.length);
+    };
+
+    const handleNextMobile = () => {
+        if (!cardWindowsMobile.length) return;
+        setActiveMobileIndex(i => (i + 1) % cardWindowsMobile.length);
+    };
+
+    const handlePrevMobile = () => {
+        if (!cardWindowsMobile.length) return;
+        setActiveMobileIndex(i => (i - 1 + cardWindowsMobile.length) % cardWindowsMobile.length);
+    };
+
+    // Reset active indexes when data length changes
+    useEffect(() => {
+        if (activeDesktopIndex >= cardWindowsDesktop.length) setActiveDesktopIndex(0);
+    }, [cardWindowsDesktop.length]);
+
+    useEffect(() => {
+        if (activeMobileIndex >= cardWindowsMobile.length) setActiveMobileIndex(0);
+    }, [cardWindowsMobile.length]);
 
     return (
         <div className="container-fluid w-100">
@@ -419,10 +545,10 @@ const ImageSlider = () => {
             {/* MOBILE — visible on xs & sm */}
             <div className="d-block d-md-none">
                 <div className="container-fluid">
-                    <div className="row gx-2 gy-3 justify-content-center">
+                    <div className="row gx-2 gy-4 justify-content-center">
                         {[{ img: wifi, title: 'Unlimited Wifi' }, { img: food, title: 'Best Food' }, { img: security1, title: 'Best Security' }, { img: library, title: 'Library' }].map((card, idx) => (
                             <div className="col-6" key={idx}>
-                                <div className="text-center p-3 mb-5 icon_11 border rounded-3">
+                                <div className="text-center p-3 mb-5 icon_111 border rounded-3">
                                     <div className="icon-circle mx-auto">
                                         <img
                                             src={card.img}
@@ -572,87 +698,182 @@ const ImageSlider = () => {
                         <div className='py-2'>
                             <h1 className='text-center text-white'>આપણી સંસ્થા</h1>
                         </div>
-                        {/* DESKTOP CAROUSEL */}
+                        {/* Desktop View */}
                         <div className="d-none d-md-block">
-                            {cardChunks.map((chunk, index) => (
-                                <div key={`chunk-${index.id}`} className={`carousel-item ${index === 0 ? "active" : ""}`}>
-                                    <div className="row justify-content-center">
-                                        {chunk.map((data) => (
-                                            <div key={data.id} className="col-md-2 col-sm-6 col-6 p-3">
-                                                <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
-                                                    <div
-                                                        className="shadow-sm h-100 d-flex flex-column justify-content-between align-items-center text-center"
-                                                        style={{
-                                                            width: "100%",
-                                                            height: "100%",
-                                                            borderRadius: "15px",
-                                                            padding: "10px",
-                                                            backgroundColor: "#fff",
-                                                        }}
-                                                    >
-                                                        {data.logo ? (
-                                                            <img
-                                                                src={secureUrl(data.logo)}
-                                                                className="rounded-1 mb-1"
-                                                                alt={data.name || "Ahir Samaj"}
-                                                                style={{ width: "100%", height: 180, objectFit: "contain" }}
-                                                            />
-                                                        ) : (
-                                                            <div
-                                                                className="rounded-1 h-100 mb-1 d-flex align-items-center justify-content-center"
-                                                                style={{
-                                                                    width: "100%",
-                                                                    height: "100%",
-                                                                    background: "#ffffff",
-                                                                    color: "#067C71",
-                                                                    fontWeight: 700,
-                                                                    fontSize: "20px",
-                                                                    borderRadius: "8px"
-                                                                }}
-                                                            >
-                                                                Ahir Samaj
-                                                            </div>
-                                                        )}
-                                                        <span className="fw-bold text-dark text-center" style={{ fontSize: 14 }}>{data.name}</span>
-                                                    </div>
-                                                </Link>
+                            {cardWindowsDesktop.length > 0 ? (
+                                cardWindowsDesktop.map((chunk, index) => (
+                                    <div key={index} className={`carousel-item ${index === activeDesktopIndex ? "active" : ""}`}>
+                                        <div className="col-md-12 d-flex justify-content-center align-items-center mb-3 flex-wrap gap-2">
+                                            <div className="col-md-2"></div>
+
+                                            {/* All Button */}
+                                            <div className="col-md-1 py-2" key="all">
+                                                <button
+                                                    onClick={() => setSelectedSchoolType(null)}
+                                                    className="btn text-white w-100 d-flex justify-content-center align-items-center text-center"
+                                                    style={{
+                                                        backgroundColor: selectedSchoolType === null ? "#EFA325" : "#038176",
+                                                        border: `2px solid ${selectedSchoolType === null ? "#EFA325" : "#ffffff"}`,
+                                                        borderRadius: "22px",
+                                                        height: "60px",
+                                                        whiteSpace: "normal",
+                                                        fontSize: "14px",
+                                                        gap: "15px",
+                                                        transition: "all 0.3s ease",
+                                                        boxShadow: selectedSchoolType === null ? "0 0 8px rgba(6, 124, 113, 0.5)" : "none",
+                                                        fontWeight: selectedSchoolType === null ? "bold" : "normal",
+                                                    }}
+                                                >
+                                                    ઓલ સ્કૂલ
+                                                </button>
                                             </div>
-                                        ))}
-                                        <div className="d-flex justify-content-center align-items-center gap-2 mt-2">
 
-                                            <button
-                                                className="btn btn-light rounded shadow"
-                                                type="button"
-                                                data-bs-target="#mobileCardCarousel"
-                                                data-bs-slide="prev"
-                                            >
-                                                <GrFormPrevious />
-                                            </button>
+                                            {/* School Type Buttons */}
+                                            {schoolTypes.length > 0 ? schoolTypes.map((type, i) => (
+                                                <div className="col-md-1" key={i}>
+                                                    <button
+                                                        onClick={() => setSelectedSchoolType(type)}
+                                                        className="btn text-white w-100 d-flex justify-content-center align-items-center text-center"
+                                                        style={{
+                                                            backgroundColor: selectedSchoolType === type ? "#EFA325" : "#038176",
+                                                            border: `2px solid ${selectedSchoolType === type ? "#EFA325" : "#ffffff"}`,
+                                                            borderRadius: "22px",
+                                                            height: "60px",
+                                                            whiteSpace: "normal",
+                                                            fontSize: "14px",
+                                                            gap: "15px",
+                                                            transition: "all 0.3s ease",
+                                                            boxShadow: selectedSchoolType === type ? "0 0 8px rgba(6, 124, 113, 0.5)" : "none",
+                                                            fontWeight: selectedSchoolType === type ? "bold" : "normal",
+                                                        }}
+                                                    >{schoolTypeLabels[type] || type}
+                                                    </button>
+                                                </div>
+                                            )) : null}
 
-                                            <button
-                                                className="btn btn-light rounded shadow"
-                                                type="button"
-                                                data-bs-target="#mobileCardCarousel"
-                                                data-bs-slide="next"
-                                            >
-                                                <MdOutlineNavigateNext />
-                                            </button>
+                                            <div className="col-md-2"></div>
+                                        </div>
+                                        <div className="row justify-content-center">
+                                            {chunk.map((data) => (
+                                                <div key={data.id} className="col-md-2 p-1 mb-5">
+                                                    <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
+                                                        <div
+                                                            className="shadow-sm h-100 d-flex flex-column justify-content-between align-items-center text-center"
+                                                            style={{
+                                                                borderRadius: "15px",
+                                                                padding: "20px",
+                                                                backgroundColor: "#fff",
+                                                            }}
+                                                        >
+                                                            {data.logo ? (
+                                                                <img
+                                                                    src={secureUrl(data.logo)}
+                                                                    alt="logo School"
+                                                                    className="rounded-1 mb-3"
+                                                                    style={{ height: "150px", objectFit: "contain" }}
+                                                                    loading="lazy"
+                                                                />
+                                                            ) : (
+                                                                <div
+                                                                    className="rounded-1 d-flex align-items-center justify-content-center"
+                                                                    style={{
+                                                                        width: "100%",
+                                                                        height: "150px",
+                                                                        background: "#ffffff",
+                                                                        color: "#067C71",
+                                                                        fontWeight: 700,
+                                                                        fontSize: "30px",
+                                                                        borderRadius: "8px",
+                                                                    }}
+                                                                >
+                                                                    Ahir Samaj
+                                                                </div>
+                                                            )}
+                                                            <span className="fw-bold text-dark">{data.name}</span>
+                                                        </div>
+                                                    </Link>
+                                                </div>
+                                            ))}
+                                        </div>
 
+                                        <div className="row">
+                                            <div className="col-12 d-flex justify-content-center">
+                                                <div className="d-flex justify-content-center align-items-center gap-2 my-2">
+                                                    <button
+                                                        className="btn btn-light rounded shadow"
+                                                        type="button"
+                                                        onClick={handlePrevDesktop}
+                                                        aria-label="Previous slide"
+                                                    >
+                                                        <GrFormPrevious aria-hidden="true" />
+                                                    </button>
+                                                    <button
+                                                        className="btn btn-light rounded shadow"
+                                                        type="button"
+                                                        onClick={handleNextDesktop}
+                                                        aria-label="Next slide"
+                                                    >
+                                                        <MdOutlineNavigateNext aria-hidden="true" />
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                ))
+                            ) : (
+                                <div className="carousel-item active text-center py-5">
+                                    <p>No results found.</p>
                                 </div>
-                            ))}
+                            )}
                         </div>
 
-                        {/* MOBILE GRID */}
-                        <div className="d-block d-md-none w-100">
-                            <div id="mobileCardCarousel" className="carousel slide" data-bs-interval="4000">
+
+                        {/* Mobile View */}
+                        <div className="d-block d-md-none">
+                            <div id="mobileSchoolCarousel" className="carousel slide" data-bs-interval="4000">
                                 <div className="carousel-inner">
+                                    {cardWindowsMobile.map((pair, idx) => (
+                                        <div key={idx} className={`carousel-item ${idx === activeMobileIndex ? "active" : ""}`}>
+                                            <div className="d-flex d-md-none py-3 overflow-auto gap-2 px-1" style={{ scrollbarWidth: "none" }}>
 
-                                    {mobileChunks.map((pair, idx) => (
-                                        <div key={idx.id} className={`carousel-item ${idx === 0 ? "active" : ""}`}>
+                                                {/* All Button */}
+                                                <button
+                                                    onClick={() => setSelectedSchoolType(null)}
+                                                    className="btn text-white flex-shrink-0"
+                                                    style={{
+                                                        minWidth: "130px",
+                                                        height: "50px",
+                                                        backgroundColor: selectedSchoolType === null ? "#EFA325" : "#038176",
+                                                        border: `2px solid ${selectedSchoolType === null ? "#EFA325" : "#ffffff"}`,
+                                                        borderRadius: "22px",
+                                                        fontSize: "14px",
+                                                        fontWeight: selectedSchoolType === null ? "bold" : "normal",
+                                                    }}
+                                                >
+                                                    ઓલ સ્કૂલ
+                                                </button>
+
+                                                {/* School Type Buttons */}
+                                                {schoolTypes.map((type, i) => (
+                                                    <button
+                                                        key={i}
+                                                        onClick={() => setSelectedSchoolType(type)}
+                                                        className="btn text-white flex-shrink-0"
+                                                        style={{
+                                                            minWidth: "130px",
+                                                            height: "50px",
+                                                            backgroundColor: selectedSchoolType === type ? "#EFA325" : "#038176",
+                                                            border: `2px solid ${selectedSchoolType === type ? "#EFA325" : "#ffffff"}`,
+                                                            borderRadius: "22px",
+                                                            fontSize: "14px",
+                                                            fontWeight: selectedSchoolType === type ? "bold" : "normal",
+                                                        }}
+                                                    >
+                                                        {schoolTypeLabels[type] || type}
+                                                    </button>
+                                                ))}
+                                            </div>
                                             <div className="row gx-3 gy-2 p-2">
-
                                                 {pair.map((data) => (
                                                     <div key={data.id} className="col-6 p-2">
                                                         <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
@@ -662,44 +883,44 @@ const ImageSlider = () => {
                                                                     borderRadius: "12px",
                                                                     padding: "10px",
                                                                     backgroundColor: "#fff",
-                                                                    height: "180px",
-                                                                    justifyContent: "space-between"
+                                                                    height: "200px",
+                                                                    justifyContent: "space-between",
                                                                 }}
                                                             >
-
-
-                                                                {/* Image Box (Fixed Size) */}
                                                                 <div
                                                                     style={{
                                                                         width: "100%",
-                                                                        height: "100px",        // 🔥 FIX: equal image box height
+                                                                        height: "100px",
                                                                         display: "flex",
                                                                         alignItems: "center",
-                                                                        justifyContent: "center"
+                                                                        justifyContent: "center",
                                                                     }}
                                                                 >
                                                                     {data.logo ? (
                                                                         <img
                                                                             src={secureUrl(data.logo)}
-                                                                            className="mb-2"
-                                                                            alt="Ahir Samaj"
+                                                                            alt={`${data.name} logo`}
+                                                                            width="120"
+                                                                            height="120"
+                                                                            loading="lazy"
                                                                             style={{
-                                                                                width: "100%",
-                                                                                height: "120px",
                                                                                 objectFit: "contain",
+                                                                                display: "block",
                                                                             }}
                                                                         />
                                                                     ) : (
                                                                         <div
-                                                                            className="d-flex align-items-center justify-content-center mb-2"
                                                                             style={{
                                                                                 width: "100%",
-                                                                                height: "100px",
+                                                                                height: "120px",
                                                                                 background: "#ffffff",
                                                                                 color: "#067C71",
                                                                                 fontWeight: 700,
-                                                                                fontSize: "22px",
+                                                                                fontSize: "18px",
                                                                                 borderRadius: "8px",
+                                                                                display: "flex",
+                                                                                alignItems: "center",
+                                                                                justifyContent: "center",
                                                                             }}
                                                                         >
                                                                             Ahir Samaj
@@ -707,49 +928,51 @@ const ImageSlider = () => {
                                                                     )}
                                                                 </div>
 
-                                                                <span className="fw-bold text-dark" style={{ fontSize: "12px" }}>
+                                                                <span
+                                                                    className="fw-bold text-dark small"
+                                                                    style={{
+                                                                        fontSize: "12px",
+                                                                        minHeight: "32px",
+                                                                        display: "flex",
+                                                                        alignItems: "center",
+                                                                    }}
+                                                                >
                                                                     {data.name}
                                                                 </span>
                                                             </div>
                                                         </Link>
                                                     </div>
                                                 ))}
-
-                                                {/* If odd number → keep spacing */}
-                                                {pair.length === 1 && <div className="col-6 p-2"></div>}
+                                                {pair.length === 1 && <div className="col-6"></div>}
                                             </div>
                                         </div>
                                     ))}
-
                                 </div>
 
-                                {/* Carousel Controls */}
-                                <div className="d-flex justify-content-center align-items-center gap-2 mt-2">
-
+                                {/* Navigation Buttons (Inside Mobile Carousel) */}
+                                <div className="d-flex justify-content-center align-items-center gap-2 mt-3">
+                                    {/* Previous */}
                                     <button
                                         className="btn btn-light rounded shadow"
                                         type="button"
-                                        data-bs-target="#mobileCardCarousel"
-                                        data-bs-slide="prev"
+                                        onClick={handlePrevMobile}
+                                        aria-label="Previous slide"
                                     >
-                                        <GrFormPrevious />
+                                        <GrFormPrevious aria-hidden="true" />
                                     </button>
 
+                                    {/* Next */}
                                     <button
                                         className="btn btn-light rounded shadow"
                                         type="button"
-                                        data-bs-target="#mobileCardCarousel"
-                                        data-bs-slide="next"
+                                        onClick={handleNextMobile}
+                                        aria-label="Next slide"
                                     >
-                                        <MdOutlineNavigateNext />
+                                        <MdOutlineNavigateNext aria-hidden="true" />
                                     </button>
-
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
                 </div>
 

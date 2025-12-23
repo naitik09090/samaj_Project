@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 // import { useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Kano from '../images/Kano.webp'
 import { PiBuildingsBold } from "react-icons/pi";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
 import { FaArrowRightLong } from "react-icons/fa6";
 import calendar from "../images/calendar.png"
+// import Carousel from "bootstrap/js/dist/carousel";
+
+
 
 const Home = () => {
     const [data1, setData1] = useState([]),
@@ -15,18 +18,56 @@ const Home = () => {
         // carouselRef = useRef(null),
         [index, setIndex] = useState(0),
         [data4, setData4] = useState([]),
+        [schoolTypes, setSchoolTypes] = useState([]),
+        [selectedSchoolType, setSelectedSchoolType] = useState(null),
         { id } = useParams();
+    const [activeDesktopIndex, setActiveDesktopIndex] = useState(0);
+    const [activeMobileIndex, setActiveMobileIndex] = useState(0);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filteredData1, setFilteredData1] = useState([]);
+    const [school, setSchool] = useState(null);
+    const [selectedOption, setSelectedOption] = useState("All");
+    const [subOption, setSubOption] = useState("");
+
+    const filteredData = slock?.data?.filter(t => t.id >= 1 && t.id <= 4) ?? [];
 
     // 👉 NEXT
     const handleNext = () => {
         setIndex(e => (e + 1) % filteredData.length)
     };
 
-    const filteredData = slock?.data?.filter(t => t.id >= 1 && t.id <= 4) ?? [];
     // 👉 PREV
     const handlePrev = () => {
         setIndex(e => 0 === e ? filteredData.length - 1 : e - 1)
     };
+
+    // 👉 AUTO-ROTATE EVERY 4 SECONDS
+    useEffect(() => {
+        if (filteredData.length === 0) return;
+        const interval = setInterval(() => {
+            setIndex(e => (e + 1) % filteredData.length);
+        }, 4000);
+        return () => clearInterval(interval);
+    }, [filteredData.length]);
+    // const slideCarousel = (direction) => {
+    //     const isMobile = window.innerWidth < 768;
+    //     const carouselId = isMobile
+    //         ? "mobileSchoolCarousel"
+    //         : "desktopSchoolCarousel";
+
+    //     const el = document.getElementById(carouselId);
+    //     if (!el) return;
+
+    //     const carousel = Carousel.getOrCreateInstance(el, {
+    //         interval: false,
+    //         ride: false,
+    //     });
+
+    //     direction === "next" ? carousel.next() : carousel.prev();
+    // };
+
+
+
 
     const URL = "https://ahirsamajbe-gnapdbcbbzdcabc2.centralindia-01.azurewebsites.net";
 
@@ -98,9 +139,85 @@ const Home = () => {
     useEffect(() => {
         fetch(`${URL}/api/v1/schools/schools/`)
             .then((res) => res.json())
-            .then((json) => setData1(json))
+            .then((json) => {
+                setData1(json);
+                setFilteredData1(json);
+                // Extract unique school types from the data
+                const types = [...new Set(json.data?.map(school => school.school_type).filter(Boolean))].sort();
+                setSchoolTypes(types);
+            })
             .catch((err) => console.error(err));
     }, []);
+    useEffect(() => {
+        const all = data1?.data || [];
+        if (selectedSchoolType == null) {
+            setFilteredData1({ ...data1, data: all });
+            return;
+        }
+        const filtered = all.filter(item => item.school_type === selectedSchoolType);
+        setFilteredData1({ ...data1, data: filtered });
+    }, [selectedSchoolType, data1]);
+
+    // Search API call with school_type and search term
+    useEffect(() => {
+        if (!searchTerm.trim()) {
+            // If no search term, use the type filter logic
+            const all = data1?.data || [];
+            if (selectedSchoolType == null) {
+                setFilteredData1({ ...data1, data: all });
+            } else {
+                const filtered = all.filter(item => item.school_type === selectedSchoolType);
+                setFilteredData1({ ...data1, data: filtered });
+            }
+            return;
+        }
+
+        // Call search API with school_type parameter
+        let searchUrl = `${URL}/api/v1/schools/schools/?search=${encodeURIComponent(searchTerm)}`;
+        if (selectedSchoolType != null) {
+            searchUrl += `&school_type=${encodeURIComponent(selectedSchoolType)}`;
+        }
+
+        fetch(searchUrl)
+            .then(res => res.json())
+            .then(json => setFilteredData1(json))
+            .catch(err => console.error("Search error:", err));
+    }, [searchTerm, selectedSchoolType]);
+
+    // Fetch single school
+    useEffect(() => {
+        if (!id) {
+            setSchool(null);
+            console.log(school);
+            return;
+        }
+        fetch(`${URL}/api/v1/schools/schools/${id}`)
+            .then((res) => res.json())
+            .then((result) => setSchool(result?.data ?? result))
+            .catch((err) => console.error("Error fetching school:", err));
+    }, [id]);
+
+    // Extract data array (your API returns { data: [...] })
+
+    useEffect(() => {
+        const allData = data1?.data || [];
+        const all = allData;
+
+        if (selectedOption === "All") {
+            setFilteredData1({ ...data1, data: all });
+            return;
+        }
+
+        if (!subOption) return; // wait until user selects sub option
+
+        console.log(setSubOption);
+
+        const filtered = all.filter(
+            (item) => item[selectedOption] === subOption
+        );
+
+        setFilteredData1({ ...data1, data: filtered });
+    }, [selectedOption, subOption, data1]);
 
     // const secureUrl = (url) => url?.replace(/^http:\/\//i, "https://");
     // const secureUrl = e => e ? e.replace(/^http:\/\//i, ".webp") : "";
@@ -108,26 +225,83 @@ const Home = () => {
         url.startsWith("http://")
             ? url.replace("http://", "https://")
             : url;
+    // Mapping of API school types to Gujarati display names
+    const schoolTypeLabels = {
+        "Ahir Boarding": "આહીર બોર્ડિંગ",
+        "Ahir Charitable Trust": "આહિર ચેરિટેબલ ટ્રસ્ટ",
+        "KANYA CHHATRALAYA": "કન્યા છત્રાલય",
+        "CHHATRALAYA": "છત્રાલય",
+        "Ahir Kalyan Mandal": "આહિર કેળવણી મંડળ",
+        "Ahir Samaj": "આહીર સમાજ વાડી",
+    };
 
     // const handleClick = (data) => {
     //     navigate("/news", { state: { newsData: data } }); // ✅ state pass
     // };
 
-    // Chunk data into sets of 3
-    const chunkArray1 = (e, r) => {
-        let t = [];
-        for (let l = 0; l < e.length; l += r)
-            t.push(e.slice(l, l + r));
-        return t
+    // sliding windows helper (wrap-around) — we will render windows that shift by 1
+    // const makeSlidingWindows = (arr = [], size = 5) => {
+    //     const items = Array.isArray(arr) ? arr : [];
+    //     if (!items.length) return [];
+    //     const ext = items.concat(items.slice(0, Math.max(0, size - 1)));
+    //     const windows = [];
+    //     for (let i = 0; i < items.length; i++) {
+    //         windows.push(ext.slice(i, i + size));
+    //     }
+    //     return windows;
+    // };
+
+    // sliding windows helper (shift by 1). If items <= window size, return single window without duplication.
+    const makeSlidingWindows = (arr = [], size = 5) => {
+        const items = Array.isArray(arr) ? arr : [];
+        if (!items.length) return [];
+        if (items.length <= size) return [items.slice()];
+        const ext = items.concat(items.slice(0, Math.max(0, size - 1)));
+        const windows = [];
+        for (let i = 0; i < items.length; i++) {
+            windows.push(ext.slice(i, i + size));
+        }
+        return windows;
     };
 
-    const cardChunks = chunkArray1(data1.data || [], 5),
-        cardChunks1 = chunkArray1(data1.data || [], 2);
+    const itemsArr = filteredData1?.data || [];
+    const cardWindowsDesktop = makeSlidingWindows(itemsArr, 5);
+    const cardWindowsMobile = makeSlidingWindows(itemsArr, 4);
+
+    // Handlers for desktop and mobile carousel navigation (move by one card)
+    const handleNextDesktop = () => {
+        if (!cardWindowsDesktop.length) return;
+        setActiveDesktopIndex(i => (i + 1) % cardWindowsDesktop.length);
+    };
+
+    const handlePrevDesktop = () => {
+        if (!cardWindowsDesktop.length) return;
+        setActiveDesktopIndex(i => (i - 1 + cardWindowsDesktop.length) % cardWindowsDesktop.length);
+    };
+
+    const handleNextMobile = () => {
+        if (!cardWindowsMobile.length) return;
+        setActiveMobileIndex(i => (i + 1) % cardWindowsMobile.length);
+    };
+
+    const handlePrevMobile = () => {
+        if (!cardWindowsMobile.length) return;
+        setActiveMobileIndex(i => (i - 1 + cardWindowsMobile.length) % cardWindowsMobile.length);
+    };
+
+    // Reset active indexes when data length changes
+    useEffect(() => {
+        if (activeDesktopIndex >= cardWindowsDesktop.length) setActiveDesktopIndex(0);
+    }, [cardWindowsDesktop.length]);
+
+    useEffect(() => {
+        if (activeMobileIndex >= cardWindowsMobile.length) setActiveMobileIndex(0);
+    }, [cardWindowsMobile.length]);
 
     // apno_Etiyas no data
     const ideologyData = [
         {
-            title: "Unity (એકતા અને ભાઈચારો)",
+            title: "Unity <br /> (એકતા અને ભાઈચારો)",
             text: "We believe every Ahir, whether from any village or region, is part of one family. Our goal is to bring every member of the community on a single platform where we stay connected, informed, and supportive of each other."
         },
         // {
@@ -135,15 +309,15 @@ const Home = () => {
         //     text: "Education is the foundation of progress. Our ideology promotes equal access to quality education for every Ahir student by connecting them with schools, hostels, scholarships, guidance, and opportunities."
         // },
         {
-            title: "Preserving Our History & Culture (ઇતિહાસ અને સંસ્કૃતિને સાચવવું)",
+            title: "Preserving Our History & Culture <br /> (ઇતિહાસ અને સંસ્કૃતિને સાચવવું)",
             text: "We take pride in our rich heritage — from Shri Krishna’s lineage to our traditions of courage and hard work. This platform helps preserve and share our history, surnames, values, and cultural identity with the next generation."
         },
         {
-            title: "Youth Empowerment (યુવા સશક્તિકરણ)",
+            title: "Youth Empowerment <br /> (યુવા સશક્તિકરણ)",
             text: "Our youth are the future leaders of Ahir Samaj. We encourage skill development, awareness, digital education, and active participation in community events."
         },
         {
-            title: "Growth Through Digital Connectivity (ડિજિટલ જોડાણ દ્વારા વૃદ્ધિ)",
+            title: "Growth Through Digital Connectivity <br /> (ડિજિટલ જોડાણ દ્વારા વૃદ્ધિ)",
             text: "The world is moving fast — information must be accessible. Our ideology is to bring the entire Samaj online so that every child, parent, and elder can access important information anytime, anywhere."
         }
     ];
@@ -220,8 +394,58 @@ const Home = () => {
                     <div className="d-none d-md-block py-5">
                         {filteredData.map((data, i) =>
                             i === index && (
-                                <div key={data.id} className="row justify-content-center align-items-start g-3">
-                                    <div className="col-12 col-md-3 img_1_Main text-center">
+                                <div key={data.id} className="row justify-content-center align-items-start g-3" data-bs-interval="2000">
+                                    <div className='col-md-10'>
+                                        <div className='row'>
+                                            <div className='col-md-12 slokaBox_BG col-12 d-flex'>
+                                                <div className='col-md-3 d-flex justify-content-start align-items-start'>
+                                                    <div className="imgBox">
+                                                        <img
+                                                            src={data.sloka_image}
+                                                            alt={`Krishna ${data.id}`}
+                                                            loading="lazy"
+                                                            className="krishna-img"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                {/* <div className='col-md-1'></div> */}
+                                                <div className="col-md-9">
+                                                    <div className="slokaBox text-white p-5">
+                                                        <b className="b_Tages mb-2">
+                                                            (अध्याय {data.chapter}, श्लोक {data.verse})
+                                                        </b>
+
+                                                        <h2 className="h2_Tages mb-2">{data.sloka_sans}</h2>
+
+                                                        <b className="b_Tages mb-1">:: अनुवाद ::</b>
+
+                                                        <div className="contentArea">
+                                                            <p className="p_Tages mb-2">{data.sloka_guj}</p>
+                                                            <p className="p_Tages mb-0">{data.sloka_eng}</p>
+                                                        </div>
+
+                                                        <hr />
+
+                                                        <div className="d-flex justify-content-between align-items-center">
+                                                            <p className="p_Tages mb-0">
+                                                                {data.sloka_origin} — Chapter {data.chapter}, Verse {data.verse}
+                                                            </p>
+
+                                                            <div className='BtnSlock'>
+                                                                <button className="btn NandRBtn me-2" onClick={handlePrev}>
+                                                                    <GrFormPrevious />
+                                                                </button>
+                                                                <button className="btn NandRBtn" onClick={handleNext}>
+                                                                    <MdOutlineNavigateNext />
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/* <div className="col-12 col-md-3 col-lg-3 img_1_Main text-center">
                                         <img
                                             src={data.sloka_image}
                                             className="img-fluid krishna-img"
@@ -232,7 +456,7 @@ const Home = () => {
                                     </div>
 
                                     <div className="col-12 col-md-8 col-lg-7">
-                                        <div className="slock_Bg p-4 mx-auto">
+                                        <div className="slock_Bg h-100 p-4">
                                             <b className="b_Tages mb-2">
                                                 (अध्याय {data.chapter}, श्लोक {data.verse})
                                             </b>
@@ -250,11 +474,11 @@ const Home = () => {
                                                 {data.sloka_origin} — Chapter {data.chapter}, Verse {data.verse}
                                             </p>
                                             <div className="col-12 d-flex m-0 justify-content-end">
-                                                <button className="btn NandRBtn me-2" onClick={handlePrev}>⟵</button>
-                                                <button className="btn NandRBtn" onClick={handleNext}>⟶</button>
+                                                <button className="btn NandRBtn me-2" onClick={handlePrev}><GrFormPrevious aria-hidden="true" /></button>
+                                                <button className="btn NandRBtn" onClick={handleNext}><MdOutlineNavigateNext aria-hidden="true" /></button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             )
                         )}
@@ -311,28 +535,28 @@ const Home = () => {
                         <div className="row">
                             {filteredData.map((data, i) =>
                                 i === index && (
-                                    <div key={data.id} className="row h-100 w-100 mb-3 justify-content-center g-3">
+                                    <div key={data.id} className="row h-100 w-100 mb-5 justify-content-center g-0">
 
                                         <div className="col-12 col-sm-12 h-100">
-                                            <div className="slock_Bg1 text-center p-4 mx-auto">
-                                                <b className="b_Tages1 mb-2">
+                                            <div className="slock_Bg1 text-center p-4 ">
+                                                <b className="b_Tages1 w-100 p-2 mb-3">
                                                     (अध्याय {data.chapter}, श्लोक {data.verse})
                                                 </b>
 
-                                                <h2 className="h2_Tages1 mb-3">{data.sloka_sans}</h2>
-                                                <div className="col-12 col-sm-12 col-md-3 img_1_Main1">
+                                                <h2 className="h2_Tages1 py-3">{data.sloka_sans}</h2>
+                                                <div className="col-12 col-sm-12 col-md-3 py-2 img_1_Main1">
                                                     <img
                                                         src={data.sloka_image}
                                                         className="img-fluid"
                                                         alt={`Krishna ${data.id}`}
-                                                        style={{ objectFit: "contain", width: "auto" }}
+                                                        style={{ objectFit: "contain", width: "auto", height: "350px" }}
                                                         loading="lazy"
                                                     />
                                                 </div>
 
-                                                <b className="b_Tages1 mb-2">:: अनुवाद ::</b>
+                                                <b className="b_Tages1 w-100 p-2 mb-2">:: अनुवाद ::</b>
 
-                                                <p className="p_Tages1 mb-2">{data.sloka_guj}</p>
+                                                <p className="p_Tages1 my-3 mb-2">{data.sloka_guj}</p>
                                                 <p className="p_Tages1 mb-3">{data.sloka_eng}</p>
 
                                                 <hr />
@@ -341,8 +565,8 @@ const Home = () => {
                                                     {data.sloka_origin} — Chapter {data.chapter}, Verse {data.verse}
                                                 </p>
                                                 <div className="col-12 d-flex justify-content-center py-2">
-                                                    <button className="btn NandRBtn1 me-2" onClick={handlePrev}>⟵</button>
-                                                    <button className="btn NandRBtn1" onClick={handleNext}>⟶</button>
+                                                    <button className="btn NandRBtn1 me-2" onClick={handlePrev}><GrFormPrevious aria-hidden="true" /></button>
+                                                    <button className="btn NandRBtn1" onClick={handleNext}><MdOutlineNavigateNext aria-hidden="true" /></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -354,8 +578,7 @@ const Home = () => {
                 </div>
 
                 {/* BANNER SECTION */}
-                <div className="container-fluid bG_2"
-                >
+                <div className="container-fluid bG_2">
                     {/* DESKTOP VIEW */}
                     <div className="floating-box container p-4 mb-5 rounded shadow d-none d-md-block">
                         <div className="row justify-content-between align-items-center">
@@ -374,80 +597,145 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                    {/* Desktop view */}
-                    <div className="d-none d-md-block mb-3">
-                        <div id="schoolCarousel" className="carousel slide" data-bs-ride="carousel" data-bs-interval="10000">
-                            <div className="carousel-inner">
-                                {cardChunks.map((chunk, index) => (
-                                    <div key={`chunk-${index}`} className={`carousel-item ${index === 0 ? "active" : ""}`}>
-                                        <div className="row justify-content-center">
-                                            {chunk.map((data) => (
-                                                <div key={data.id} className="col-md-2 col-sm-6 col-6 p-3">
-                                                    <a href={`/school/${data.id}`} className="text-decoration-none text-dark">
-                                                        <div
-                                                            className="shadow-sm h-100 d-flex flex-column justify-content-between align-items-center text-center"
-                                                            style={{
-                                                                width: "100%",
-                                                                height: "100%",
-                                                                borderRadius: "15px",
-                                                                padding: "10px",
-                                                                backgroundColor: "#fff",
-                                                            }}
-                                                        >
-                                                            {data.logo ? (
-                                                                <img
-                                                                    src={secureUrl(data.logo)}
-                                                                    className="rounded-1 mb-1"
-                                                                    alt={"Ahir Samaj"}
-                                                                    style={{ width: "100%", height: 180, objectFit: "contain" }}
-                                                                    loading="lazy"
-                                                                />
-                                                            ) : (
-                                                                <div
-                                                                    className="rounded-1 h-100 mb-1 d-flex align-items-center justify-content-center"
-                                                                    style={{
-                                                                        width: "100%",
-                                                                        height: "100%",
-                                                                        background: "#ffffff",
-                                                                        color: "#067C71",
-                                                                        fontWeight: 700,
-                                                                        fontSize: "20px",
-                                                                        borderRadius: "8px"
-                                                                    }}
-                                                                >
-                                                                    Ahir Samaj
-                                                                </div>
-                                                            )}
-                                                            <span className="fw-bold text-dark text-center" style={{ fontSize: 14 }}>{data.name}</span>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            ))}
+                    {/* Desktop View */}
+                    <div className="d-none d-md-block" style={{ height: '500px' }}>
+                        {cardWindowsDesktop.length > 0 ? (
+                            cardWindowsDesktop.map((chunk, index) => (
+                                <div key={index} className={`carousel-item ${index === activeDesktopIndex ? "active" : ""}`}>
+                                    <div className="col-md-12 d-flex justify-content-center align-items-center mb-3 flex-wrap gap-2">
+                                        <div className="col-md-2"></div>
+
+                                        {/* All Button */}
+                                        <div className="col-md-1 py-2" key="all">
+                                            <button
+                                                onClick={() => setSelectedSchoolType(null)}
+                                                className="btn text-white w-100 d-flex justify-content-center align-items-center text-center"
+                                                style={{
+                                                    backgroundColor: selectedSchoolType === null ? "#EFA325" : "#038176",
+                                                    border: `2px solid ${selectedSchoolType === null ? "#067C71" : "#ffffff"}`,
+                                                    borderRadius: "22px",
+                                                    height: "60px",
+                                                    whiteSpace: "normal",
+                                                    fontSize: "14px",
+                                                    gap: "15px",
+                                                    transition: "all 0.3s ease",
+                                                    boxShadow: selectedSchoolType === null ? "0 0 8px rgba(6, 124, 113, 0.5)" : "none",
+                                                    fontWeight: selectedSchoolType === null ? "bold" : "normal",
+                                                }}
+                                            >
+                                                ઓલ સ્કૂલ
+                                            </button>
+                                        </div>
+
+                                        {/* School Type Buttons */}
+                                        {schoolTypes.length > 0 ? schoolTypes.map((type, i) => (
+                                            <div className="col-md-1" key={i}>
+                                                <button
+                                                    onClick={() => setSelectedSchoolType(type)}
+                                                    className="btn text-white w-100 d-flex justify-content-center align-items-center text-center"
+                                                    style={{
+                                                        backgroundColor: selectedSchoolType === type ? "#EFA325" : "#038176",
+                                                        border: `2px solid ${selectedSchoolType === type ? "#067C71" : "#ffffff"}`,
+                                                        borderRadius: "22px",
+                                                        height: "60px",
+                                                        whiteSpace: "normal",
+                                                        fontSize: "14px",
+                                                        gap: "15px",
+                                                        transition: "all 0.3s ease",
+                                                        boxShadow: selectedSchoolType === type ? "0 0 8px rgba(6, 124, 113, 0.5)" : "none",
+                                                        fontWeight: selectedSchoolType === type ? "bold" : "normal",
+                                                    }}
+                                                >{schoolTypeLabels[type] || type}
+                                                </button>
+                                            </div>
+                                        )) : null}
+
+                                        <div className="col-md-2"></div>
+                                    </div>
+                                    <div className="row justify-content-center">
+                                        {chunk.map((data) => (
+                                            <div key={data.id} className="col-md-2 p-1 mb-5">
+                                                <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
+                                                    <div
+                                                        className="shadow-sm h-100 d-flex flex-column justify-content-between align-items-center text-center"
+                                                        style={{
+                                                            borderRadius: "15px",
+                                                            padding: "20px",
+                                                            backgroundColor: "#fff",
+                                                        }}
+                                                    >
+                                                        {data.logo ? (
+                                                            <img
+                                                                src={secureUrl(data.logo)}
+                                                                alt="logo School"
+                                                                className="rounded-1 mb-3"
+                                                                style={{ height: "150px", objectFit: "contain" }}
+                                                                loading="lazy"
+                                                            />
+                                                        ) : (
+                                                            <div
+                                                                className="rounded-1 d-flex align-items-center justify-content-center"
+                                                                style={{
+                                                                    width: "100%",
+                                                                    height: "150px",
+                                                                    background: "#ffffff",
+                                                                    color: "#067C71",
+                                                                    fontWeight: 700,
+                                                                    fontSize: "30px",
+                                                                    borderRadius: "8px",
+                                                                }}
+                                                            >
+                                                                Ahir Samaj
+                                                            </div>
+                                                        )}
+                                                        <span className="fw-bold text-dark">{data.name}</span>
+                                                    </div>
+                                                </Link>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <div className="row">
+                                        <div className="col-12 d-flex justify-content-center">
+                                            <div className="d-flex justify-content-center align-items-center gap-2 my-2">
+                                                <button
+                                                    className="btn btn-light rounded shadow"
+                                                    type="button"
+                                                    onClick={handlePrevDesktop}
+                                                    aria-label="Previous slide"
+                                                >
+                                                    <GrFormPrevious aria-hidden="true" />
+                                                </button>
+                                                <button
+                                                    className="btn btn-light rounded shadow"
+                                                    type="button"
+                                                    onClick={handleNextDesktop}
+                                                    aria-label="Next slide"
+                                                >
+                                                    <MdOutlineNavigateNext aria-hidden="true" />
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                ))}
+                                </div>
+                            ))
+                        ) : (
+                            <div className="carousel-item active text-center py-5">
+                                <p>No results found.</p>
                             </div>
-
-                            {/* Optional: carousel controls (desktop only) */}
-                            <button className="carousel-control-prev" type="button" data-bs-target="#schoolCarousel" data-bs-slide="prev" style={{ width: 50 }}>
-                                <span className="visually-hidden">Previous</span>
-                            </button>
-                            <button className="carousel-control-next" type="button" data-bs-target="#schoolCarousel" data-bs-slide="next" style={{ width: 50 }}>
-                                <span className="visually-hidden">Next</span>
-                            </button>
-                        </div>
+                        )}
                     </div>
 
-                    {/* MOBILE VIEW */}
-                    <div className="floating-box1 container p-3 rounded shadow d-block d-md-none">
-                        <div className="row text-center">
-                            <div className="col-12 mb-2">
-                                <h1 className="fw-bold h2 fs-5 m-0">
+                    {/* Mobile VIEW */}
+                    <div className="floating-box1 container p-4 shadow d-block d-md-none">
+                        <div className="row justify-content-between align-items-center">
+                            <div className="col-md-12 text-center">
+                                <h1 className="fw-bold fs-3 text-white m-0 mb-2">
                                     આપણી સંસ્થા
                                 </h1>
                             </div>
 
-                            <div className="col-12">
+                            <div className="col-md-12 text-center">
                                 <a href='/ImageSlider'>
                                     <button type="button" className="btn btn-success">
                                         View All
@@ -457,118 +745,156 @@ const Home = () => {
                         </div>
                     </div>
 
-
-                    {/* ------------------ MOBILE: 2 cards per slide carousel ------------------ */}
-                    <div className="d-block d-md-none w-100">
-                        <div
-                            id="mobileSchoolCarousel"
-                            className="carousel slide"
-                            data-bs-ride="carousel"
-                            data-bs-interval="4000"
-                        >
+                    {/* Mobile View */}
+                    <div className="d-block d-md-none">
+                        <div id="mobileSchoolCarousel" className="carousel slide" data-bs-interval="4000">
                             <div className="carousel-inner">
+                                {cardWindowsMobile.map((pair, idx) => (
+                                    <div key={idx} className={`carousel-item ${idx === activeMobileIndex ? "active" : ""}`}>
+                                        <div className="d-flex d-md-none py-3 overflow-auto gap-2 px-1" style={{ scrollbarWidth: "none" }}>
 
-                                {cardChunks1.map((pair, idx) => (
-                                    <div
-                                        key={idx}
-                                        className={`carousel-item ${idx === 0 ? "active" : ""}`}
-                                    >
-                                        <div className="row gx-2 gy-2 px-1">
+                                            {/* All Button */}
+                                            <button
+                                                onClick={() => setSelectedSchoolType(null)}
+                                                className="btn text-white flex-shrink-0"
+                                                style={{
+                                                    minWidth: "130px",
+                                                    height: "50px",
+                                                    backgroundColor: selectedSchoolType === null ? "#EFA325" : "#038176",
+                                                    border: `2px solid ${selectedSchoolType === null ? "#067C71" : "#ffffff"}`,
+                                                    borderRadius: "22px",
+                                                    fontSize: "13px",
+                                                    fontWeight: selectedSchoolType === null ? "bold" : "normal",
+                                                }}
+                                            >
+                                                ઓલ સ્કૂલ
+                                            </button>
 
+                                            {/* School Type Buttons */}
+                                            {schoolTypes.map((type, i) => (
+                                                <button
+                                                    key={i}
+                                                    onClick={() => setSelectedSchoolType(type)}
+                                                    className="btn text-white flex-shrink-0"
+                                                    style={{
+                                                        minWidth: "130px",
+                                                        height: "50px",
+                                                        backgroundColor: selectedSchoolType === type ? "#EFA325" : "#038176",
+                                                        border: `2px solid ${selectedSchoolType === type ? "#067C71" : "#ffffff"}`,
+                                                        borderRadius: "22px",
+                                                        fontSize: "13px",
+                                                        fontWeight: selectedSchoolType === type ? "bold" : "normal",
+                                                    }}
+                                                >
+                                                    {schoolTypeLabels[type] || type}
+                                                </button>
+                                            ))}
+                                        </div>
+                                        <div className="row gx-3 gy-2 p-2">
                                             {pair.map((data) => (
-                                                <div key={data.id} className="col-6">
-                                                    <a
-                                                        href={`/school/${data.id}`}
-                                                        className="text-decoration-none text-dark d-block h-100"
-                                                    >
+                                                <div key={data.id} className="col-6 p-2">
+                                                    <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
                                                         <div
-                                                            className="shadow-sm bg-white d-flex flex-column align-items-center text-center h-100"
+                                                            className="shadow-sm d-flex flex-column align-items-center text-center"
                                                             style={{
-                                                                borderRadius: "14px",
+                                                                borderRadius: "22px",
                                                                 padding: "10px",
-                                                                minHeight: "200px",
+                                                                backgroundColor: "#fff",
+                                                                height: "200px",
+                                                                justifyContent: "space-between",
                                                             }}
                                                         >
+                                                            <div
+                                                                style={{
+                                                                    width: "100%",
+                                                                    height: "100px",
+                                                                    display: "flex",
+                                                                    alignItems: "center",
+                                                                    justifyContent: "center",
+                                                                }}
+                                                            >
+                                                                {data.logo ? (
+                                                                    <img
+                                                                        src={secureUrl(data.logo)}
+                                                                        alt={`${data.name} logo`}
+                                                                        width="120"
+                                                                        height="120"
+                                                                        loading="lazy"
+                                                                        style={{
+                                                                            objectFit: "contain",
+                                                                            display: "block",
+                                                                        }}
+                                                                    />
+                                                                ) : (
+                                                                    <div
+                                                                        style={{
+                                                                            width: "100%",
+                                                                            height: "120px",
+                                                                            background: "#ffffff",
+                                                                            color: "#067C71",
+                                                                            fontWeight: 700,
+                                                                            fontSize: "18px",
+                                                                            borderRadius: "8px",
+                                                                            display: "flex",
+                                                                            alignItems: "center",
+                                                                            justifyContent: "center",
+                                                                        }}
+                                                                    >
+                                                                        Ahir Samaj
+                                                                    </div>
+                                                                )}
+                                                            </div>
 
-                                                            {/* Logo */}
-                                                            {data.logo ? (
-                                                                <img
-                                                                    src={secureUrl(data.logo)}
-                                                                    className="rounded-1 mb-1"
-                                                                    alt={"Ahir Samaj"}
-                                                                    style={{
-                                                                        maxHeight: "80px",
-                                                                        maxWidth: "100%",
-                                                                        objectFit: "contain",
-                                                                    }}
-                                                                    loading="lazy"
-                                                                />
-                                                            ) : (
-                                                                <div
-                                                                    className="rounded-1 h-100 mb-1 d-flex align-items-center justify-content-center"
-                                                                    style={{
-                                                                        width: "100%",
-                                                                        background: "#ffffff",
-                                                                        color: "#067C71",
-                                                                        fontWeight: 700,
-                                                                        fontSize: "20px",
-                                                                        borderRadius: "8px"
-                                                                    }}
-                                                                >
-                                                                    Ahir Samaj
-                                                                </div>
-                                                            )}
-
-                                                            {/* Name */}
-                                                            <span className="fw-bold text-dark text-center" style={{ fontSize: 14 }}>{data.name}</span>
+                                                            <span
+                                                                className="fw-bold text-dark small"
+                                                                style={{
+                                                                    fontSize: "12px",
+                                                                    minHeight: "32px",
+                                                                    display: "flex",
+                                                                    alignItems: "center",
+                                                                }}
+                                                            >
+                                                                {data.name}
+                                                            </span>
                                                         </div>
-                                                    </a>
+                                                    </Link>
                                                 </div>
                                             ))}
-
-                                            {pair.length === 1 && <div className="col-6" />}
+                                            {pair.length === 1 && <div className="col-6"></div>}
                                         </div>
                                     </div>
                                 ))}
-
                             </div>
-                        </div>
-                    </div>
 
-
-
-                    {/* Bottom Info + Buttons */}
-                    <div className="row mb-3">
-                        <div className="col-12 d-flex justify-content-center">
-                            <div className="d-flex justify-content-center align-items-center gap-2">
-
+                            {/* Navigation Buttons (Inside Mobile Carousel) */}
+                            <div className="d-flex justify-content-center align-items-center gap-2 mt-3">
+                                {/* Previous */}
                                 <button
                                     className="btn btn-light rounded shadow"
                                     type="button"
-                                    data-bs-target="#mobileSchoolCarousel"
-                                    data-bs-slide="prev"
+                                    onClick={handlePrevMobile}
+                                    aria-label="Previous slide"
                                 >
                                     <GrFormPrevious aria-hidden="true" />
-                                    <span className="visually-hidden">Previous</span>
                                 </button>
 
+                                {/* Next */}
                                 <button
                                     className="btn btn-light rounded shadow"
                                     type="button"
-                                    data-bs-target="#mobileSchoolCarousel"
-                                    data-bs-slide="next"
+                                    onClick={handleNextMobile}
+                                    aria-label="Next slide"
                                 >
                                     <MdOutlineNavigateNext aria-hidden="true" />
-                                    <span className="visually-hidden">Next</span>
                                 </button>
-
                             </div>
                         </div>
                     </div>
+
                 </div>
-            </div>
+            </div >
             {/* Ideology Section */}
-            <div className="container-fluid">
+            <div div className="container-fluid" >
                 <div className="row align-items-center">
                     {/* LEFT TEXT SECTION */}
                     <div className="col-md-8">
@@ -578,14 +904,17 @@ const Home = () => {
                             and preserves the values passed down by our ancestors.</p>
                         <div className="d-none d-md-block">
                             <div className="row g-4 justify-content-center">
-
                                 {ideologyData.map((item, index) => (
-                                    <div className="col-md-6 d-flex justify-content-center" key={index.id}>
+                                    <div className="col-md-5 d-flex justify-content-center" key={index.id}>
                                         <div
-                                            className="card_Ideology border-0"
-                                            style={{ width: "100%", maxWidth: "300px" }}
+                                            className="card_Ideology"
+                                            style={{ width: "100%", maxWidth: "470px" }}
                                         >
-                                            <h5 className="text-center fw-bold mb-2">{item.title}</h5>
+                                            {/* <h5 className="text-center fw-bold mb-2">{item.title}</h5> */}
+                                            <h4
+                                                dangerouslySetInnerHTML={{ __html: item.title }} className='text-center'
+                                            />
+
                                         </div>
                                     </div>
                                 ))}
@@ -599,11 +928,11 @@ const Home = () => {
                             <div className="row g-3 justify-content-center">
                                 {ideologyData.map((item, index) => (
                                     <div className="col-6" key={index.id}>
-                                        <div className="mobile-card shadow-sm">
+                                        <div className="mobile-card">
                                             <div className="content-box">
-                                                <b className="title h6">
-                                                    {truncate(item.title, 70)}
-                                                </b>
+                                                <h4
+                                                    dangerouslySetInnerHTML={{ __html: item.title }} className='text-center'
+                                                />
 
                                                 {/* <p className="description">
                                                     {expanded[index] ? item.text : truncate(item.text, 30)}
@@ -639,7 +968,7 @@ const Home = () => {
             </div>
 
             {/* Youtube video */}
-            <div className="container-fluid text-center p-3">
+            <div className="container-fluid text-center p-3" >
                 <div className="row">
                     <div className="col-12 d-flex justify-content-center">
                         <div className="ratio ratio-16x9" style={{ maxWidth: '1600px', width: '100%', borderRadius: '12px', overflow: 'hidden' }}>
@@ -657,7 +986,7 @@ const Home = () => {
             </div>
 
             {/* Latest News Section */}
-            <div className='container'>
+            <div div className='container' >
                 <div className='row'>
                     <div className='col-md-12 justify-content-center text-center'>
                         <h1>લેટેસ્ટ ન્યૂઝ</h1>

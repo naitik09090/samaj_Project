@@ -1,5 +1,6 @@
 import React from 'react'
 import { CiMail } from "react-icons/ci";
+import SamajLogo from '../images/ahir_samaj_logo1.jpg';
 // import { GiFemaleVampire } from "react-icons/gi";
 // import { HiOutlineLocationMarker } from "react-icons/hi";
 // import { GiFemaleVampire } from "react-icons/gi";
@@ -16,8 +17,7 @@ const Footer = () => {
                         {/* Left Section */}
                         <div style={{ maxWidth: "24rem" }}>
                             <h2 className="text-white h5 m-0 d-flex align-items-center">
-                                <span style={{ fontWeight: 600 }}>આહિર</span>
-                                <span style={{ color: "#001d1aff", fontWeight: 600 }}> સમાજ</span>
+                                <img src={SamajLogo} alt='Samaj Logo' className='rounded-5' height={40} width={140} />
                             </h2>
                             <p className="small mt-2 text-white">
                                 <CiMail /> contact@ahirsamaj.in
@@ -48,10 +48,7 @@ const Footer = () => {
 
                         {/* Logo & Contact */}
                         <div className="mb-4">
-                            <h2 className="text-white h5 m-0">
-                                <span style={{ fontWeight: 600 }}>આહિર</span>
-                                <span style={{ color: "#001d1aff", fontWeight: 600 }}> સમાજ</span>
-                            </h2>
+                            <img src={SamajLogo} alt='Samaj Logo' className='rounded-5' height={40} width={140} />
                             <p className="small text-white mt-2">
                                 <CiMail /> contact@ahirsamaj.in
                             </p>

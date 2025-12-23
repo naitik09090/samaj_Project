@@ -4,6 +4,7 @@ import { LuLinkedin } from "react-icons/lu";
 import { TfiTwitter } from "react-icons/tfi";
 import { FaInstagram } from "react-icons/fa";
 import { BiWorld } from "react-icons/bi";
+import SamajLogo from '../images/ahir_samaj_logo1.jpg';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -30,8 +31,9 @@ const Navbar = () => {
     position: "fixed",
     backgroundColor: isScrolled ? "#067C71" : "#ffffff",
     border: "1px solid #057c71",
-    borderRadius: isScrolled ? "0px" : "22px",
-    paddingLeft: "16px",
+    borderRadius: isScrolled ? "0px 0px 40px 40px" : "22px",
+    height: isScrolled ? "65px" : "auto",
+    paddingLeft: "0px",
     paddingRight: "20px",
     transition: "all 0.3s ease"
   };
@@ -73,7 +75,7 @@ const Navbar = () => {
             {langOpen && (
               <div
                 className="position-absolute bg-white shadow-sm rounded"
-                style={{ top: "100%", left: "-100px", zIndex: 5000 }}
+                style={{ top: "100%", left: "-80px", zIndex: 5000 }}
               >
                 <select
                   className="form-select"
@@ -117,16 +119,13 @@ const Navbar = () => {
             {/* LOGO */}
             <div className="col-6 col-md-3 d-flex align-items-center">
               <a href="/" className="text-decoration-none">
-                <h2 className="h5 m-0">
-                  <span style={{ color: isScrolled ? "#000000" : "#000000", fontWeight: 600 }}>આહિર</span>
-                  <span style={{ color: isScrolled ? "#FFFFFF" : "#067C71", fontWeight: 600, marginLeft: 6 }}>સમાજ</span>
-                </h2>
+                <img src={SamajLogo} alt='Samaj Logo' height={40} width={140} style={{borderRadius:'30px', paddingTop:isScrolled?'5px':'0px'}} />
               </a>
             </div>
 
             {/* ---------------------- DESKTOP MENU ---------------------- */}
             <div className="col-md-9 d-none d-md-flex justify-content-end">
-              <ul className="d-flex gap-3 list-unstyled py-3 m-0 me-3">
+              <ul className="d-flex gap-3 list-unstyled py-3 m-0">
 
                 <li><a href="/" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>હોમ</a></li>
                 <li><a href="/ImageSlider" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>સ્કૂલ</a></li>

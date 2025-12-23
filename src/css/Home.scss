@@ -14,7 +14,6 @@
 }
 
 .carousel-item {
-  min-height: 250px;
   display: flex;
   justify-content: center;
   align-items: center
@@ -55,8 +54,7 @@ p.text-start {
   color: #fff
 }
 
-.slock_Bg,
-.slock_Bg1 {
+.slock_Bg {
   border-radius: 50px;
   color: #fff
 }
@@ -69,34 +67,102 @@ p.text-start {
   text-overflow: ellipsis
 }
 
-.NandRBtn,
 .NandRBtn1 {
-  background: linear-gradient(#ffffff, #ffffff);
+  background-color: #ffffff !important;
   color: #004c4c;
   margin: 1px
 }
+.BtnSlock button{
+  color: #000000;
+  background-color: #ffffff !important;
+}
+
+.BtnSlock :hover{
+  color: #000000 !important;
+}
 
 .img_1_Main img,
-.img_1_Main1 img,
 .slock_Bg,
 .slock_Bg1 {
   background: linear-gradient(#058479, #037167)
 }
 
-.slock_Bg {
-  height: auto
-}
 
 .slock_Bg1 {
   height: auto;
-  width: 280px !important
+  max-width: auto;
+  border-radius: 22px !important;
+  color: #ffffff;
 }
 
-.h2_Tages,
-.p_Tages,
-.slock_Bg .b_Tages {
-  margin-left: 140px
+.slock_Bg {
+  height: 400px;
+  width: auto !important
 }
+
+.slokaBox {
+  height: 440px;
+  border-radius: 45px 22px 22px 45px;
+  display: flex;
+  flex-direction: column;
+}
+.slokaBox_BG {
+  background: #058378;
+  border-radius: 22px 22px 22px 22px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  // display: flex;
+  // flex-direction: column;
+}
+
+.contentArea {
+  flex: 1;
+  /* auto adjust space */
+  overflow-y: auto;
+  /* scroll if text more */
+  margin: 10px 0;
+  padding-right: 6px;
+}
+
+/* optional: scrollbar nice look */
+.contentArea::-webkit-scrollbar {
+  width: 4px;
+}
+
+.contentArea::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 22px;
+}
+
+.imgBox {
+  width: auto;
+  height: 350px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  left: 65px;
+  top: 45px;
+}
+
+.krishna-img {
+  max-width: auto;
+  max-height: 100%;
+  object-fit: cover;
+}
+.krishna-img-mobile {
+  max-width: auto;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+
+// .h2_Tages,
+// .p_Tages,
+// .slock_Bg .b_Tages {
+//   // margin-left: 140px
+// }
 
 .slock_Bg .b_Tages,
 .slock_Bg1 {
@@ -118,17 +184,15 @@ p.text-start {
   border: 1px solid #fff;
   width: auto;
   height: 300px;
-  border-radius: 30px;
-  left: 170px
 }
 
 .img_1_Main1 img {
-  border: 1px solid #fff;
+  background-color: transparent;
   width: auto;
   height: 100%;
   border-radius: 30px;
   left: 0 !important;
-  top: -10px !important
+  top: -20px !important
 }
 
 .Main-Card_1 {
@@ -208,14 +272,16 @@ p.text-start {
 .text121 {
   left: 110px
 }
-.card_Ideology{
+
+.card_Ideology {
+  border: 2px solid #04AA9C;
   border-radius: 22px;
-  padding: 10px;
+  padding: 30px;
   margin: 10px;
 }
 
 .card_Ideology:hover {
   transition: all 0.3s ease-in-out;
-  box-shadow: 0px 0px 10px rgba(6, 124, 113, 1);
+  box-shadow: 0px 0px 20px rgba(6, 124, 113, 1);
   transform: scale(1.05);
 }
