@@ -72,12 +72,13 @@ p.text-start {
   color: #004c4c;
   margin: 1px
 }
-.BtnSlock button{
+
+.BtnSlock button {
   color: #000000;
   background-color: #ffffff !important;
 }
 
-.BtnSlock :hover{
+.BtnSlock :hover {
   color: #000000 !important;
 }
 
@@ -106,6 +107,7 @@ p.text-start {
   display: flex;
   flex-direction: column;
 }
+
 .slokaBox_BG {
   background: #058378;
   border-radius: 22px 22px 22px 22px;
@@ -151,6 +153,7 @@ p.text-start {
   max-height: 100%;
   object-fit: cover;
 }
+
 .krishna-img-mobile {
   max-width: auto;
   max-height: 100%;
@@ -158,27 +161,35 @@ p.text-start {
 }
 
 
-// .h2_Tages,
-// .p_Tages,
-// .slock_Bg .b_Tages {
-//   // margin-left: 140px
-// }
+.h2_Tages,
+.p_Tages,
+.slock_Bg {
+  // margin-left: 140px
+}
 
-.slock_Bg .b_Tages,
+.slock_Bg,
 .slock_Bg1 {
   font-weight: 600;
   background-color: #efa30a;
   padding: 5px 20px;
   border-radius: 10px
 }
+.b_Tages {
+  font-weight: 600;
+  width: fit-content;
+  background-color: #efa30a;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
 
 .b_Tages1 {
   font-weight: 600;
   background-color: #efa30a;
-  color: #ffffff;
+  color: #1a1a1a;
   padding: 5px 10px;
   border-radius: 10px;
 }
+
 
 .img_1_Main img {
   border: 1px solid #fff;

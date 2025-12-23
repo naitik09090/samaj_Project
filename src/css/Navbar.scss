@@ -381,16 +381,25 @@
 
 .floating-box1 {
     background-color: #efa30a;
-    color: #ffffff;
+    color: #1a1a1a;
+    /* dark text */
     border-radius: 22px;
     margin-top: -165px;
     z-index: 1;
     margin-bottom: 25px;
 }
-.floating-box1 button{
+
+.floating-box1 button {
     border-radius: 22px;
     padding: 5px 40px;
+    font-weight: 600;
 }
+
+
+.floating-title {
+    color: #1a1a1a;
+}
+
 
 .F_SliDer,
 .p_12 {

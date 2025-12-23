@@ -23,11 +23,11 @@ const Home = () => {
         { id } = useParams();
     const [activeDesktopIndex, setActiveDesktopIndex] = useState(0);
     const [activeMobileIndex, setActiveMobileIndex] = useState(0);
-    const [searchTerm, setSearchTerm] = useState("");
+    // const [searchTerm, setSearchTerm] = useState("");
     const [filteredData1, setFilteredData1] = useState([]);
     const [school, setSchool] = useState(null);
-    const [selectedOption, setSelectedOption] = useState("All");
-    const [subOption, setSubOption] = useState("");
+    // const [selectedOption, setSelectedOption] = useState("All");
+    // const [subOption, setSubOption] = useState("");
 
     const filteredData = slock?.data?.filter(t => t.id >= 1 && t.id <= 4) ?? [];
 
@@ -159,30 +159,30 @@ const Home = () => {
     }, [selectedSchoolType, data1]);
 
     // Search API call with school_type and search term
-    useEffect(() => {
-        if (!searchTerm.trim()) {
-            // If no search term, use the type filter logic
-            const all = data1?.data || [];
-            if (selectedSchoolType == null) {
-                setFilteredData1({ ...data1, data: all });
-            } else {
-                const filtered = all.filter(item => item.school_type === selectedSchoolType);
-                setFilteredData1({ ...data1, data: filtered });
-            }
-            return;
-        }
+    // useEffect(() => {
+    //     if (!searchTerm.trim()) {
+    //         // If no search term, use the type filter logic
+    //         const all = data1?.data || [];
+    //         if (selectedSchoolType == null) {
+    //             setFilteredData1({ ...data1, data: all });
+    //         } else {
+    //             const filtered = all.filter(item => item.school_type === selectedSchoolType);
+    //             setFilteredData1({ ...data1, data: filtered });
+    //         }
+    //         return;
+    //     }
 
-        // Call search API with school_type parameter
-        let searchUrl = `${URL}/api/v1/schools/schools/?search=${encodeURIComponent(searchTerm)}`;
-        if (selectedSchoolType != null) {
-            searchUrl += `&school_type=${encodeURIComponent(selectedSchoolType)}`;
-        }
+    //     // Call search API with school_type parameter
+    //     // let searchUrl = `${URL}/api/v1/schools/schools/?search=${encodeURIComponent(searchTerm)}`;
+    //     if (selectedSchoolType != null) {
+    //         // searchUrl += `&school_type=${encodeURIComponent(selectedSchoolType)}`;
+    //     }
 
-        fetch(searchUrl)
-            .then(res => res.json())
-            .then(json => setFilteredData1(json))
-            .catch(err => console.error("Search error:", err));
-    }, [searchTerm, selectedSchoolType]);
+    //     fetch(searchUrl)
+    //         .then(res => res.json())
+    //         .then(json => setFilteredData1(json))
+    //         .catch(err => console.error("Search error:", err));
+    // }, [selectedSchoolType]);
 
     // Fetch single school
     useEffect(() => {
@@ -199,25 +199,25 @@ const Home = () => {
 
     // Extract data array (your API returns { data: [...] })
 
-    useEffect(() => {
-        const allData = data1?.data || [];
-        const all = allData;
+    // useEffect(() => {
+    //     const allData = data1?.data || [];
+    //     const all = allData;
 
-        if (selectedOption === "All") {
-            setFilteredData1({ ...data1, data: all });
-            return;
-        }
+    //     if (selectedOption === "All") {
+    //         setFilteredData1({ ...data1, data: all });
+    //         return;
+    //     }
 
-        if (!subOption) return; // wait until user selects sub option
+    //     if (!subOption) return; // wait until user selects sub option
 
-        console.log(setSubOption);
+    //     console.log(setSubOption);
 
-        const filtered = all.filter(
-            (item) => item[selectedOption] === subOption
-        );
+    //     const filtered = all.filter(
+    //         (item) => item[selectedOption] === subOption
+    //     );
 
-        setFilteredData1({ ...data1, data: filtered });
-    }, [selectedOption, subOption, data1]);
+    //     setFilteredData1({ ...data1, data: filtered });
+    // }, [selectedOption, subOption, data1]);
 
     // const secureUrl = (url) => url?.replace(/^http:\/\//i, "https://");
     // const secureUrl = e => e ? e.replace(/^http:\/\//i, ".webp") : "";
@@ -322,8 +322,8 @@ const Home = () => {
         }
     ];
 
-    const truncate = (t, a) => t && t.length > a ? t.slice(0, a) + "…" : t || "",
-        items = Array.isArray(data4?.data) ? data4.data : [];
+    // const truncate = (t, a) => t && t.length > a ? t.slice(0, a) + "…" : t || ""
+    const items = Array.isArray(data4?.data) ? data4.data : [];
 
     return (
         <>
@@ -544,12 +544,12 @@ const Home = () => {
                                                 </b>
 
                                                 <h2 className="h2_Tages1 py-3">{data.sloka_sans}</h2>
-                                                <div className="col-12 col-sm-12 col-md-3 py-2 img_1_Main1">
+                                                <div className="col-12 col-sm-12 col-md-3 py-2 img_1_Main1 mx-auto">
                                                     <img
                                                         src={data.sloka_image}
-                                                        className="img-fluid"
+                                                        className="krishna-img-mobile"
                                                         alt={`Krishna ${data.id}`}
-                                                        style={{ objectFit: "contain", width: "auto", height: "350px" }}
+                                                        style={{ objectFit: "contain", width: "auto", height: "300px" }}
                                                         loading="lazy"
                                                     />
                                                 </div>
@@ -565,8 +565,8 @@ const Home = () => {
                                                     {data.sloka_origin} — Chapter {data.chapter}, Verse {data.verse}
                                                 </p>
                                                 <div className="col-12 d-flex justify-content-center py-2">
-                                                    <button className="btn NandRBtn1 me-2" onClick={handlePrev}><GrFormPrevious aria-hidden="true" /></button>
-                                                    <button className="btn NandRBtn1" onClick={handleNext}><MdOutlineNavigateNext aria-hidden="true" /></button>
+                                                    <button className="btn NandRBtn1 me-2" aria-label="Search schools" onClick={handlePrev}><GrFormPrevious /></button>
+                                                    <button className="btn NandRBtn1" aria-label="Search schools" onClick={handleNext}><MdOutlineNavigateNext /></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -730,7 +730,7 @@ const Home = () => {
                     <div className="floating-box1 container p-4 shadow d-block d-md-none">
                         <div className="row justify-content-between align-items-center">
                             <div className="col-md-12 text-center">
-                                <h1 className="fw-bold fs-3 text-white m-0 mb-2">
+                                <h1 className="fw-bold fs-3 m-0 mb-2 floating-title">
                                     આપણી સંસ્થા
                                 </h1>
                             </div>
@@ -756,11 +756,12 @@ const Home = () => {
                                             {/* All Button */}
                                             <button
                                                 onClick={() => setSelectedSchoolType(null)}
-                                                className="btn text-white flex-shrink-0"
+                                                className="btn flex-shrink-0"
                                                 style={{
                                                     minWidth: "130px",
                                                     height: "50px",
                                                     backgroundColor: selectedSchoolType === null ? "#EFA325" : "#038176",
+                                                    color: selectedSchoolType === null ? "#1A1A1A" : "#FFFFFF", // ✅ FIX
                                                     border: `2px solid ${selectedSchoolType === null ? "#067C71" : "#ffffff"}`,
                                                     borderRadius: "22px",
                                                     fontSize: "13px",
@@ -769,6 +770,8 @@ const Home = () => {
                                             >
                                                 ઓલ સ્કૂલ
                                             </button>
+
+
 
                                             {/* School Type Buttons */}
                                             {schoolTypes.map((type, i) => (
@@ -780,6 +783,7 @@ const Home = () => {
                                                         minWidth: "130px",
                                                         height: "50px",
                                                         backgroundColor: selectedSchoolType === type ? "#EFA325" : "#038176",
+                                                        color: selectedSchoolType === null ? "#1A1A1A" : "#FFFFFF", // ✅ FIX
                                                         border: `2px solid ${selectedSchoolType === type ? "#067C71" : "#ffffff"}`,
                                                         borderRadius: "22px",
                                                         fontSize: "13px",
@@ -911,8 +915,8 @@ const Home = () => {
                                             style={{ width: "100%", maxWidth: "470px" }}
                                         >
                                             {/* <h5 className="text-center fw-bold mb-2">{item.title}</h5> */}
-                                            <h4
-                                                dangerouslySetInnerHTML={{ __html: item.title }} className='text-center'
+                                            <h1
+                                                dangerouslySetInnerHTML={{ __html: item.title }} className='text-center h4'
                                             />
 
                                         </div>
@@ -930,8 +934,8 @@ const Home = () => {
                                     <div className="col-6" key={index.id}>
                                         <div className="mobile-card">
                                             <div className="content-box">
-                                                <h4
-                                                    dangerouslySetInnerHTML={{ __html: item.title }} className='text-center'
+                                                <h1
+                                                    dangerouslySetInnerHTML={{ __html: item.title }} className='text-center h4'
                                                 />
 
                                                 {/* <p className="description">
