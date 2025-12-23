@@ -988,7 +988,6 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-
             {/* Latest News Section */}
             <div div className='container' >
                 <div className='row'>
