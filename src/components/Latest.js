@@ -248,7 +248,7 @@ const About_us = () => {
                                                     })}
                                                 </p>
 
-                                                <h6 className="m-1 text-start title-line-1">{item.title}</h6>
+                                                <h6 className="m-1 text-start title-line-1" style={{color:"#067C71"}}>{item.title}</h6>
                                                 <p className="m-1 text-muted text-start title-content-2">{item.content}</p>
 
                                                 <div className="mt-auto">
@@ -311,7 +311,7 @@ const About_us = () => {
                                                     })}
                                                 </p>
 
-                                                <h6 className="text-start title-line-1" style={{ fontSize: 14 }}>
+                                                <h6 className="text-start title-line-1" style={{ fontSize: 14, color: "#067C71" }}>
                                                     {item.title.length > 60 ? item.title.slice(0, 60) + "…" : item.title}
                                                 </h6>
 

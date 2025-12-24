@@ -138,14 +138,11 @@ p.text-start {
 .imgBox {
   width: auto;
   height: 350px;
-  border-radius: 12px;
+  border-radius: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  position: relative;
-  left: 65px;
-  top: 45px;
 }
 
 .krishna-img {
@@ -260,8 +257,8 @@ p.text-start {
 }
 
 .title-line-1 {
-  font-weight: 600;
-  font-size: 18px;
+  font-weight: bold;
+  font-size: 20px;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
@@ -277,18 +274,51 @@ p.text-start {
 }
 
 .text121 {
-  left: 110px
+  left: 100px
 }
 
 .card_Ideology {
   border: 2px solid #04AA9C;
   border-radius: 22px;
-  padding: 30px;
   margin: 10px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card_Ideology:hover {
   transition: all 0.3s ease-in-out;
   box-shadow: 0px 0px 20px rgba(6, 124, 113, 1);
+  transform: scale(1.05);
+}
+
+.School_Card {
+  background-color: #ffffff;
+  margin: 10px;
+  border-radius: 22px;
+  width: 360px !important;
+  height: auto;
+}
+
+.School_Card:hover {
+  border: 2px solid #04AA9C;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 0px 20px #ffffff;
+  transform: scale(1.05);
+}
+
+.School_Card_Mobile {
+  background-color: #ffffff;
+  margin: 10px;
+  border-radius: 22px;
+  width: 116px !important;
+  height: auto;
+}
+
+.School_Card_Mobile:hover {
+  border: 2px solid #04AA9C;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 0px 20px #ffffff;
   transform: scale(1.05);
 }

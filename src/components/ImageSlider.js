@@ -161,7 +161,7 @@ const ImageSlider = () => {
     };
 
     const itemsArr = filteredData?.data || [];
-    const cardWindowsDesktop = makeSlidingWindows(itemsArr, 6);
+    const cardWindowsDesktop = makeSlidingWindows(itemsArr, 8);
     const cardWindowsMobile = makeSlidingWindows(itemsArr, 4);
 
     // Handlers for desktop and mobile carousel navigation (move by one card)
@@ -369,7 +369,7 @@ const ImageSlider = () => {
                                         <div className="col-md-2"></div>
 
                                         {/* All Button */}
-                                        <div className="col-md-1 py-2" key="all">
+                                        {/* <div className="col-md-1 py-2" key="all">
                                             <button
                                                 onClick={() => setSelectedSchoolType(null)}
                                                 className="btn text-white w-100 d-flex justify-content-center align-items-center text-center"
@@ -387,7 +387,7 @@ const ImageSlider = () => {
                                             >
                                                 ઓલ સ્કૂલ
                                             </button>
-                                        </div>
+                                        </div> */}
 
                                         {/* School Type Buttons */}
                                         {schoolTypes.length > 0 ? schoolTypes.map((type, i) => (
@@ -416,17 +416,14 @@ const ImageSlider = () => {
                                     <div className="row justify-content-center">
                                         {chunk.map((data) => (
                                             <>
-                                                <div key={data.id} className="col-md-4 p-1 mb-5">
+                                                <div key={data.id} className="col-md-3 School_Card p-2 mb-5">
                                                     <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
                                                         <div
-                                                            className="shadow-sm h-100 d-flex flex-column justify-content-center align-items-center text-center"
+                                                            className="h-100 d-flex flex-column justify-content-center align-items-center text-center"
                                                             style={{
-                                                                borderRadius: "15px",
-                                                                padding: "20px",
-                                                                marginLeft: "auto",
-                                                                marginRight: "auto",
+                                                                borderRadius: "22px",
                                                                 margin: "auto",
-                                                                width: "450px",
+                                                                width: "auto",
                                                                 backgroundColor: "#fff",
                                                             }}
                                                         >
@@ -435,20 +432,20 @@ const ImageSlider = () => {
                                                                     src={secureUrl(data.logo)}
                                                                     alt="logo School"
                                                                     className="rounded-1 mb-3"
-                                                                    style={{ height: "150px", objectFit: "contain" }}
+                                                                    style={{ height: "150px", width: "auto", objectFit: "contain" }}
                                                                     loading="lazy"
                                                                 />
                                                             ) : (
                                                                 <div
                                                                     className="rounded-1 d-flex align-items-center justify-content-center"
                                                                     style={{
-                                                                        width: "100%",
+                                                                        width: "auto",
                                                                         height: "150px",
                                                                         background: "#ffffff",
                                                                         color: "#067C71",
                                                                         fontWeight: 700,
                                                                         fontSize: "30px",
-                                                                        borderRadius: "8px",
+                                                                        borderRadius: "22px",
                                                                     }}
                                                                 >
                                                                     Ahir Samaj
@@ -503,7 +500,7 @@ const ImageSlider = () => {
                                         <div className="d-flex d-md-none py-3 overflow-auto gap-2 px-1" style={{ scrollbarWidth: "none" }}>
 
                                             {/* All Button */}
-                                            <button
+                                            {/* <button
                                                 onClick={() => setSelectedSchoolType(null)}
                                                 className="btn text-white flex-shrink-0"
                                                 style={{
@@ -517,7 +514,7 @@ const ImageSlider = () => {
                                                 }}
                                             >
                                                 ઓલ સ્કૂલ
-                                            </button>
+                                            </button> */}
 
                                             {/* School Type Buttons */}
                                             {schoolTypes.map((type, i) => (
@@ -549,14 +546,14 @@ const ImageSlider = () => {
                                                                 borderRadius: "12px",
                                                                 padding: "10px",
                                                                 backgroundColor: "#fff",
-                                                                height: "200px",
+                                                                height: "180px",
                                                                 justifyContent: "space-between",
                                                             }}
                                                         >
                                                             <div
                                                                 style={{
                                                                     width: "100%",
-                                                                    height: "100px",
+                                                                    height: "auto",
                                                                     display: "flex",
                                                                     alignItems: "center",
                                                                     justifyContent: "center",
@@ -597,7 +594,7 @@ const ImageSlider = () => {
                                                             <span
                                                                 className="fw-bold text-dark small"
                                                                 style={{
-                                                                    fontSize: "12px",
+                                                                    fontSize: "10px",
                                                                     minHeight: "32px",
                                                                     display: "flex",
                                                                     alignItems: "center",

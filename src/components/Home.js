@@ -264,7 +264,7 @@ const Home = () => {
     };
 
     const itemsArr = filteredData1?.data || [];
-    const cardWindowsDesktop = makeSlidingWindows(itemsArr, 5);
+    const cardWindowsDesktop = makeSlidingWindows(itemsArr, 4);
     const cardWindowsMobile = makeSlidingWindows(itemsArr, 4);
 
     // Handlers for desktop and mobile carousel navigation (move by one card)
@@ -402,22 +402,23 @@ const Home = () => {
                         {filteredData.map((data, i) =>
                             i === index && (
                                 <div key={data.id} className="row justify-content-center align-items-start g-3" data-bs-interval="2000">
-                                    <div className='col-md-10'>
+                                    <div className='col-md-12'>
                                         <div className='row'>
-                                            <div className='col-md-12 slokaBox_BG col-12 d-flex'>
-                                                <div className='col-md-3 d-flex justify-content-start align-items-start'>
+                                            <div className='col-md-2'></div>
+                                            <div className='col-md-12 col-lg-8 slokaBox_BG col-12 d-flex'>
+                                                <div className='col-md-4 p-2 d-flex justify-content-center align-items-center'>
                                                     <div className="imgBox">
                                                         <img
                                                             src={data.sloka_image}
                                                             alt={`Krishna ${data.id}`}
                                                             loading="lazy"
-                                                            className="krishna-img"
+                                                            className="krishna-img h-100"
                                                         />
                                                     </div>
                                                 </div>
                                                 {/* <div className='col-md-1'></div> */}
-                                                <div className="col-md-9">
-                                                    <div className="slokaBox text-white p-5">
+                                                <div className="col-md-8">
+                                                    <div className="slokaBox text-white p-4">
                                                         <b className="b_Tages mb-2">
                                                             (अध्याय {data.chapter}, श्लोक {data.verse})
                                                         </b>
@@ -609,7 +610,7 @@ const Home = () => {
                         {/* Filter Buttons - Outside Carousel */}
                         <div className="row justify-content-center align-items-center mb-4">
                             {/* All Button */}
-                            <div className="col-auto">
+                            {/* <div className="col-auto">
                                 <button
                                     onClick={() => setSelectedSchoolType(null)}
                                     className="btn text-white"
@@ -628,7 +629,7 @@ const Home = () => {
                                 >
                                     ઓલ સ્કૂલ
                                 </button>
-                            </div>
+                            </div> */}
 
                             {/* School Type Buttons */}
                             {schoolTypes.length > 0 ? schoolTypes.map((type) => (
@@ -663,10 +664,10 @@ const Home = () => {
                                 >
                                     <div className="row justify-content-center g-3 mb-4">
                                         {chunk.map((data) => (
-                                            <div key={data.id} className="col-md-2 col-lg-2">
+                                            <div key={data.id} className="col-md-3 col-lg-2 School_Card">
                                                 <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
                                                     <div
-                                                        className="shadow-sm h-100 d-flex flex-column justify-content-between align-items-center text-center"
+                                                        className="h-100 d-flex flex-column justify-content-between align-items-center text-center"
                                                         style={{
                                                             borderRadius: "15px",
                                                             padding: "20px",
@@ -765,7 +766,7 @@ const Home = () => {
                                         <div className="d-flex d-md-none py-3 overflow-auto gap-2 px-1" style={{ scrollbarWidth: "none" }}>
 
                                             {/* All Button */}
-                                            <button
+                                            {/* <button
                                                 onClick={() => setSelectedSchoolType(null)}
                                                 className="btn flex-shrink-0"
                                                 style={{
@@ -780,7 +781,7 @@ const Home = () => {
                                                 }}
                                             >
                                                 ઓલ સ્કૂલ
-                                            </button>
+                                            </button> */}
 
 
 
@@ -810,19 +811,19 @@ const Home = () => {
                                                 <div key={data.id} className="col-6 p-2">
                                                     <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
                                                         <div
-                                                            className="shadow-sm d-flex flex-column align-items-center text-center"
+                                                            className="d-flex flex-column align-items-center text-center"
                                                             style={{
                                                                 borderRadius: "22px",
                                                                 padding: "10px",
                                                                 backgroundColor: "#fff",
-                                                                height: "200px",
+                                                                height: "180px",
                                                                 justifyContent: "space-between",
                                                             }}
                                                         >
                                                             <div
                                                                 style={{
                                                                     width: "100%",
-                                                                    height: "100px",
+                                                                    height: "120px",
                                                                     display: "flex",
                                                                     alignItems: "center",
                                                                     justifyContent: "center",
@@ -863,10 +864,7 @@ const Home = () => {
                                                             <span
                                                                 className="fw-bold text-dark small"
                                                                 style={{
-                                                                    fontSize: "12px",
-                                                                    minHeight: "32px",
-                                                                    display: "flex",
-                                                                    alignItems: "center",
+                                                                    fontSize: "10px",
                                                                 }}
                                                             >
                                                                 {data.name}
@@ -912,13 +910,16 @@ const Home = () => {
             <div className="container-fluid">
                 <div className="row align-items-center">
                     {/* LEFT TEXT SECTION */}
-                    <div className="col-md-8">
+                    <div className="col-md-12 mb-5">
                         <h1 className="fw-bold text-center">Ideology <br /> (અમારી વિચારસરણી)</h1>
                         <p className="text-center">Our ideology is built on the principles that have guided the Ahir community for generations — <b> Unity, Education, Culture, and Service.</b></p>
                         <p className="text-center">We believe that a strong community is created when every member grows together, supports each other,
                             and preserves the values passed down by our ancestors.</p>
+                    </div>
+                    <div className="col-md-1"></div>
+                    <div className="col-md-7">
                         <div className="d-none d-md-block">
-                            <div className="row g-4 justify-content-center">
+                            <div className="row g-3 justify-content-center">
                                 {ideologyData.map((item, index) => (
                                     <div className="col-md-5 d-flex justify-content-center" key={index}>
                                         <div
@@ -927,7 +928,7 @@ const Home = () => {
                                         >
                                             {/* <h5 className="text-center fw-bold mb-2">{item.title}</h5> */}
                                             <h1
-                                                dangerouslySetInnerHTML={{ __html: item.title }} className='text-center h4'
+                                                dangerouslySetInnerHTML={{ __html: item.title }} className='text-center h6'
                                             />
 
                                         </div>
@@ -961,7 +962,7 @@ const Home = () => {
 
                     </div>
                     {/* RIGHT IMAGE SECTION */}
-                    <div className="col-md-4 text-center mt-4 mt-lg-0">
+                    <div className="col-md-4 text-center mt-4 mt-lg-0 d-flex align-items-center justify-content-start">
                         <picture>
                             <source
                                 srcSet={Kano?.replace(/^http:\/\//i, "https://").replace(/\.(png|jpg|jpeg)$/i, ".webp")}
@@ -971,10 +972,7 @@ const Home = () => {
                             <img
                                 src={Kano?.replace(/^http:\/\//i, "https://")}
                                 alt="Lord Krishna"
-                                className="img-fluid2"
-                                width="400"   // keeps aspect ratio
-                                height="600"
-                                style={{ borderRadius: "16px" }}
+                                style={{ borderRadius: "16px", height:"400px", width:"auto" }}
                                 loading="lazy"
                             />
                         </picture>
@@ -1028,7 +1026,7 @@ const Home = () => {
                                                     })}
                                                 </p>
 
-                                                <h6 className="text-start title-line-1 h-100" style={{ marginBottom: 8 }}>{data.title}</h6>
+                                                <h6 className="text-start title-line-1" style={{ marginBottom: 8, color: '#067C71' }}>{data.title}</h6>
                                                 <p className="text-muted text-start title-content-2" style={{ flexGrow: 1 }}>
                                                     {typeof data.content === "string" ? (data.content.length > 140 ? data.content.slice(0, 140) + "…" : data.content) : ""}
                                                 </p>
@@ -1090,7 +1088,7 @@ const Home = () => {
                                                     })}
                                                 </p>
 
-                                                <h1 className="h6 text-start title-line-1" style={{ fontSize: 14 }}>
+                                                <h1 className="h6 text-start title-line-1" style={{ fontSize: 14, color: "#067C71" }}>
                                                     {data.title.length > 60 ? data.title.slice(0, 60) + "…" : data.title}
                                                 </h1>
 

@@ -306,7 +306,7 @@ const ImageSlider = () => {
     };
 
     const itemsArr = filteredData?.data || [];
-    const cardWindowsDesktop = makeSlidingWindows(itemsArr, 5);
+    const cardWindowsDesktop = makeSlidingWindows(itemsArr, 4);
     const cardWindowsMobile = makeSlidingWindows(itemsArr, 4);
 
     // Handlers for desktop and mobile carousel navigation (move by one card)
@@ -367,7 +367,7 @@ const ImageSlider = () => {
                                                 alt={item.caption || `photo-${item.id}`}
                                                 style={{
                                                     height: isMobile ? "260px" : "760px",
-                                                    objectFit: "cover",
+                                                    objectFit: "contain",
                                                 }}
                                             />
                                         </Carousel.Item>
@@ -708,7 +708,7 @@ const ImageSlider = () => {
                                             <div className="col-md-2"></div>
 
                                             {/* All Button */}
-                                            <div className="col-md-1 py-2" key="all">
+                                            {/* <div className="col-md-1 py-2" key="all">
                                                 <button
                                                     onClick={() => setSelectedSchoolType(null)}
                                                     className="btn text-white w-100 d-flex justify-content-center align-items-center text-center"
@@ -727,7 +727,7 @@ const ImageSlider = () => {
                                                 >
                                                     ઓલ સ્કૂલ
                                                 </button>
-                                            </div>
+                                            </div> */}
 
                                             {/* School Type Buttons */}
                                             {schoolTypes.length > 0 ? schoolTypes.map((type, i) => (
@@ -756,7 +756,7 @@ const ImageSlider = () => {
                                         </div>
                                         <div className="row justify-content-center">
                                             {chunk.map((data) => (
-                                                <div key={data.id} className="col-md-2 p-1 mb-5">
+                                                <div key={data.id} className="col-md-2 School_Card p-1 mb-5">
                                                     <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
                                                         <div
                                                             className="shadow-sm h-100 d-flex flex-column justify-content-between align-items-center text-center"
@@ -838,7 +838,7 @@ const ImageSlider = () => {
                                             <div className="d-flex d-md-none py-3 overflow-auto gap-2 px-1" style={{ scrollbarWidth: "none" }}>
 
                                                 {/* All Button */}
-                                                <button
+                                                {/* <button
                                                     onClick={() => setSelectedSchoolType(null)}
                                                     className="btn text-white flex-shrink-0"
                                                     style={{
@@ -852,7 +852,7 @@ const ImageSlider = () => {
                                                     }}
                                                 >
                                                     ઓલ સ્કૂલ
-                                                </button>
+                                                </button> */}
 
                                                 {/* School Type Buttons */}
                                                 {schoolTypes.map((type, i) => (
@@ -884,14 +884,14 @@ const ImageSlider = () => {
                                                                     borderRadius: "12px",
                                                                     padding: "10px",
                                                                     backgroundColor: "#fff",
-                                                                    height: "200px",
+                                                                    height: "180px",
                                                                     justifyContent: "space-between",
                                                                 }}
                                                             >
                                                                 <div
                                                                     style={{
                                                                         width: "100%",
-                                                                        height: "100px",
+                                                                        height: "auto",
                                                                         display: "flex",
                                                                         alignItems: "center",
                                                                         justifyContent: "center",
@@ -932,7 +932,7 @@ const ImageSlider = () => {
                                                                 <span
                                                                     className="fw-bold text-dark small"
                                                                     style={{
-                                                                        fontSize: "12px",
+                                                                        fontSize: "10px",
                                                                         minHeight: "32px",
                                                                         display: "flex",
                                                                         alignItems: "center",
