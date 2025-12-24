@@ -605,63 +605,65 @@ const Home = () => {
                         </div>
                     </div>
                     {/* Desktop View */}
-                    <div className="d-none d-md-block" style={{ height: '500px' }}>
+                    <div className="d-none d-md-block">
+                        {/* Filter Buttons - Outside Carousel */}
+                        <div className="row justify-content-center align-items-center mb-4">
+                            {/* All Button */}
+                            <div className="col-auto">
+                                <button
+                                    onClick={() => setSelectedSchoolType(null)}
+                                    className="btn text-white"
+                                    style={{
+                                        backgroundColor: selectedSchoolType === null ? "#EFA325" : "#038176",
+                                        border: `2px solid ${selectedSchoolType === null ? "#067C71" : "#ffffff"}`,
+                                        borderRadius: "22px",
+                                        height: "60px",
+                                        minWidth: "120px",
+                                        whiteSpace: "normal",
+                                        fontSize: "14px",
+                                        transition: "all 0.3s ease",
+                                        boxShadow: selectedSchoolType === null ? "0 0 8px rgba(6, 124, 113, 0.5)" : "none",
+                                        fontWeight: selectedSchoolType === null ? "bold" : "normal",
+                                    }}
+                                >
+                                    ઓલ સ્કૂલ
+                                </button>
+                            </div>
+
+                            {/* School Type Buttons */}
+                            {schoolTypes.length > 0 ? schoolTypes.map((type) => (
+                                <div className="col-auto" key={type}>
+                                    <button
+                                        onClick={() => setSelectedSchoolType(type)}
+                                        className="btn text-white"
+                                        style={{
+                                            backgroundColor: selectedSchoolType === type ? "#EFA325" : "#038176",
+                                            border: `2px solid ${selectedSchoolType === type ? "#067C71" : "#ffffff"}`,
+                                            borderRadius: "22px",
+                                            height: "60px",
+                                            minWidth: "120px",
+                                            whiteSpace: "normal",
+                                            fontSize: "14px",
+                                            transition: "all 0.3s ease",
+                                            boxShadow: selectedSchoolType === type ? "0 0 8px rgba(6, 124, 113, 0.5)" : "none",
+                                            fontWeight: selectedSchoolType === type ? "bold" : "normal",
+                                        }}
+                                    >{schoolTypeLabels[type] || type}
+                                    </button>
+                                </div>
+                            )) : null}
+                        </div>
+
+                        {/* Carousel with School Cards Only */}
                         {cardWindowsDesktop.length > 0 ? (
                             cardWindowsDesktop.map((chunk, index) => (
-                                <div key={index} className={`carousel-item ${index === activeDesktopIndex ? "active" : ""}`}>
-                                    <div className="col-md-12 d-flex justify-content-center align-items-center mb-3 flex-wrap gap-2">
-                                        <div className="col-md-2"></div>
-
-                                        {/* All Button */}
-                                        <div className="col-md-1 py-2" key="all">
-                                            <button
-                                                onClick={() => setSelectedSchoolType(null)}
-                                                className="btn text-white w-100 d-flex justify-content-center align-items-center text-center"
-                                                style={{
-                                                    backgroundColor: selectedSchoolType === null ? "#EFA325" : "#038176",
-                                                    border: `2px solid ${selectedSchoolType === null ? "#067C71" : "#ffffff"}`,
-                                                    borderRadius: "22px",
-                                                    height: "60px",
-                                                    whiteSpace: "normal",
-                                                    fontSize: "14px",
-                                                    gap: "15px",
-                                                    transition: "all 0.3s ease",
-                                                    boxShadow: selectedSchoolType === null ? "0 0 8px rgba(6, 124, 113, 0.5)" : "none",
-                                                    fontWeight: selectedSchoolType === null ? "bold" : "normal",
-                                                }}
-                                            >
-                                                ઓલ સ્કૂલ
-                                            </button>
-                                        </div>
-
-                                        {/* School Type Buttons */}
-                                        {schoolTypes.length > 0 ? schoolTypes.map((type) => (
-                                            <div className="col-md-1" key={type}>
-                                                <button
-                                                    onClick={() => setSelectedSchoolType(type)}
-                                                    className="btn text-white w-100 d-flex justify-content-center align-items-center text-center"
-                                                    style={{
-                                                        backgroundColor: selectedSchoolType === type ? "#EFA325" : "#038176",
-                                                        border: `2px solid ${selectedSchoolType === type ? "#067C71" : "#ffffff"}`,
-                                                        borderRadius: "22px",
-                                                        height: "60px",
-                                                        whiteSpace: "normal",
-                                                        fontSize: "14px",
-                                                        gap: "15px",
-                                                        transition: "all 0.3s ease",
-                                                        boxShadow: selectedSchoolType === type ? "0 0 8px rgba(6, 124, 113, 0.5)" : "none",
-                                                        fontWeight: selectedSchoolType === type ? "bold" : "normal",
-                                                    }}
-                                                >{schoolTypeLabels[type] || type}
-                                                </button>
-                                            </div>
-                                        )) : null}
-
-                                        <div className="col-md-2"></div>
-                                    </div>
-                                    <div className="row justify-content-center">
+                                <div
+                                    key={index}
+                                    className={`${index === activeDesktopIndex ? "" : "d-none"}`}
+                                >
+                                    <div className="row justify-content-center g-3 mb-4">
                                         {chunk.map((data) => (
-                                            <div key={data.id} className="col-md-2 p-1 mb-5">
+                                            <div key={data.id} className="col-md-2 col-lg-2">
                                                 <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
                                                     <div
                                                         className="shadow-sm h-100 d-flex flex-column justify-content-between align-items-center text-center"
@@ -669,6 +671,7 @@ const Home = () => {
                                                             borderRadius: "15px",
                                                             padding: "20px",
                                                             backgroundColor: "#fff",
+                                                            minHeight: "240px",
                                                         }}
                                                     >
                                                         {data.logo ? (
@@ -676,12 +679,12 @@ const Home = () => {
                                                                 src={secureUrl(data.logo)}
                                                                 alt="logo School"
                                                                 className="rounded-1 mb-3"
-                                                                style={{ height: "150px", objectFit: "contain" }}
+                                                                style={{ height: "150px", width: "100%", objectFit: "contain" }}
                                                                 loading="lazy"
                                                             />
                                                         ) : (
                                                             <div
-                                                                className="rounded-1 d-flex align-items-center justify-content-center"
+                                                                className="rounded-1 d-flex align-items-center justify-content-center mb-3"
                                                                 style={{
                                                                     width: "100%",
                                                                     height: "150px",
@@ -695,42 +698,43 @@ const Home = () => {
                                                                 Ahir Samaj
                                                             </div>
                                                         )}
-                                                        <span className="fw-bold text-dark">{data.name}</span>
+                                                        <span className="fw-bold text-dark" style={{ fontSize: "14px" }}>{data.name}</span>
                                                     </div>
                                                 </Link>
                                             </div>
                                         ))}
                                     </div>
-
-                                    <div className="row">
-                                        <div className="col-12 d-flex justify-content-center">
-                                            <div className="d-flex justify-content-center align-items-center gap-2 my-2">
-                                                <button
-                                                    className="btn btn-light rounded shadow"
-                                                    type="button"
-                                                    onClick={handlePrevDesktop}
-                                                    aria-label="Previous slide"
-                                                >
-                                                    <GrFormPrevious aria-hidden="true" />
-                                                </button>
-                                                <button
-                                                    className="btn btn-light rounded shadow"
-                                                    type="button"
-                                                    onClick={handleNextDesktop}
-                                                    aria-label="Next slide"
-                                                >
-                                                    <MdOutlineNavigateNext aria-hidden="true" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             ))
                         ) : (
-                            <div className="carousel-item active text-center py-5">
+                            <div className="text-center py-5">
                                 <p>No results found.</p>
                             </div>
                         )}
+
+                        {/* Navigation Buttons */}
+                        <div className="row">
+                            <div className="col-12 d-flex justify-content-center">
+                                <div className="d-flex justify-content-center align-items-center gap-2 my-3">
+                                    <button
+                                        className="btn btn-light rounded shadow"
+                                        type="button"
+                                        onClick={handlePrevDesktop}
+                                        aria-label="Previous slide"
+                                    >
+                                        <GrFormPrevious aria-hidden="true" />
+                                    </button>
+                                    <button
+                                        className="btn btn-light rounded shadow"
+                                        type="button"
+                                        onClick={handleNextDesktop}
+                                        aria-label="Next slide"
+                                    >
+                                        <MdOutlineNavigateNext aria-hidden="true" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Mobile VIEW */}
@@ -785,12 +789,12 @@ const Home = () => {
                                                 <button
                                                     key={type}
                                                     onClick={() => setSelectedSchoolType(type)}
-                                                    className="btn text-white flex-shrink-0"
+                                                    className="btn flex-shrink-0"
                                                     style={{
                                                         minWidth: "130px",
                                                         height: "50px",
                                                         backgroundColor: selectedSchoolType === type ? "#EFA325" : "#038176",
-                                                        color: selectedSchoolType === null ? "#1A1A1A" : "#FFFFFF", // ✅ FIX
+                                                        color: selectedSchoolType === type ? "#1A1A1A" : "#FFFFFF",
                                                         border: `2px solid ${selectedSchoolType === type ? "#067C71" : "#ffffff"}`,
                                                         borderRadius: "22px",
                                                         fontSize: "13px",
@@ -1079,7 +1083,7 @@ const Home = () => {
                                                         backgroundColor: "#067C71",
                                                         borderRadius: "22px",
                                                         width: "100%",
-                                                        height: 110,
+                                                        height: 130,
                                                     }}
                                                 />
                                             </div>

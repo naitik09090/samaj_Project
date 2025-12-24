@@ -81,6 +81,8 @@ import "./css/About.scss";
 import "./css/Footer.scss";
 import "./css/School.scss";
 import "./css/Apno_Etiyas.scss";
+import "./css/carousel.scss";
+import "./css/utilities.scss";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense, useEffect } from "react";

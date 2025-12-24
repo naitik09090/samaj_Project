@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import calendar from "../images/calendar.png"
 import { FaArrowRightLong } from "react-icons/fa6";
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { SimpleCarousel } from './SimpleCarousel';
+// Bootstrap JS removed - using minimal custom carousel styles instead
 
 
 const About_us = () => {
@@ -73,71 +74,73 @@ const About_us = () => {
                     {/* IMAGE SLIDER (replaces single image) */}
                     <div>
                         {Array.isArray(data?.images) && data.images.length > 0 ? (
-                            <div
-                                id="detailCarousel"
-                                className="carousel slide"
-                                data-bs-ride="carousel"
-                                data-bs-interval="4000"   // ✅ 4 seconds
-                            >
-                                {/* Indicators */}
-                                <div className="carousel-indicators">
-                                    {data.images.map((img, idx) => (
-                                        <button
-                                            key={idx}
-                                            type="button"
-                                            data-bs-target="#detailCarousel"
-                                            data-bs-slide-to={idx}
-                                            className={idx === 0 ? "active" : ""}
-                                            aria-current={idx === 0 ? "true" : undefined}
-                                            aria-label={`Slide ${idx + 1}`}
-                                        />
-                                    ))}
-                                </div>
-
-                                {/* Slides */}
+                            <SimpleCarousel interval={4000} id="detailCarousel">
                                 <div
-                                    className="carousel-inner"
-                                    style={{ borderRadius: 20, overflow: "hidden" }}
+                                    id="detailCarousel"
+                                    className="carousel slide"
+                                    data-bs-ride="carousel"
+                                    data-bs-interval="4000"   // ✅ 4 seconds
                                 >
-                                    {data.images.map((img, idx) => (
-                                        <div
-                                            key={idx}
-                                            className={`carousel-item ${idx === 0 ? "active" : ""}`}
-                                        >
-                                            <img
-                                                src={secureUrl(img.image)}
-                                                className="d-block w-100"
-                                                alt={`slide-${idx}`}
-                                                loading={idx === 0 ? "eager" : "lazy"}
-                                                style={{
-                                                    width: "100%",
-                                                    maxHeight: "600px",
-                                                    objectFit: "contain",
-                                                }}
+                                    {/* Indicators */}
+                                    <div className="carousel-indicators">
+                                        {data.images.map((img, idx) => (
+                                            <button
+                                                key={idx}
+                                                type="button"
+                                                data-bs-target="#detailCarousel"
+                                                data-bs-slide-to={idx}
+                                                className={idx === 0 ? "active" : ""}
+                                                aria-current={idx === 0 ? "true" : undefined}
+                                                aria-label={`Slide ${idx + 1}`}
                                             />
-                                        </div>
-                                    ))}
+                                        ))}
+                                    </div>
+
+                                    {/* Slides */}
+                                    <div
+                                        className="carousel-inner"
+                                        style={{ borderRadius: 20, overflow: "hidden" }}
+                                    >
+                                        {data.images.map((img, idx) => (
+                                            <div
+                                                key={idx}
+                                                className={`carousel-item ${idx === 0 ? "active" : ""}`}
+                                            >
+                                                <img
+                                                    src={secureUrl(img.image)}
+                                                    className="d-block w-100"
+                                                    alt={`slide-${idx}`}
+                                                    loading={idx === 0 ? "eager" : "lazy"}
+                                                    style={{
+                                                        width: "100%",
+                                                        maxHeight: "600px",
+                                                        objectFit: "contain",
+                                                    }}
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Controls */}
+                                    <button
+                                        className="carousel-control-prev"
+                                        type="button"
+                                        data-bs-target="#detailCarousel"
+                                        data-bs-slide="prev"
+                                    >
+                                        <span className="carousel-control-prev-icon d-none" />
+                                    </button>
+
+                                    <button
+                                        className="carousel-control-next"
+                                        type="button"
+                                        data-bs-target="#detailCarousel"
+                                        data-bs-slide="next"
+                                    >
+                                        <span className="carousel-control-next-icon d-none" />
+                                    </button>
                                 </div>
-
-                                {/* Controls */}
-                                <button
-                                    className="carousel-control-prev"
-                                    type="button"
-                                    data-bs-target="#detailCarousel"
-                                    data-bs-slide="prev"
-                                >
-                                    <span className="carousel-control-prev-icon d-none" />
-                                </button>
-
-                                <button
-                                    className="carousel-control-next"
-                                    type="button"
-                                    data-bs-target="#detailCarousel"
-                                    data-bs-slide="next"
-                                >
-                                    <span className="carousel-control-next-icon d-none" />
-                                </button>
-                            </div>
+                            </SimpleCarousel>
                         ) : (
                             <img
                                 src={secureUrl(data?.images?.[0]?.image)}

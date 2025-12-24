@@ -161,11 +161,11 @@ p.text-start {
 }
 
 
-.h2_Tages,
-.p_Tages,
-.slock_Bg {
-  // margin-left: 140px
-}
+// .h2_Tages,
+// .p_Tages,
+// .slock_Bg {
+//   // margin-left: 140px
+// }
 
 .slock_Bg,
 .slock_Bg1 {
@@ -207,6 +207,7 @@ p.text-start {
 
 .Main-Card_1 {
   min-width: 100%;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   border-radius: 20px;
