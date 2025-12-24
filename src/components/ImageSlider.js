@@ -161,7 +161,7 @@ const ImageSlider = () => {
     };
 
     const itemsArr = filteredData?.data || [];
-    const cardWindowsDesktop = makeSlidingWindows(itemsArr, 5);
+    const cardWindowsDesktop = makeSlidingWindows(itemsArr, 6);
     const cardWindowsMobile = makeSlidingWindows(itemsArr, 4);
 
     // Handlers for desktop and mobile carousel navigation (move by one card)
@@ -415,44 +415,50 @@ const ImageSlider = () => {
                                     </div>
                                     <div className="row justify-content-center">
                                         {chunk.map((data) => (
-                                            <div key={data.id} className="col-md-2 p-1 mb-5">
-                                                <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
-                                                    <div
-                                                        className="shadow-sm h-100 d-flex flex-column justify-content-between align-items-center text-center"
-                                                        style={{
-                                                            borderRadius: "15px",
-                                                            padding: "20px",
-                                                            backgroundColor: "#fff",
-                                                        }}
-                                                    >
-                                                        {data.logo ? (
-                                                            <img
-                                                                src={secureUrl(data.logo)}
-                                                                alt="logo School"
-                                                                className="rounded-1 mb-3"
-                                                                style={{ height: "150px", objectFit: "contain" }}
-                                                                loading="lazy"
-                                                            />
-                                                        ) : (
-                                                            <div
-                                                                className="rounded-1 d-flex align-items-center justify-content-center"
-                                                                style={{
-                                                                    width: "100%",
-                                                                    height: "150px",
-                                                                    background: "#ffffff",
-                                                                    color: "#067C71",
-                                                                    fontWeight: 700,
-                                                                    fontSize: "30px",
-                                                                    borderRadius: "8px",
-                                                                }}
-                                                            >
-                                                                Ahir Samaj
-                                                            </div>
-                                                        )}
-                                                        <span className="fw-bold text-dark">{data.name}</span>
-                                                    </div>
-                                                </Link>
-                                            </div>
+                                            <>
+                                                <div key={data.id} className="col-md-4 p-1 mb-5">
+                                                    <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
+                                                        <div
+                                                            className="shadow-sm h-100 d-flex flex-column justify-content-center align-items-center text-center"
+                                                            style={{
+                                                                borderRadius: "15px",
+                                                                padding: "20px",
+                                                                marginLeft: "auto",
+                                                                marginRight: "auto",
+                                                                margin: "auto",
+                                                                width: "450px",
+                                                                backgroundColor: "#fff",
+                                                            }}
+                                                        >
+                                                            {data.logo ? (
+                                                                <img
+                                                                    src={secureUrl(data.logo)}
+                                                                    alt="logo School"
+                                                                    className="rounded-1 mb-3"
+                                                                    style={{ height: "150px", objectFit: "contain" }}
+                                                                    loading="lazy"
+                                                                />
+                                                            ) : (
+                                                                <div
+                                                                    className="rounded-1 d-flex align-items-center justify-content-center"
+                                                                    style={{
+                                                                        width: "100%",
+                                                                        height: "150px",
+                                                                        background: "#ffffff",
+                                                                        color: "#067C71",
+                                                                        fontWeight: 700,
+                                                                        fontSize: "30px",
+                                                                        borderRadius: "8px",
+                                                                    }}
+                                                                >
+                                                                    Ahir Samaj
+                                                                </div>
+                                                            )}
+                                                            <span className="fw-bold text-dark">{data.name}</span>
+                                                        </div>
+                                                    </Link>
+                                                </div>
+                                            </>
                                         ))}
                                     </div>
 

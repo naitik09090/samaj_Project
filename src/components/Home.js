@@ -987,14 +987,7 @@ const Home = () => {
                 <div className="row">
                     <div className="col-12 d-flex justify-content-center">
                         <div className="ratio ratio-16x9" style={{ maxWidth: '1600px', width: '100%', borderRadius: '12px', overflow: 'hidden' }}>
-                            <iframe
-                                src="https://www.youtube-nocookie.com/embed/xby0-Ecnjw0?list=RDxby0-Ecnjw0"
-                                title="Aditya Gadhavi | Shamaliyo"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerPolicy="strict-origin-when-cross-origin"
-                                allowFullScreen
-                            />
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/4m79KoSpfck?si=extlUtA2DZDIHY8L" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
@@ -1083,7 +1076,7 @@ const Home = () => {
                                                         backgroundColor: "#067C71",
                                                         borderRadius: "22px",
                                                         width: "100%",
-                                                        height: 130,
+                                                        height: 110,
                                                     }}
                                                 />
                                             </div>
