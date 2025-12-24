@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import { useRef } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import Kano from '../images/Kano.webp'
 import { PiBuildingsBold } from "react-icons/pi";
 import { MdOutlineNavigateNext } from "react-icons/md";
@@ -23,6 +23,12 @@ const Home = () => {
         [filteredData1, setFilteredData1] = useState([]),
         [school, setSchool] = useState(null),
         { id } = useParams();
+
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        window.scrollTo(0, 0); // 👈 NO smooth, direct jump
+    }, [pathname]);
     // carouselRef = useRef(null),
     // const [searchTerm, setSearchTerm] = useState("");
     // const [selectedOption, setSelectedOption] = useState("All");
@@ -297,6 +303,7 @@ const Home = () => {
         if (activeMobileIndex >= cardWindowsMobile.length) setActiveMobileIndex(0);
     }, [cardWindowsMobile.length]);
 
+
     // apno_Etiyas no data
     const ideologyData = [
         {
@@ -401,7 +408,7 @@ const Home = () => {
                     <div className="d-none d-md-block py-5">
                         {filteredData.map((data, i) =>
                             i === index && (
-                                <div key={data.id} className="row justify-content-center align-items-start g-3" data-bs-interval="2000">
+                                <div key={data.id} className="row justify-content-center align-items-start g-3" data-bs-interval="4000">
                                     <div className='col-md-12'>
                                         <div className='row'>
                                             <div className='col-md-2'></div>
@@ -543,10 +550,10 @@ const Home = () => {
                         <div className="row">
                             {filteredData.map((data, i) =>
                                 i === index && (
-                                    <div key={data.id} className="row h-100 w-100 mb-5 justify-content-center g-0">
+                                    <div key={data.id} className="row h-100 w-100 mb-5 justify-content-center g-0" data-bs-interval="8000">
 
                                         <div className="col-12 col-sm-12 h-100">
-                                            <div className="slock_Bg1 text-center p-4 ">
+                                            <div className="slock_Bg1 text-center p-4">
                                                 <b className="b_Tages1 w-100 p-2 mb-3">
                                                     (अध्याय {data.chapter}, श्लोक {data.verse})
                                                 </b>
@@ -597,9 +604,9 @@ const Home = () => {
                             </div>
 
                             <div className="col-md-2 text-end">
-                                <a href='/ImageSlider'>
+                                <a href='/Our_Schools'>
                                     <button type="button" className="btn btn-success">
-                                        View All
+                                        સ્કૂલ
                                     </button>
                                 </a>
                             </div>
@@ -664,17 +671,19 @@ const Home = () => {
                                 >
                                     <div className="row justify-content-center g-3 mb-4">
                                         {chunk.map((data) => (
-                                            <div key={data.id} className="col-md-3 col-lg-2 School_Card">
+                                            <div key={data.id} className="col-md-3 col-lg-3">
                                                 <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
                                                     <div
-                                                        className="h-100 d-flex flex-column justify-content-between align-items-center text-center"
+                                                        className="h-100 School_Card m-1 d-flex flex-column justify-content-between align-items-center text-center"
                                                         style={{
                                                             borderRadius: "15px",
                                                             padding: "20px",
                                                             backgroundColor: "#fff",
-                                                            minHeight: "240px",
+                                                            minHeight: "auto",
+                                                            cursor: "pointer",
                                                         }}
                                                     >
+
                                                         {data.logo ? (
                                                             <img
                                                                 src={secureUrl(data.logo)}
@@ -748,9 +757,9 @@ const Home = () => {
                             </div>
 
                             <div className="col-md-12 text-center">
-                                <a href='/ImageSlider'>
+                                <a href='/Our_Schools'>
                                     <button type="button" className="btn btn-success">
-                                        View All
+                                        સ્કૂલ
                                     </button>
                                 </a>
                             </div>
@@ -811,9 +820,9 @@ const Home = () => {
                                                 <div key={data.id} className="col-6 p-2">
                                                     <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
                                                         <div
-                                                            className="d-flex flex-column align-items-center text-center"
+                                                            className="shadow-sm d-flex flex-column align-items-center text-center"
                                                             style={{
-                                                                borderRadius: "22px",
+                                                                borderRadius: "12px",
                                                                 padding: "10px",
                                                                 backgroundColor: "#fff",
                                                                 height: "180px",
@@ -911,7 +920,7 @@ const Home = () => {
                 <div className="row align-items-center">
                     {/* LEFT TEXT SECTION */}
                     <div className="col-md-12 mb-5">
-                        <h1 className="fw-bold text-center">Ideology <br /> (અમારી વિચારસરણી)</h1>
+                        <h1 className="fw-bold text-center py-2" style={{ color: "#067C71" }}>Ideology <br /> (અમારી વિચારસરણી)</h1>
                         <p className="text-center">Our ideology is built on the principles that have guided the Ahir community for generations — <b> Unity, Education, Culture, and Service.</b></p>
                         <p className="text-center">We believe that a strong community is created when every member grows together, supports each other,
                             and preserves the values passed down by our ancestors.</p>
@@ -972,7 +981,7 @@ const Home = () => {
                             <img
                                 src={Kano?.replace(/^http:\/\//i, "https://")}
                                 alt="Lord Krishna"
-                                style={{ borderRadius: "16px", height:"400px", width:"auto" }}
+                                style={{ borderRadius: "16px", height: "400px", width: "auto" }}
                                 loading="lazy"
                             />
                         </picture>
@@ -994,7 +1003,7 @@ const Home = () => {
             <div className='container'>
                 <div className='row'>
                     <div className='col-md-12 justify-content-center text-center'>
-                        <h1>લેટેસ્ટ ન્યૂઝ</h1>
+                        <h1 className="fw-bold text-center py-2" style={{ color: "#067C71" }}>લેટેસ્ટ ન્યૂઝ</h1>
                         {/* ---------------- DESKTOP (md+) - show full grid (4 per row) ---------------- */}
                         <div className="d-none d-md-block">
                             <div className="row py-4">

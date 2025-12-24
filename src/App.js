@@ -125,7 +125,7 @@ function App() {
                 <Route path="/LatestNews" element={<LatestNews />} />
                 <Route path="/latest/:id" element={<Latest />} />
                 <Route path="/school/:id" element={<School />} />
-                <Route path="/ImageSlider" element={<ImageSlider />} />
+                <Route path="/Our_Schools" element={<ImageSlider />} />
                 {/* <Route path="/cards" element={<Cards />} /> */}
                 {/* <Route path="/privacy-policy" element={<Privacy />} /> */}
                 {/* <Route path="/about" element={<About />} /> */}

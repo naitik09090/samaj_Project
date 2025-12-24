@@ -542,7 +542,7 @@ const About_us = () => {
                                                                 })}
                                                             </p>
 
-                                                            <h2 className="h6" style={{ fontSize: 14, color: "#067C71" }}>
+                                                            <h2 className="h6" style={{ fontSize: 14 }}>
                                                                 {newsItem.title.length > 60 ? newsItem.title.slice(0, 20) + "…" : newsItem.title}
                                                             </h2>
 

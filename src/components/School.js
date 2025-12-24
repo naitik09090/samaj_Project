@@ -339,11 +339,32 @@ const ImageSlider = () => {
         if (activeMobileIndex >= cardWindowsMobile.length) setActiveMobileIndex(0);
     }, [cardWindowsMobile.length]);
 
+    const handleSchoolClick = (schoolData) => {
+        setSchool(schoolData);
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    };
+
+
     return (
         <div className="container-fluid w-100">
             {school && (
-                <h3 className="text-center mb-3" style={{ fontWeight: 600, fontSize: "35px", color: "#067C71" }}>{school?.name}</h3>
+                <h3
+                    className="text-center mb-3"
+                    id="school_Logo"
+                    style={{
+                        fontWeight: 600,
+                        fontSize: "35px",
+                        color: "#067C71",
+                    }}
+                >
+                    {school.name}
+                </h3>
             )}
+
             {/* Carousel */}
             <div className="container-fluid">
                 <div className="overflow-hidden">
@@ -756,9 +777,10 @@ const ImageSlider = () => {
                                         </div>
                                         <div className="row justify-content-center">
                                             {chunk.map((data) => (
-                                                <div key={data.id} className="col-md-2 School_Card p-1 mb-5">
+                                                <div key={data.id} className="col-md-2 School_Card m-1 p-1 mb-5">
                                                     <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
                                                         <div
+                                                            onClick={() => handleSchoolClick(data)}
                                                             className="shadow-sm h-100 d-flex flex-column justify-content-between align-items-center text-center"
                                                             style={{
                                                                 borderRadius: "15px",
@@ -879,15 +901,18 @@ const ImageSlider = () => {
                                                     <div key={data.id} className="col-6 p-2">
                                                         <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
                                                             <div
-                                                                className="shadow-sm d-flex flex-column align-items-center text-center"
+                                                                onClick={() => handleSchoolClick(data)}
+                                                                className="d-flex flex-column align-items-center text-center"
                                                                 style={{
-                                                                    borderRadius: "12px",
+                                                                    borderRadius: "22px",
                                                                     padding: "10px",
                                                                     backgroundColor: "#fff",
                                                                     height: "180px",
                                                                     justifyContent: "space-between",
+                                                                    cursor: "pointer",
                                                                 }}
                                                             >
+
                                                                 <div
                                                                     style={{
                                                                         width: "100%",

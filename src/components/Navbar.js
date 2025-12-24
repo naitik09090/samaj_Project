@@ -128,7 +128,7 @@ const Navbar = () => {
               <ul className="d-flex gap-3 list-unstyled py-3 m-0">
 
                 <li><a href="/" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>હોમ</a></li>
-                <li><a href="/ImageSlider" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>સ્કૂલ</a></li>
+                <li><a href="/Our_Schools" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>સ્કૂલ</a></li>
                 <li><a href="/LatestNews" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>લેટેસ્ટ ન્યૂઝ</a></li>
                 {/* <li><a href="/about" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>અબાઉટ</a></li> */}
                 <li><a href="/Apno_Etiyas" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>આપણો ઈતિહાસ</a></li>
@@ -167,7 +167,7 @@ const Navbar = () => {
               >
                 <ul className="list-unstyled mb-2">
                   <li className="mb-2"><a href="/" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>હોમ</a></li>
-                  <li className="mb-2"><a href="/ImageSlider" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>સ્કૂલ</a></li>
+                  <li className="mb-2"><a href="/Our_Schools" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>સ્કૂલ</a></li>
                   <li className="mb-2"><a href="/LatestNews" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>લેટેસ્ટ ન્યૂઝ</a></li>
                   {/* <li className="mb-2"><a href="/about" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>અબાઉટ</a></li> */}
                   <li className="mb-2"><a href="/Apno_Etiyas" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>આપણો ઈતિહાસ</a></li>
