@@ -150,6 +150,7 @@ const ImageSlider = () => {
     // Search API call with school_type and search term
     useEffect(() => {
         if (!searchTerm.trim()) {
+            console.log(setSearchTerm);
             // If no search term, use the type filter logic
             const all = data1?.data || [];
             if (selectedSchoolType == null) {

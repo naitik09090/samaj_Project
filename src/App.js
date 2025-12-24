@@ -1,5 +1,3 @@
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import "bootstrap/dist/js/bootstrap.bundle.min.js";
 // import "./App.scss";
 // import "./css/Navbar.scss";
 // import "./css/Home.scss";
@@ -74,8 +72,6 @@
 //   );
 // }
 
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import "bootstrap/dist/js/bootstrap.bundle.min.js";
 // export default App;
 import "./App.scss";
 import "./css/Navbar.scss";
@@ -99,11 +95,11 @@ const LatestNews = lazy(() => import("./components/LatestNews"));
 const Latest = lazy(() => import("./components/Latest"));
 const School = lazy(() => import("./components/School"));
 const ImageSlider = lazy(() => import("./components/ImageSlider"));
-const Cards = lazy(() => import("./components/Cards"));
-const Privacy = lazy(() => import("./components/Privacy"));
+// const Cards = lazy(() => import("./components/Cards"));
+// const Privacy = lazy(() => import("./components/Privacy"));
 // const About = lazy(() => import("./components/About"));
-const Terms = lazy(() => import("./components/Terms"));
-const Contact = lazy(() => import("./components/Contact"));
+// const Terms = lazy(() => import("./components/Terms"));
+// const Contact = lazy(() => import("./components/Contact"));
 const ApnoEtiyas = lazy(() => import("./components/Apno_Etiyas"));
 
 function App() {
@@ -130,11 +126,11 @@ function App() {
                 <Route path="/latest/:id" element={<Latest />} />
                 <Route path="/school/:id" element={<School />} />
                 <Route path="/ImageSlider" element={<ImageSlider />} />
-                <Route path="/cards" element={<Cards />} />
-                <Route path="/privacy-policy" element={<Privacy />} />
+                {/* <Route path="/cards" element={<Cards />} /> */}
+                {/* <Route path="/privacy-policy" element={<Privacy />} /> */}
                 {/* <Route path="/about" element={<About />} /> */}
-                <Route path="/terms" element={<Terms />} />
-                <Route path="/contact" element={<Contact />} />
+                {/* <Route path="/terms" element={<Terms />} /> */}
+                {/* <Route path="/contact" element={<Contact />} /> */}
                 <Route path="/Apno_Etiyas" element={<ApnoEtiyas />} />
               </Routes>
             </Suspense>

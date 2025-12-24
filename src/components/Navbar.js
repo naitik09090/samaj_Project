@@ -30,9 +30,9 @@ const Navbar = () => {
     zIndex: 3000,
     position: "fixed",
     backgroundColor: isScrolled ? "#067C71" : "#ffffff",
-    border: "1px solid #057c71",
-    borderRadius: isScrolled ? "0px 0px 40px 40px" : "22px",
-    height: isScrolled ? "65px" : "auto",
+    border: isScrolled ? "1px solid #057c71" : "1px solid #ffffff",
+    borderRadius: isScrolled ? "0px 0px 22px 22px" : "22px",
+    height: isScrolled ? "55px" : "auto",
     paddingLeft: "0px",
     paddingRight: "20px",
     transition: "all 0.3s ease"
@@ -145,7 +145,7 @@ const Navbar = () => {
                 aria-label="Open menu"
               >
                 <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
-                  <path d="M3 7h24M3 14h24M3 21h24" stroke="black" strokeWidth="2" />
+                  <path d="M3 7h24M3 14h24M3 21h24" stroke={isScrolled ? "#FFFFFF" : "#067C71"} strokeWidth="2" />
                 </svg>
               </button>
 
@@ -157,8 +157,12 @@ const Navbar = () => {
                 className="text-center p-4"
                 style={{
                   display: menuOpen ? "block" : "none",
-                  borderTopLeftRadius: 10,
-                  borderTopRightRadius: 10,
+                  // borderTopLeftRadius: 10,
+                  // borderTopRightRadius: 10,
+                  backgroundColor: isScrolled ? "#067C71" : "#ffffff",
+                  width: isScrolled ? "400px" : "auto",
+                  height: isScrolled ? "auto" : "auto",
+                  borderRadius: isScrolled ? "0px 0px 22px 22px" : "0px 0px 22px 22px",
                 }}
               >
                 <ul className="list-unstyled mb-2">

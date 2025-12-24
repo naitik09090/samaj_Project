@@ -918,10 +918,10 @@ const About_us = () => {
 
     const [selectedId, setSelectedId] = useState(Data_Main[0]?.id || null);
 
-    const selectedItem =
-        Data_Main.find(d => d.id === selectedId) || Data_Main[0];
+    const selectedItem = Data_Main.find(d => d.id === selectedId) || Data_Main[0];
 
     const getListItems = (html = "") => {
+        console.log(setOpenSidebar);
         const matches = [...html.matchAll(/<li>(.*?)<\/li>/gi)];
         return matches.map(m => m[1].trim()).filter(Boolean);
     };

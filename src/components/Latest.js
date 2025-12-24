@@ -6,13 +6,14 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import calendar from "../images/calendar.png"
 import { FaArrowRightLong } from "react-icons/fa6";
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
 
 const About_us = () => {
     const [data4, setData4] = useState([]);
     const { id } = useParams();
     const [data, setData] = useState(null);
     const [featuredId, setFeaturedId] = useState(null);
-
     const URL = "https://ahirsamajbe-gnapdbcbbzdcabc2.centralindia-01.azurewebsites.net";
 
 
@@ -29,7 +30,7 @@ const About_us = () => {
                 }
             })
             .catch((err) => console.error(err));
-    }, []);
+    }, [featuredId]);
 
     useEffect(() => {
         // Use id from URL, or default to 1
@@ -72,11 +73,17 @@ const About_us = () => {
                     {/* IMAGE SLIDER (replaces single image) */}
                     <div>
                         {Array.isArray(data?.images) && data.images.length > 0 ? (
-                            <div id="detailCarousel" className="carousel slide" data-bs-ride="carousel">
+                            <div
+                                id="detailCarousel"
+                                className="carousel slide"
+                                data-bs-ride="carousel"
+                                data-bs-interval="4000"   // ✅ 4 seconds
+                            >
+                                {/* Indicators */}
                                 <div className="carousel-indicators">
                                     {data.images.map((img, idx) => (
                                         <button
-                                            key={idx.id}
+                                            key={idx}
                                             type="button"
                                             data-bs-target="#detailCarousel"
                                             data-bs-slide-to={idx}
@@ -87,13 +94,21 @@ const About_us = () => {
                                     ))}
                                 </div>
 
-                                <div className="carousel-inner" style={{ borderRadius: 20, overflow: "hidden" }}>
+                                {/* Slides */}
+                                <div
+                                    className="carousel-inner"
+                                    style={{ borderRadius: 20, overflow: "hidden" }}
+                                >
                                     {data.images.map((img, idx) => (
-                                        <div key={idx.id} className={`carousel-item ${idx === 0 ? "active" : ""}`}>
+                                        <div
+                                            key={idx}
+                                            className={`carousel-item ${idx === 0 ? "active" : ""}`}
+                                        >
                                             <img
                                                 src={secureUrl(img.image)}
                                                 className="d-block w-100"
                                                 alt={`slide-${idx}`}
+                                                loading={idx === 0 ? "eager" : "lazy"}
                                                 style={{
                                                     width: "100%",
                                                     maxHeight: "600px",
@@ -104,13 +119,14 @@ const About_us = () => {
                                     ))}
                                 </div>
 
+                                {/* Controls */}
                                 <button
                                     className="carousel-control-prev"
                                     type="button"
                                     data-bs-target="#detailCarousel"
                                     data-bs-slide="prev"
                                 >
-                                    <span className="carousel-control-prev-icon"></span>
+                                    <span className="carousel-control-prev-icon d-none" />
                                 </button>
 
                                 <button
@@ -119,9 +135,8 @@ const About_us = () => {
                                     data-bs-target="#detailCarousel"
                                     data-bs-slide="next"
                                 >
-                                    <span className="carousel-control-next-icon"></span>
+                                    <span className="carousel-control-next-icon d-none" />
                                 </button>
-
                             </div>
                         ) : (
                             <img
@@ -137,6 +152,7 @@ const About_us = () => {
                             />
                         )}
                     </div>
+
 
                     {/* DATE */}
                     <p className="text-start text-muted mt-2">
@@ -183,7 +199,7 @@ const About_us = () => {
                     </div> */}
                 {/* Replace the narrow sidebar block with a full-width grid showing 4 cards per row */}
                 <div className='col-12'>
-                    <h1 className='text-center mb-4' style={{fontWeight:'500'}}>મોર ન્યૂઝ</h1>
+                    <h1 className='text-center mb-4' style={{ fontWeight: '500' }}>મોર ન્યૂઝ</h1>
                 </div>
                 <div className='col-12'>
 
@@ -202,6 +218,8 @@ const About_us = () => {
                                             <img
                                                 src={secureUrl(item.images?.[0]?.image)}
                                                 alt="Latest News"
+                                                loading="lazy"
+                                                decoding="async"
                                                 style={{
                                                     height: "140px",
                                                     width: "100%",
@@ -270,6 +288,8 @@ const About_us = () => {
                                                 className="Main-Card_2 mb-2"
                                                 // alt={`${item.name} image`}
                                                 alt='Mobile View Latest News'
+                                                loading="lazy"
+                                                decoding="async"
                                                 style={{
                                                     objectFit: "contain",
                                                     backgroundColor: "#067C71",

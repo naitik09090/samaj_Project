@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+// import React, { useEffect } from "react";
 
 export default function TermsConditions() {
   // Inject Bootstrap 5 and Google Font

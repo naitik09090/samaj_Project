@@ -7,7 +7,6 @@ import { MdOutlineNavigateNext } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
 import { FaArrowRightLong } from "react-icons/fa6";
 import calendar from "../images/calendar.png"
-// import Carousel from "bootstrap/js/dist/carousel";
 
 
 
@@ -15,17 +14,17 @@ const Home = () => {
     const [data1, setData1] = useState([]),
         [data2, setData2] = useState([]),
         [slock, setSlock] = useState([]),
-        // carouselRef = useRef(null),
         [index, setIndex] = useState(0),
         [data4, setData4] = useState([]),
         [schoolTypes, setSchoolTypes] = useState([]),
         [selectedSchoolType, setSelectedSchoolType] = useState(null),
+        [activeDesktopIndex, setActiveDesktopIndex] = useState(0),
+        [activeMobileIndex, setActiveMobileIndex] = useState(0),
+        [filteredData1, setFilteredData1] = useState([]),
+        [school, setSchool] = useState(null),
         { id } = useParams();
-    const [activeDesktopIndex, setActiveDesktopIndex] = useState(0);
-    const [activeMobileIndex, setActiveMobileIndex] = useState(0);
+    // carouselRef = useRef(null),
     // const [searchTerm, setSearchTerm] = useState("");
-    const [filteredData1, setFilteredData1] = useState([]);
-    const [school, setSchool] = useState(null);
     // const [selectedOption, setSelectedOption] = useState("All");
     // const [subOption, setSubOption] = useState("");
 
@@ -347,6 +346,15 @@ const Home = () => {
                                         borderRadius: "22px"
                                     }}
                                 />
+                                {/* <picture>
+                                    <source srcSet={secureUrl(data.image_webp)} type="image/webp" />
+                                    <img
+                                        src={secureUrl(data.image)}
+                                        alt={data.title}
+                                        loading="lazy"
+                                        style={{ width: "100%", height: "auto", objectFit: "cover", borderRadius: "22px" }}
+                                    />
+                                </picture> */}
 
                             </div>
                         ))}
