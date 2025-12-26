@@ -36,7 +36,7 @@ const Home = () => {
 
     const filteredData = slock?.data?.filter(t => t.id >= 1 && t.id <= 4) ?? [];
 
-     // Counter animation from 1 to 100
+    // Counter animation from 1 to 100
     useEffect(() => {
         const duration = 2000; // 2 seconds
         const steps = 100;
@@ -356,14 +356,27 @@ const Home = () => {
                 <div className="container-fluid mb-3">
                     {Array.isArray(data2) &&
                         data2.map((data, idx) => (
-                            <div className="d-flex flex-column justify-content-center align-items-center"
-                                style={{ height: "100%" }} key={data?.id ?? idx}>
+                            <div className="d-flex flex-column justify-content-center align-items-center" key={data?.id ?? idx}>
 
+                                {/* <img
+                                    src={secureUrl(data.image)}
+                                    alt={data.title}
+                                    className="d-block slideshow-img"
+                                    loading="lazy"
+                                    width="364"
+                                    height="364"
+                                    style={{
+                                        objectFit: "cover",
+                                        borderRadius: "22px"
+                                    }}
+                                /> */}
                                 <img
                                     src={secureUrl(data.image)}
                                     alt={data.title}
                                     className="d-block"
                                     loading="eager"
+                                    height="364px"
+                                    width="364px"
                                     style={{
                                         width: "100%",
                                         height: "auto",
@@ -703,6 +716,15 @@ const Home = () => {
                                                     >
 
                                                         {data.logo ? (
+                                                            // <img
+                                                            //     src={secureUrl(data.logo)}
+                                                            //     alt="logo School"
+                                                            //     className="rounded-1 mb-3 school-logo-img"
+                                                            //     width="250"
+                                                            //     height="150"
+                                                            //     style={{ objectFit: "contain" }}
+                                                            //     loading="lazy"
+                                                            // />
                                                             <img
                                                                 src={secureUrl(data.logo)}
                                                                 alt="logo School"
