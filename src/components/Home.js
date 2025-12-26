@@ -389,20 +389,26 @@ const Home = () => {
                                         borderRadius: "22px"
                                     }}
                                 /> */}
-                                <img
-                                    src={secureUrl(data.image)}
-                                    alt={data.title}
-                                    className="d-block"
-                                    loading="eager"
-                                    height="364px"
-                                    width="364px"
-                                    style={{
-                                        width: "100%",
-                                        height: "auto",
-                                        objectFit: "cover",
-                                        borderRadius: "22px"
-                                    }}
-                                />
+                                <picture>
+                                    <source
+                                        srcSet={secureUrl(data.image).replace(/\.(png|jpg|jpeg)$/i, '.webp')}
+                                        type="images/webp"
+                                    />
+                                    <img
+                                        src={secureUrl(data.image)}
+                                        alt={data.title}
+                                        className="d-block"
+                                        loading="eager"
+                                        width="364"
+                                        height="364"
+                                        style={{
+                                            width: "100%",
+                                            height: "auto",
+                                            objectFit: "cover",
+                                            borderRadius: "22px"
+                                        }}
+                                    />
+                                </picture>
                                 {/* <picture>
                                     <source srcSet={secureUrl(data.image_webp)} type="image/webp" />
                                     <img
@@ -744,13 +750,27 @@ const Home = () => {
                                                             //     style={{ objectFit: "contain" }}
                                                             //     loading="lazy"
                                                             // />
-                                                            <img
-                                                                src={secureUrl(data.logo)}
-                                                                alt="logo School"
-                                                                className="rounded-1 mb-3"
-                                                                style={{ height: "150px", width: "100%", objectFit: "contain" }}
-                                                                loading="lazy"
-                                                            />
+                                                            // <img
+                                                            //     src={secureUrl(data.logo)}
+                                                            //     alt="logo School"
+                                                            //     className="rounded-1 mb-3"
+                                                            //     style={{ height: "150px", width: "100%", objectFit: "contain" }}
+                                                            //     loading="lazy"
+                                                            // />
+                                                            <picture>
+                                                                <source
+                                                                    srcSet={secureUrl(data.logo).replace(/\.(png|jpg|jpeg)$/i, '.webp')}
+                                                                    type="images/webp"
+                                                                />
+                                                                <img
+                                                                    src={secureUrl(data.logo)}
+                                                                    alt="logo School"
+                                                                    width="250"
+                                                                    height="150"
+                                                                    loading="lazy"
+                                                                    style={{ height: "150px", width: "100%", objectFit: "contain" }}
+                                                                />
+                                                            </picture>
                                                         ) : (
                                                             <div
                                                                 className="rounded-1 d-flex align-items-center justify-content-center mb-3"
@@ -1015,7 +1035,7 @@ const Home = () => {
                                         <div className="mobile-card">
                                             <div className="content-box">
                                                 <h1
-                                                    dangerouslySetInnerHTML={{ __html: item.title }} className='text-center h4'
+                                                    dangerouslySetInnerHTML={{ __html: item.title }} className='text-center title h4'
                                                 />
 
                                                 {/* <p className="description">
@@ -1070,20 +1090,28 @@ const Home = () => {
                                 {items.map((data) => (
                                     <div className="col-md-6 col-lg-3" key={data.id}>
                                         <div className="Main-Card_1 shadow-sm p-1 h-100 d-flex flex-column">
-                                            <img
-                                                src={secureUrl(data.images[0].image)}
-                                                className="Main-Card_2 mb-2"
-                                                // alt={`${data.name} image`}
-                                                alt='Desktop View Img'
-                                                loading="lazy"
-                                                style={{
-                                                    objectFit: "contain", // fill to full img show
-                                                    backgroundColor: "#ffffff",
-                                                    borderRadius: "20px",
-                                                    width: "100%",
-                                                    height: 200,         // consistent card image height on desktop
-                                                }}
-                                            />
+                                            <picture>
+                                                <source
+                                                    srcSet={secureUrl(data.images[0].image).replace(/\.(png|jpg|jpeg)$/i, '.webp')}
+                                                    type="images/webp"
+                                                />
+                                                <img
+                                                    src={secureUrl(data.images[0].image)}
+                                                    className="Main-Card_2 mb-2"
+                                                    alt="Desktop View Img"
+                                                    width="300"
+                                                    height="200"
+                                                    loading="lazy"
+                                                    style={{
+                                                        objectFit: "contain",
+                                                        backgroundColor: "#ffffff",  // ✅ Correct
+                                                        borderRadius: "20px",        // ✅ Correct
+                                                        width: "100%",               // ✅ Correct
+                                                        height: 200,
+                                                    }}
+                                                />
+                                            </picture>
+
                                             <div className="card-body1 d-flex flex-column" style={{ minHeight: 200 }}>
                                                 <p className="text-start text-muted mb-2" style={{ fontSize: 14 }}>
                                                     <img src={calendar} className="claendar_Icon" loading="lazy" height={18} width={18} alt="calendar" />
@@ -1132,20 +1160,28 @@ const Home = () => {
                                     <div className="col-6" key={data.id}>
                                         <div className="Main-Card_1 p-1 shadow-sm d-flex flex-column">
                                             <div>
-                                                <img
-                                                    src={secureUrl(data.images[0].image)}
-                                                    className="Main-Card_2 mb-1"
-                                                    // alt={`${data.name} image`}
-                                                    alt="Mobile view img"
-                                                    loading="lazy"
-                                                    style={{
-                                                        objectFit: "contain",
-                                                        backgroundColor: "#ffffff",
-                                                        borderRadius: "22px",
-                                                        width: "100%",
-                                                        height: 110,
-                                                    }}
-                                                />
+                                                <picture>
+                                                    <source
+                                                        srcSet={secureUrl(data.images[0].image).replace(/\.(png|jpg|jpeg)$/i, '.webp')}
+                                                        type="images/webp"
+                                                    />
+                                                    <img
+                                                        src={secureUrl(data.images[0].image)}
+                                                        className="Main-Card_2 mb-1"
+                                                        alt="Mobile view img"
+                                                        width="180"
+                                                        height="110"
+                                                        loading="lazy"
+                                                        style={{
+                                                            objectFit: "contain",
+                                                            backgroundColor: "#ffffff",  // ✅ Correct
+                                                            borderRadius: "22px",        // ✅ Correct
+                                                            width: "100%",               // ✅ Correct
+                                                            height: 110,                 // ✅ Correct
+                                                        }}
+                                                    />
+                                                </picture>
+
                                             </div>
                                             <div className="card-body1 d-flex flex-column" style={{ padding: "8px" }}>
                                                 <p className="text-start text-muted mb-1" style={{ fontSize: 12 }}>
@@ -1192,7 +1228,7 @@ const Home = () => {
                             From Our News & Insights</h1> */}
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     )
 }

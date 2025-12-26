@@ -45,21 +45,21 @@ const Navbar = () => {
       <div className="row F_NAv py-1">
 
         {/* Email */}
-        <div className="col-12 col-md-4 d-flex align-items-center">
+        <div className="col-12 col-md-6 col-lg-4 d-flex align-items-center">
           <b className="email p-2">
             <FiMail className="MSg_Icon" /> contact@ahirsamaj.in
           </b>
         </div>
 
-        <div className="col-md-6 d-none d-md-block"></div>
+        <div className="col-lg-6 d-none d-lg-block"></div>
 
-        {/* Desktop icons (HIDE ON MOBILE) */}
-        <div className="col-md-2 d-none d-md-flex justify-content-end py-2">
+        {/* Desktop icons (HIDE ON MOBILE & TABLET) */}
+        <div className="col-lg-2 d-none d-lg-flex justify-content-end py-2">
 
-          <LuLinkedin className="LiNK_Icon py-0" />
-          <TfiTwitter className="LiNK_Icon py-0" />
-          <FaInstagram className="LiNK_Icon py-0" />
-          <FiFacebook className="LiNK_Icon py-0" />
+          <LuLinkedin type="button" className="LiNK_Icon py-0" />
+          <TfiTwitter type="button" className="LiNK_Icon py-0" />
+          <FaInstagram type="button" className="LiNK_Icon py-0" />
+          <FiFacebook type="button" className="LiNK_Icon py-0" />
 
           {/* Language Button */}
           <div className="position-relative">
@@ -117,14 +117,14 @@ const Navbar = () => {
           <div className="row align-items-center">
 
             {/* LOGO */}
-            <div className="col-6 col-md-3 d-flex align-items-center">
+            <div className="col-6 col-md-4 col-lg-3 d-flex align-items-center">
               <a href="/" className="text-decoration-none">
                 <img src={SamajLogo} alt='Samaj Logo' height={40} width={105} style={{ borderRadius: '30px', paddingTop: isScrolled ? '5px' : '0px' }} />
               </a>
             </div>
 
             {/* ---------------------- DESKTOP MENU ---------------------- */}
-            <div className="col-md-9 d-none d-md-flex justify-content-end">
+            <div className="col-md-8 col-lg-9 d-none d-md-flex justify-content-end">
               <ul className="d-flex gap-3 list-unstyled py-3 m-0">
 
                 <li><a href="/" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }}>હોમ</a></li>
