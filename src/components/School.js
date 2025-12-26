@@ -14,8 +14,6 @@ import wd from "../images/wd.png";
 import email_1 from "../images/Mail_icon.png";
 import phone_1 from "../images/Call_icon.png";
 import Location_icon from "../images/Location_icon.png";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import { Link, useParams } from "react-router-dom";
 
 const ImageSlider = () => {
