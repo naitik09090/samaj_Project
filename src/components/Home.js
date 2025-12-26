@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 // import { useRef } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Kano from '../images/Kano.webp'
@@ -34,36 +34,44 @@ const Home = () => {
     // const [selectedOption, setSelectedOption] = useState("All");
     // const [subOption, setSubOption] = useState("");
 
-    const filteredData = slock?.data?.filter(t => t.id >= 1 && t.id <= 4) ?? [];
+    const filteredData = useMemo(() =>
+        slock?.data?.filter(t => t.id >= 1 && t.id <= 4) ?? [],
+        [slock?.data]
+    );
 
-    // Counter animation from 1 to 100
+    // Counter animation from 1 to 100 (deferred for better performance)
     useEffect(() => {
-        const duration = 2000; // 2 seconds
-        const steps = 100;
-        const stepDuration = duration / steps;
-        let currentStep = 0;
+        // Defer animation by 500ms to prioritize initial render
+        const timeout = setTimeout(() => {
+            const duration = 2000;
+            const steps = 100;
+            const stepDuration = duration / steps;
+            let currentStep = 0;
 
-        const timer = setInterval(() => {
-            currentStep++;
-            setCounter(currentStep);
+            const timer = setInterval(() => {
+                currentStep++;
+                setCounter(currentStep);
 
-            if (currentStep >= steps) {
-                clearInterval(timer);
-            }
-        }, stepDuration);
+                if (currentStep >= steps) {
+                    clearInterval(timer);
+                }
+            }, stepDuration);
 
-        return () => clearInterval(timer);
+            return () => clearInterval(timer);
+        }, 500);
+
+        return () => clearTimeout(timeout);
     }, []);
 
-    // 👉 NEXT
-    const handleNext = () => {
+    // 👉 NEXT (memoized)
+    const handleNext = useCallback(() => {
         setIndex(e => (e + 1) % filteredData.length)
-    };
+    }, [filteredData.length]);
 
-    // 👉 PREV
-    const handlePrev = () => {
+    // 👉 PREV (memoized)
+    const handlePrev = useCallback(() => {
         setIndex(e => 0 === e ? filteredData.length - 1 : e - 1)
-    };
+    }, [filteredData.length]);
 
     // 👉 AUTO-ROTATE EVERY 4 SECONDS
     useEffect(() => {
@@ -105,11 +113,22 @@ const Home = () => {
                 .then((json) => setData2(json.data))
                 .catch((err) => console.error(err));
         };
-        // fetch on first load
+
+        // Fetch on first load
         fetchSlides();
-        // fetch again when screen size changes
-        window.addEventListener("resize", fetchSlides);
-        return () => window.removeEventListener("resize", fetchSlides);
+
+        // Debounce resize handler to reduce main-thread work
+        let resizeTimeout;
+        const debouncedFetchSlides = () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(fetchSlides, 300);
+        };
+
+        window.addEventListener("resize", debouncedFetchSlides);
+        return () => {
+            window.removeEventListener("resize", debouncedFetchSlides);
+            clearTimeout(resizeTimeout);
+        };
     }, []);
 
 
