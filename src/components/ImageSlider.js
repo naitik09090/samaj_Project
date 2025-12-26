@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdOutlineNavigateNext } from "react-icons/md";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ImageSlider = () => {
     const [data1, setData1] = useState([]);
@@ -14,8 +14,6 @@ const ImageSlider = () => {
     // const [value, setValue] = useState("");
 
     const carouselRef = useRef(null);
-    const { id } = useParams();
-    const [school, setSchool] = useState(null);
     const [activeDesktopIndex, setActiveDesktopIndex] = useState(0);
     const [activeMobileIndex, setActiveMobileIndex] = useState(0);
 
@@ -47,12 +45,6 @@ const ImageSlider = () => {
         "CHHATRALAYA": "છત્રાલય",
         "Chhatra Alaya": "છાત્રાલય",
         "Ahir Kalyan Mandal": "આહિર કેળવણી મંડળ",
-    };
-
-    const getSchoolLabel = (type) => {
-        if (!type) return "";
-        const found = Object.keys(schoolTypeLabels).find(k => k.toLowerCase() === String(type).toLowerCase());
-        return schoolTypeLabels[found] || type;
     };
 
     // Update filteredData when selectedSchoolType changes
@@ -91,20 +83,19 @@ const ImageSlider = () => {
             .then(json => setFilteredData(json))
             .catch(err => console.error("Search error:", err));
         console.log(setSearchTerm);
-    }, [searchTerm, selectedSchoolType]);
+    }, [searchTerm, selectedSchoolType, data1]);
 
     // Fetch single school
-    useEffect(() => {
-        if (!id) {
-            setSchool(null);
-            console.log(school);
-            return;
-        }
-        fetch(`${URL}/api/v1/schools/schools/${id}`)
-            .then((res) => res.json())
-            .then((result) => setSchool(result?.data ?? result))
-            .catch((err) => console.error("Error fetching school:", err));
-    }, [id]);
+    // useEffect(() => {
+    //     if (!id) {
+    //         setSchool(null);
+    //         return;
+    //     }
+    //     fetch(`${URL}/api/v1/schools/schools/${id}`)
+    //         .then((res) => res.json())
+    //         .then((result) => setSchool(result?.data ?? result))
+    //         .catch((err) => console.error("Error fetching school:", err));
+    // }, [id]);
 
     // Extract data array (your API returns { data: [...] })
 
@@ -188,11 +179,11 @@ const ImageSlider = () => {
     // Reset active indexes when data length changes
     useEffect(() => {
         if (activeDesktopIndex >= cardWindowsDesktop.length) setActiveDesktopIndex(0);
-    }, [cardWindowsDesktop.length]);
+    }, [cardWindowsDesktop.length, activeDesktopIndex]);
 
     useEffect(() => {
         if (activeMobileIndex >= cardWindowsMobile.length) setActiveMobileIndex(0);
-    }, [cardWindowsMobile.length]);
+    }, [cardWindowsMobile.length, activeMobileIndex]);
 
     return (
         <div className="container-fluid" style={{ borderRadius: "22px" }}>
@@ -366,7 +357,6 @@ const ImageSlider = () => {
                             cardWindowsDesktop.map((chunk, index) => (
                                 <div key={index} className={`content-box2 bG_School carousel-item ${index === activeDesktopIndex ? "active" : ""}`}>
                                     <div className="col-md-12 d-flex justify-content-center align-items-center mb-3 flex-wrap gap-2">
-                                        <div className="col-md-2"></div>
 
                                         {/* All Button */}
                                         {/* <div className="col-md-1 py-2" key="all">
@@ -391,7 +381,7 @@ const ImageSlider = () => {
 
                                         {/* School Type Buttons */}
                                         {schoolTypes.length > 0 ? schoolTypes.map((type, i) => (
-                                            <div className="col-md-1" key={i}>
+                                            <div className="col-md-2" key={i}>
                                                 <button
                                                     onClick={() => setSelectedSchoolType(type)}
                                                     className="btn text-white w-100 d-flex justify-content-center align-items-center text-center"
@@ -411,20 +401,20 @@ const ImageSlider = () => {
                                             </div>
                                         )) : null}
 
-                                        <div className="col-md-2"></div>
                                     </div>
                                     <div className="row justify-content-center">
                                         {chunk.map((data) => (
                                             <>
-                                                <div key={data.id} className="col-md-3 School_Card m-1 p-2 mb-5">
+                                                <div key={data.id} className="col-md-3 col-lg-3 mb-3">
                                                     <Link to={`/school/${data.id}`} className="text-decoration-none text-dark">
                                                         <div
-                                                            className="h-100 d-flex flex-column justify-content-center align-items-center text-center"
+                                                            className="h-100 School_Card d-flex flex-column justify-content-center align-items-center text-center"
                                                             style={{
-                                                                borderRadius: "22px",
-                                                                margin: "auto",
-                                                                width: "auto",
+                                                                borderRadius: "15px",
+                                                                padding: "20px",
                                                                 backgroundColor: "#fff",
+                                                                minHeight: "auto",
+                                                                cursor: "pointer",
                                                             }}
                                                         >
                                                             {data.logo ? (
@@ -432,7 +422,7 @@ const ImageSlider = () => {
                                                                     src={secureUrl(data.logo)}
                                                                     alt="logo School"
                                                                     className="rounded-1 mb-3"
-                                                                    style={{ height: "150px", width: "auto", objectFit: "contain" }}
+                                                                    style={{ height: "150px", objectFit: "contain" }}
                                                                     loading="lazy"
                                                                 />
                                                             ) : (

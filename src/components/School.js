@@ -172,7 +172,7 @@ const ImageSlider = () => {
             .then(res => res.json())
             .then(json => setFilteredData(json))
             .catch(err => console.error("Search error:", err));
-    }, [searchTerm, selectedSchoolType]);
+    }, [searchTerm, selectedSchoolType, data1]);
 
     // 1) Fetch single school by id (safer than fetching whole list and .find)
     // useEffect(() => {
@@ -258,13 +258,13 @@ const ImageSlider = () => {
         return match ? match[1] : null;
     };
 
-    const chunkArray1 = (arr, size) => {
-        const result = [];
-        for (let i = 0; i < arr.length; i += size) {
-            result.push(arr.slice(i, i + size));
-        }
-        return result;
-    };
+    // const chunkArray1 = (arr, size) => {
+    //     const result = [];
+    //     for (let i = 0; i < arr.length; i += size) {
+    //         result.push(arr.slice(i, i + size));
+    //     }
+    //     return result;
+    // };
 
     // const chunkMobileCards = (arr) => {
     //     const result = [];
@@ -276,9 +276,9 @@ const ImageSlider = () => {
 
     // compute filtered list (null = show all)
     // Filter schools by selected school type - if null, show all
-    const filteredSchools = selectedSchoolType
-        ? data1.data?.filter(school => school.school_type === selectedSchoolType) || []
-        : data1.data || [];
+    // const filteredSchools = selectedSchoolType
+    //     ? data1.data?.filter(school => school.school_type === selectedSchoolType) || []
+    //     : data1.data || [];
 
     // sliding windows helper (wrap-around) — we will render windows that shift by 1
     // const makeSlidingWindows = (arr = [], size = 5) => {
@@ -333,11 +333,11 @@ const ImageSlider = () => {
     // Reset active indexes when data length changes
     useEffect(() => {
         if (activeDesktopIndex >= cardWindowsDesktop.length) setActiveDesktopIndex(0);
-    }, [cardWindowsDesktop.length]);
+    }, [cardWindowsDesktop.length, activeDesktopIndex]);
 
     useEffect(() => {
         if (activeMobileIndex >= cardWindowsMobile.length) setActiveMobileIndex(0);
-    }, [cardWindowsMobile.length]);
+    }, [cardWindowsMobile.length, activeMobileIndex]);
 
     const handleSchoolClick = (schoolData) => {
         setSchool(schoolData);
@@ -726,7 +726,6 @@ const ImageSlider = () => {
                                 cardWindowsDesktop.map((chunk, index) => (
                                     <div key={index} className={`carousel-item ${index === activeDesktopIndex ? "active" : ""}`}>
                                         <div className="col-md-12 d-flex justify-content-center align-items-center mb-3 flex-wrap gap-2">
-                                            <div className="col-md-2"></div>
 
                                             {/* All Button */}
                                             {/* <div className="col-md-1 py-2" key="all">
@@ -752,7 +751,7 @@ const ImageSlider = () => {
 
                                             {/* School Type Buttons */}
                                             {schoolTypes.length > 0 ? schoolTypes.map((type, i) => (
-                                                <div className="col-md-1" key={i}>
+                                                <div className="col-md-2" key={i}>
                                                     <button
                                                         onClick={() => setSelectedSchoolType(type)}
                                                         className="btn text-white w-100 d-flex justify-content-center align-items-center text-center"
@@ -773,7 +772,6 @@ const ImageSlider = () => {
                                                 </div>
                                             )) : null}
 
-                                            <div className="col-md-2"></div>
                                         </div>
                                         <div className="row justify-content-center">
                                             {chunk.map((data) => (

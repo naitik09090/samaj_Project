@@ -1,32 +1,27 @@
-const purgecss = require('@fullhuman/postcss-purgecss');
-
 module.exports = {
     plugins: [
-        process.env.NODE_ENV === 'production' &&
-        purgecss({
+        require('@fullhuman/postcss-purgecss')({
             content: [
                 './src/**/*.js',
                 './src/**/*.jsx',
                 './public/index.html',
             ],
-            // Safelist Bootstrap classes that are dynamically added
+            defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
             safelist: {
                 standard: [
-                    'carousel',
-                    'carousel-inner',
-                    'carousel-item',
                     'active',
                     'show',
                     'fade',
-                    'modal',
-                    'modal-backdrop',
                     'collapse',
                     'collapsing',
+                    'carousel-item-next',
+                    'carousel-item-prev',
+                    'carousel-item-start',
+                    'carousel-item-end',
                 ],
-                deep: [/^carousel-/, /^modal-/, /^dropdown-/, /^btn-/, /^col-/],
-                greedy: [/^d-/, /^flex-/, /^justify-/, /^align-/, /^text-/, /^bg-/],
-            },
-            defaultExtractor: (content) => content.match(/[\w-/:]+(?<!:)/g) || [],
-        }),
-    ].filter(Boolean),
+                deep: [/^carousel/, /^modal/, /^dropdown/, /^nav/, /^navbar/],
+                greedy: [/^btn/, /^col/, /^row/, /^container/]
+            }
+        })
+    ]
 };

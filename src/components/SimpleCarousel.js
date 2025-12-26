@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**
  * Lightweight Bootstrap-style Carousel with auto-play
@@ -25,13 +25,13 @@ export const SimpleCarousel = ({ interval = 4000, id, children }) => {
         setActiveIndex(nextIndex);
     };
 
-    const nextSlide = () => {
+    const nextSlide = useCallback(() => {
         goToSlide(activeIndex + 1);
-    };
+    }, [activeIndex]);
 
-    const prevSlide = () => {
+    const prevSlide = useCallback(() => {
         goToSlide(activeIndex - 1);
-    };
+    }, [activeIndex]);
 
     // Auto-play functionality
     useEffect(() => {
@@ -46,7 +46,7 @@ export const SimpleCarousel = ({ interval = 4000, id, children }) => {
                 clearInterval(intervalRef.current);
             }
         };
-    }, [activeIndex, interval]);
+    }, [activeIndex, interval, nextSlide]);
 
     // Update active class on slides
     useEffect(() => {
@@ -121,7 +121,7 @@ export const SimpleCarousel = ({ interval = 4000, id, children }) => {
             if (prevBtn) prevBtn.removeEventListener('click', prevHandler);
             if (nextBtn) nextBtn.removeEventListener('click', nextHandler);
         };
-    }, [activeIndex]);
+    }, [activeIndex, nextSlide, prevSlide]);
 
     return <div ref={carouselRef}>{children}</div>;
 };

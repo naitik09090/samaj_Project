@@ -102,7 +102,7 @@ p.text-start {
 }
 
 .slokaBox {
-  height: 440px;
+  height: 520px;
   border-radius: 45px 22px 22px 45px;
   display: flex;
   flex-direction: column;
@@ -120,19 +120,15 @@ p.text-start {
   flex: 1;
   /* auto adjust space */
   overflow-y: auto;
-  /* scroll if text more */
-  margin: 10px 0;
-  padding-right: 6px;
 }
 
 /* optional: scrollbar nice look */
 .contentArea::-webkit-scrollbar {
-  width: 4px;
+  width: 10px;
 }
 
 .contentArea::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 22px;
+  display: none;
 }
 
 .imgBox {

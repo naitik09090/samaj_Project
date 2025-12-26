@@ -28,7 +28,7 @@ const Footer = () => {
                         <div>
                             <ul className="list-unstyled small text-start footer-links">
                                 <li><a href="/" className="text-white text-decoration-none">હોમ</a></li>
-                                <li><a href="/ImageSlider" className="text-white text-decoration-none">સ્કૂલ</a></li>
+                                <li><a href="/Our_Schools" className="text-white text-decoration-none">સ્કૂલ</a></li>
                                 <li><a href="/LatestNews" className="text-white text-decoration-none">લેટેસ્ટ ન્યૂઝ</a></li>
                                 {/* <li><a href="/about" className="text-white text-decoration-none">અબાઉટ</a></li> */}
                                 <li><a href="/Apno_Etiyas" className="text-white text-decoration-none">આપણો ઈતિહાસ</a></li>
@@ -58,7 +58,7 @@ const Footer = () => {
                         {/* Center Menu */}
                         <ul className="list-unstyled small text-center footer-links">
                             <li className="mb-2"><a href="/" className="text-white text-decoration-none">હોમ</a></li>
-                            <li className="mb-2"><a href="/ImageSlider" className="text-white text-decoration-none">સ્કૂલ</a></li>
+                            <li className="mb-2"><a href="/Our_Schools" className="text-white text-decoration-none">સ્કૂલ</a></li>
                             <li className="mb-2"><a href="/LatestNews" className="text-white text-decoration-none">લેટેસ્ટ ન્યૂઝ</a></li>
                             {/* <li className="mb-2"><a href="/about" className="text-white text-decoration-none">અબાઉટ</a></li> */}
                             <li className="mb-2"><a href="/Apno_Etiyas" className="text-white text-decoration-none">આપણો ઈતિહાસ</a></li>

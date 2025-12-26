@@ -57,6 +57,14 @@ const About_us = () => {
             newsList.unshift(item);
         }
     }
+    const handleSchoolClick = (item) => {
+        setData(item);
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    };
 
     // if (!data) return <h3>Loading...</h3>;
 
@@ -214,6 +222,7 @@ const About_us = () => {
                                 data4.data.slice(0, 4).map((item) => (
                                     <div className="col-auto" key={item.id}> {/* auto width for side-by-side */}
                                         <div
+                                            onClick={() => handleSchoolClick(item)}
                                             className="card shadow-sm rounded-4 p-2"
                                             style={{ width: "220px" }}  // card width
                                         >

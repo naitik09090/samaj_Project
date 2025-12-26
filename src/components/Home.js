@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // import { useRef } from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Kano from '../images/Kano.webp'
 import { PiBuildingsBold } from "react-icons/pi";
 import { MdOutlineNavigateNext } from "react-icons/md";
@@ -21,7 +21,7 @@ const Home = () => {
         [activeDesktopIndex, setActiveDesktopIndex] = useState(0),
         [activeMobileIndex, setActiveMobileIndex] = useState(0),
         [filteredData1, setFilteredData1] = useState([]),
-        [school, setSchool] = useState(null),
+        [counter, setCounter] = useState(0), // Counter for animation
         { id } = useParams();
 
     const { pathname } = useLocation();
@@ -35,6 +35,25 @@ const Home = () => {
     // const [subOption, setSubOption] = useState("");
 
     const filteredData = slock?.data?.filter(t => t.id >= 1 && t.id <= 4) ?? [];
+
+     // Counter animation from 1 to 100
+    useEffect(() => {
+        const duration = 2000; // 2 seconds
+        const steps = 100;
+        const stepDuration = duration / steps;
+        let currentStep = 0;
+
+        const timer = setInterval(() => {
+            currentStep++;
+            setCounter(currentStep);
+
+            if (currentStep >= steps) {
+                clearInterval(timer);
+            }
+        }, stepDuration);
+
+        return () => clearInterval(timer);
+    }, []);
 
     // 👉 NEXT
     const handleNext = () => {
@@ -190,17 +209,16 @@ const Home = () => {
     // }, [selectedSchoolType]);
 
     // Fetch single school
-    useEffect(() => {
-        if (!id) {
-            setSchool(null);
-            console.log(school);
-            return;
-        }
-        fetch(`${URL}/api/v1/schools/schools/${id}`)
-            .then((res) => res.json())
-            .then((result) => setSchool(result?.data ?? result))
-            .catch((err) => console.error("Error fetching school:", err));
-    }, [id]);
+    // useEffect(() => {
+    //     if (!id) {
+    //         setSchool(null);
+    //         return;
+    //     }
+    //     fetch(`${URL}/api/v1/schools/schools/${id}`)
+    //         .then((res) => res.json())
+    //         .then((result) => setSchool(result?.data ?? result))
+    //         .catch((err) => console.error("Error fetching school:", err));
+    // }, [id]);
 
     // Extract data array (your API returns { data: [...] })
 
@@ -297,11 +315,11 @@ const Home = () => {
     // Reset active indexes when data length changes
     useEffect(() => {
         if (activeDesktopIndex >= cardWindowsDesktop.length) setActiveDesktopIndex(0);
-    }, [cardWindowsDesktop.length]);
+    }, [cardWindowsDesktop.length, activeDesktopIndex]);
 
     useEffect(() => {
         if (activeMobileIndex >= cardWindowsMobile.length) setActiveMobileIndex(0);
-    }, [cardWindowsMobile.length]);
+    }, [cardWindowsMobile.length, activeMobileIndex]);
 
 
     // apno_Etiyas no data
@@ -372,27 +390,27 @@ const Home = () => {
                     <div className='row justify-content-center text-center text-black'>
 
                         <div className='col-6 col-md-3 col-sm-6'>
-                            <PiBuildingsBold size={40} />  {/* ✅ fixed size */}
-                            <h2 style={{ minHeight: "40px" }}>100+</h2> {/* ✅ reserve space */}
-                            <p>Sanstha StartYear</p>
+                            <PiBuildingsBold size={40} />
+                            <h2 style={{ minHeight: "40px" }}>{counter}</h2>
+                            <p>આહીર બોર્ડિંગ</p>
                         </div>
 
                         <div className='CoL_B col-6 col-md-3 col-sm-6'>
                             <PiBuildingsBold size={40} />
-                            <h2 style={{ minHeight: "40px" }}>100+</h2>
-                            <p>Total Sanstha</p>
+                            <h2 style={{ minHeight: "40px" }}>{counter}</h2>
+                            <p>આહિર ચેરિટેબલ ટ્રસ્ટ</p>
                         </div>
 
                         <div className='CoL_B col-6 col-md-3 col-sm-6'>
                             <PiBuildingsBold size={40} />
-                            <h2 style={{ minHeight: "40px" }}>100+</h2>
-                            <p>Total Sanstha Year</p>
+                            <h2 style={{ minHeight: "40px" }}>{counter}</h2>
+                            <p>આહીર સમાજ વાડી</p>
                         </div>
 
                         <div className='CoL_B col-6 col-md-3 col-sm-6'>
                             <PiBuildingsBold size={40} />
-                            <h2 style={{ minHeight: "40px" }}>100+</h2>
-                            <p>Total Sanstha Year</p>
+                            <h2 style={{ minHeight: "40px" }}>{counter}</h2>
+                            <p>કન્યા છત્રાલય</p>
                         </div>
 
                     </div>
@@ -606,7 +624,7 @@ const Home = () => {
                             <div className="col-md-2 text-end">
                                 <a href='/Our_Schools'>
                                     <button type="button" className="btn btn-success">
-                                        સ્કૂલ
+                                        View All
                                     </button>
                                 </a>
                             </div>
@@ -759,7 +777,7 @@ const Home = () => {
                             <div className="col-md-12 text-center">
                                 <a href='/Our_Schools'>
                                     <button type="button" className="btn btn-success">
-                                        સ્કૂલ
+                                        View All
                                     </button>
                                 </a>
                             </div>
