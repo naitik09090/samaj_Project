@@ -16,7 +16,7 @@
 .Contact_Us_Bg_COlor_Mobile,
 .F_NAv,
 .LOgo_ICon,
-.Second_BG,
+// .Second_BG,
 .Second_BG_2 {
     background-color: #057c71
 }
@@ -130,10 +130,10 @@
     top: 20px
 }
 
-.Second_BG {
-    padding: 150px;
-    border-radius: 30px 0 0 30px
-}
+// .Second_BG {
+//     padding: 150px;
+//     border-radius: 30px 0 0 30px
+// }
 
 .Second_BG_2 {
     border-radius: 0 30px 30px 0;
@@ -150,38 +150,38 @@
     left: 50px
 }
 
-.BG_COlor img,
+// .BG_COlor img,
 .img-fluid {
     top: 50px;
     position: relative
 }
 
-.Second_BG h5 h1 {
-    font-size: 64px
-}
+// .Second_BG h5 h1 {
+//     font-size: 64px
+// }
 
-.Second_BG h5 {
-    position: relative;
-    left: 150px;
-    bottom: 50px
-}
+// .Second_BG h5 {
+//     position: relative;
+//     left: 150px;
+//     bottom: 50px
+// }
 
-.Second_BG button {
-    padding: 10px;
-    width: 170px;
-    height: 50px;
-    border: 1px solid #fff;
-    border-radius: 15px;
-    background-color: transparent;
-    color: #fff
-}
+// .Second_BG button {
+//     padding: 10px;
+//     width: 170px;
+//     height: 50px;
+//     border: 1px solid #fff;
+//     border-radius: 15px;
+//     background-color: transparent;
+//     color: #fff
+// }
 
 .hero-section {
     background-color: #fff;
     padding: 20px
 }
 
-.BG_COlor,
+// .BG_COlor,
 .bg_KRishna {
     background-color: #faf4e6;
     bottom: 50px;
@@ -207,18 +207,18 @@
     left: 100px
 }
 
-.BG_COlor img {
-    border-radius: 20px;
-    width: 400px !important;
-    height: auto !important;
-    left: 100px
-}
+// .BG_COlor img {
+//     border-radius: 20px;
+//     width: 400px !important;
+//     height: auto !important;
+//     left: 100px
+// }
 
-.BG_COlor {
-    height: 250px;
-    width: 350px;
-    border-radius: 0 30px 0 0
-}
+// .BG_COlor {
+//     height: 250px;
+//     width: 350px;
+//     border-radius: 0 30px 0 0
+// }
 
 .krishna-image {
     height: 100%;
@@ -285,8 +285,7 @@
     }
 }
 
-.F_SliDer,
-.bG_2,
+// .bG_2,
 .buid_ICon1,
 .krishna-img1,
 .language-select {
@@ -400,7 +399,6 @@
 }
 
 
-.F_SliDer,
 .p_12 {
     margin-bottom: 50px
 }
@@ -419,8 +417,7 @@
     box-shadow: 0 0 6px rgba(119, 138, 134, .5)
 }
 
-.FT_1,
-.F_SliDer {
+.FT_1{
     background: linear-gradient(#058479, #037167);
     color: #fff
 }
@@ -439,13 +436,6 @@
         max-width: 560px;
         aspect-ratio: 16/9
     }
-}
-
-.F_SliDer {
-    border-radius: 50px;
-    height: auto;
-    width: 1800px;
-    left: 50px
 }
 
 .Documentary_H1 {
