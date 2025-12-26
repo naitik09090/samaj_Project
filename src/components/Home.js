@@ -1077,7 +1077,7 @@ const Home = () => {
                                                 loading="lazy"
                                                 style={{
                                                     objectFit: "contain", // fill to full img show
-                                                    backgroundColor: "#f3f3f3",
+                                                    backgroundColor: "#ffffff",
                                                     borderRadius: "20px",
                                                     width: "100%",
                                                     height: 200,         // consistent card image height on desktop
@@ -1139,7 +1139,7 @@ const Home = () => {
                                                     loading="lazy"
                                                     style={{
                                                         objectFit: "contain",
-                                                        backgroundColor: "#067C71",
+                                                        backgroundColor: "#ffffff",
                                                         borderRadius: "22px",
                                                         width: "100%",
                                                         height: 110,
