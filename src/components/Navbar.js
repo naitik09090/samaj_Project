@@ -119,7 +119,7 @@ const Navbar = () => {
             {/* LOGO */}
             <div className="col-6 col-md-3 d-flex align-items-center">
               <a href="/" className="text-decoration-none">
-                <img src={SamajLogo} alt='Samaj Logo' height={40} width={105} style={{borderRadius:'30px', paddingTop:isScrolled?'5px':'0px'}} />
+                <img src={SamajLogo} alt='Samaj Logo' height={40} width={105} style={{ borderRadius: '30px', paddingTop: isScrolled ? '5px' : '0px' }} />
               </a>
             </div>
 
@@ -160,7 +160,7 @@ const Navbar = () => {
                   // borderTopLeftRadius: 10,
                   // borderTopRightRadius: 10,
                   backgroundColor: isScrolled ? "#067C71" : "#ffffff",
-                  width: isScrolled ? "400px" : "auto",
+                  width: isScrolled ? "295px" : "295px",
                   height: isScrolled ? "auto" : "auto",
                   borderRadius: isScrolled ? "0px 0px 22px 22px" : "0px 0px 22px 22px",
                 }}

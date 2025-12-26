@@ -1039,9 +1039,9 @@ const Home = () => {
                             <img
                                 src={Kano?.replace(/^http:\/\//i, "https://")}
                                 alt="Lord Krishna"
-                                width="388"
+                                width="400"
                                 height="400"
-                                style={{ borderRadius: "16px", height: "400px", width: "auto" }}
+                                style={{ borderRadius: "16px", maxHeight: "400px", width: "auto", height: "auto" }}
                                 loading="lazy"
                             />
                         </picture>

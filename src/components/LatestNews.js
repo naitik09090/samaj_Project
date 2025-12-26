@@ -449,7 +449,7 @@ const About_us = () => {
                                                                     })}
                                                                 </p>
 
-                                                                <h6 className="m-1 text-start title-line-1" style={{color:"#067C71"}}>{newsItem.title}</h6>
+                                                                <h6 className="m-1 text-start title-line-1" style={{ color: "#067C71" }}>{newsItem.title}</h6>
                                                                 <p className="m-1 text-muted text-start title-content-2">{newsItem.content}</p>
 
                                                                 <div className="mt-auto">
@@ -526,8 +526,8 @@ const About_us = () => {
                                                             className="Main-Card_2"
                                                             loading="lazy"
                                                             style={{
-                                                                objectFit:"contain",
-                                                                borderRadius:'22px'
+                                                                objectFit: "contain",
+                                                                borderRadius: '22px'
                                                             }}
                                                             alt={newsItem.title || ""}
                                                         />

@@ -277,7 +277,7 @@ const ImageSlider = () => {
             <div id="schoolCarousel" className="carousel slide" data-bs-ride="carousel" data-bs-interval="10000" ref={carouselRef}>
                 <div className="carousel-inner">
                     <div className='py-2'>
-                        <h1 className='text-center' style={{ backgroundColor: '#EFA325', color: 'white', padding: '10px', borderRadius: '22px', fontWeight: '600' }}>આપણી સંસ્થા</h1>
+                        <h1 className='text-center' style={{ backgroundColor: '#EFA325', color: '#1a1a1a', padding: '10px', borderRadius: '22px', fontWeight: '600' }}>આપણી સંસ્થા</h1>
                     </div>
                     {/* <div className="row mb-4">
                         <div className="col-12">
