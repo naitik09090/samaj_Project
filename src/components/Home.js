@@ -1035,11 +1035,12 @@ const Home = () => {
                             <source
                                 srcSet={Kano?.replace(/^http:\/\//i, "https://").replace(/\.(png|jpg|jpeg)$/i, ".webp")}
                                 type="image/webp"
-                                loading="lazy"
                             />
                             <img
                                 src={Kano?.replace(/^http:\/\//i, "https://")}
                                 alt="Lord Krishna"
+                                width="388"
+                                height="400"
                                 style={{ borderRadius: "16px", height: "400px", width: "auto" }}
                                 loading="lazy"
                             />
@@ -1053,7 +1054,7 @@ const Home = () => {
                 <div className="row">
                     <div className="col-12 d-flex justify-content-center">
                         <div className="ratio ratio-16x9" style={{ maxWidth: '1600px', width: '100%', borderRadius: '12px', overflow: 'hidden' }}>
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/4m79KoSpfck?si=extlUtA2DZDIHY8L" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/4m79KoSpfck?si=extlUtA2DZDIHY8L" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
                         </div>
                     </div>
                 </div>
