@@ -760,7 +760,7 @@ const Home = () => {
                                                             <picture>
                                                                 <source
                                                                     srcSet={secureUrl(data.logo).replace(/\.(png|jpg|jpeg)$/i, '.webp')}
-                                                                    type="images/webp"
+                                                                    type="image/webp"
                                                                 />
                                                                 <img
                                                                     src={secureUrl(data.logo)}

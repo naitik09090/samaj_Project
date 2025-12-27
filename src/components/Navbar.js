@@ -4,7 +4,7 @@ import { LuLinkedin } from "react-icons/lu";
 import { TfiTwitter } from "react-icons/tfi";
 import { FaInstagram } from "react-icons/fa";
 import { BiWorld } from "react-icons/bi";
-import SamajLogo from '../images/ahir_samaj_logo1.jpg';
+import SamajLogo from '../images/ahir_samaj_logo.webp';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -119,7 +119,14 @@ const Navbar = () => {
             {/* LOGO */}
             <div className="col-6 col-md-4 col-lg-3 d-flex align-items-center">
               <a href="/" className="text-decoration-none">
-                <img src={SamajLogo} alt='Samaj Logo' height={40} width={105} style={{ borderRadius: '30px', paddingTop: isScrolled ? '5px' : '0px' }} />
+                <img
+                  src={SamajLogo}
+                  alt='Samaj Logo'
+                  height={40}
+                  width={105}
+                  fetchpriority="high"
+                  style={{ borderRadius: '30px', paddingTop: isScrolled ? '5px' : '0px' }}
+                />
               </a>
             </div>
 
