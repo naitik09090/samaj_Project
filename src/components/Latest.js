@@ -15,41 +15,101 @@ const About_us = () => {
     const { id } = useParams();
     const [data, setData] = useState(null);
     const [featuredId, setFeaturedId] = useState(null);
+
+    // 🎯 OPTIMISTIC UI PATTERN - Loading States
+    const [isLoadingNewsList, setIsLoadingNewsList] = useState(true);
+    const [isLoadingSingleNews, setIsLoadingSingleNews] = useState(false);
+
     const URL = "https://ahirsamajbe-gnapdbcbbzdcabc2.centralindia-01.azurewebsites.net";
 
+    // Helper to create loading placeholders
+    const createLoadingNewsList = () => ({
+        data: [
+            { id: 'loading-1', title: '⏳ Loading news...', content: 'Fetching latest news...', isLoading: true, images: [] },
+            { id: 'loading-2', title: '⏳ Please wait...', content: 'Loading content...', isLoading: true, images: [] },
+            { id: 'loading-3', title: '⏳ Fetching data...', content: 'Almost there...', isLoading: true, images: [] },
+            { id: 'loading-4', title: '⏳ Loading...', content: 'Getting data...', isLoading: true, images: [] },
+        ]
+    });
 
-    // ...existing code...
+    // Display data: show loading placeholders while loading, then real data
+    const displayNewsList = isLoadingNewsList ? createLoadingNewsList() : data4;
+
+    // 📰 Fetch all news with Optimistic UI Pattern
     useEffect(() => {
+        console.log('\n🚀 ========== NEWS LIST API CALL STARTED (Latest.js) ==========');
+        console.log('📍 Step 1: useEffect triggered for news list');
+        console.log('   API Endpoint:', `${URL}/api/v1/news/`);
+        console.log('\n⚡ Step 2: Setting loading state to TRUE');
+        console.log('   🎨 Loading placeholders will show IMMEDIATELY in UI');
+
+        setIsLoadingNewsList(true);
+
+        console.log('\n🌐 Step 3: Making actual API call...');
+
         fetch(`${URL}/api/v1/news/`)
-            .then((res) => res.json())
+            .then((res) => {
+                console.log('\n✅ Step 4: API Response received!');
+                console.log('   Response status:', res.status);
+                return res.json();
+            })
             .then((json) => {
-                console.log("News list:", json);
+                console.log('\n📦 Step 5: Processing API data');
+                console.log('   Real API Data:', json);
+                console.log('   Number of news items:', json.data?.length || 0);
+
                 setData4(json);
+                setIsLoadingNewsList(false);
+
                 // set default featured to first item on initial load
                 if (!featuredId && json?.data && json.data.length > 0) {
                     setFeaturedId(json.data[0].id);
                 }
+
+                console.log('\n✨ Step 6: State updated!');
+                console.log('   🎯 Loading placeholders replaced with REAL news');
+                console.log('========== NEWS LIST API CALL COMPLETED ==========\n');
             })
-            .catch((err) => console.error(err));
+            .catch((err) => {
+                console.error('\n❌ API Error:', err);
+                setIsLoadingNewsList(false);
+            });
     }, [featuredId]);
 
     useEffect(() => {
         // Use id from URL, or default to 1
         const newsId = id || 1;
 
+        console.log('\n🚀 ========== SINGLE NEWS API CALL STARTED (Latest.js) ==========');
+        console.log('📍 News ID:', newsId);
+        console.log('   API Endpoint:', `${URL}/api/v1/news/${newsId}`);
+
+        setIsLoadingSingleNews(true);
+
         fetch(`${URL}/api/v1/news/${newsId}`)
-            .then(res => res.json())
-            .then(result => {
-                console.log("Single news:", result);
-                setData(result?.data);
+            .then(res => {
+                console.log('\n✅ Single News API Response received!');
+                console.log('   Response status:', res.status);
+                return res.json();
             })
-            .catch(err => console.error(err));
+            .then(result => {
+                console.log('\n📦 Processing single news data');
+                console.log('   Single news:', result);
+
+                setData(result?.data);
+                setIsLoadingSingleNews(false);
+
+                console.log('\n✨ Single news state updated!');
+                console.log('========== SINGLE NEWS API CALL COMPLETED ==========\n');
+            })
+            .catch(err => {
+                console.error('\n❌ Single News API Error:', err);
+                setIsLoadingSingleNews(false);
+            });
     }, [id]);
-    // ...existing code...
-    // ...existing code...
 
     // Prepare news list with featured item first
-    const newsList = Array.isArray(data4?.data) ? [...data4.data] : [];
+    const newsList = Array.isArray(displayNewsList?.data) ? [...displayNewsList.data] : [];
     if (featuredId) {
         const idx = newsList.findIndex(n => n.id === featuredId);
         if (idx > 0) {
@@ -57,6 +117,11 @@ const About_us = () => {
             newsList.unshift(item);
         }
     }
+
+    console.log('\n📺 UI Data Sources (Latest.js):');
+    console.log('   Regular news data (data4):', data4);
+    console.log('   Display news data (displayNewsList with loading state):', displayNewsList);
+    console.log('   💡 Using displayNewsList in JSX for better UX!\n');
     const handleSchoolClick = (item) => {
         setData(item);
 
@@ -257,7 +322,7 @@ const About_us = () => {
                                                     })}
                                                 </p>
 
-                                                <h6 className="m-1 text-start title-line-1" style={{color:"#067C71"}}>{item.title}</h6>
+                                                <h6 className="m-1 text-start title-line-1" style={{ color: "#067C71" }}>{item.title}</h6>
                                                 <p className="m-1 text-muted text-start title-content-2">{item.content}</p>
 
                                                 <div className="mt-auto">
