@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useOptimistic, useTransition } from 'react';
 // import { useRef } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Kano from '../images/Kano.webp'
@@ -23,6 +23,34 @@ const Home = () => {
         [filteredData1, setFilteredData1] = useState([]),
         [counter, setCounter] = useState(0), // Counter for animation
         { id } = useParams();
+
+    // 🎯 OPTIMISTIC UI PATTERN (Compatible with React 19)
+    // Instead of useOptimistic hook (which is for user actions), we use loading states
+    // This shows placeholder data immediately while API calls are in progress
+    const [isLoadingNews, setIsLoadingNews] = useState(true);
+    const [isLoadingSchools, setIsLoadingSchools] = useState(true);
+
+    // Helper to create optimistic/loading data
+    const createLoadingNews = () => ({
+        data: [{
+            id: 'loading-1',
+            title: '⏳ Loading news...',
+            description: 'Fetching latest news from server...',
+            isLoading: true
+        }]
+    });
+
+    const createLoadingSchools = () => ({
+        data: [
+            { id: 'loading-1', name: '⏳ Loading schools...', school_type: 'Loading', logo: null, isLoading: true },
+            { id: 'loading-2', name: '⏳ Fetching data...', school_type: 'Loading', logo: null, isLoading: true },
+            { id: 'loading-3', name: '⏳ Please wait...', school_type: 'Loading', logo: null, isLoading: true }
+        ]
+    });
+
+    // Display data: show loading placeholders while loading, then real data
+    const displayNews = isLoadingNews ? createLoadingNews() : data4;
+    const displaySchools = isLoadingSchools ? createLoadingSchools() : data1;
 
     const { pathname } = useLocation();
 
@@ -155,15 +183,50 @@ const Home = () => {
     //         .catch((err) => console.error(err));
     // }, []);
 
+    // 📰 News API Call with Optimistic UI Pattern
     useEffect(() => {
+        console.log('\n🚀 ========== NEWS API CALL STARTED ==========');
+        console.log('📍 Step 1: useEffect triggered for news data');
+        console.log('   ID parameter:', id || 'No ID (fetching all news)');
+
         const endpoint = id
             ? `${URL}/api/v1/news/${id}`
             : `${URL}/api/v1/news/`;
 
+        console.log('   API Endpoint:', endpoint);
+        console.log('\n⚡ Step 2: Setting loading state to TRUE');
+        console.log('   🎨 Loading placeholder will show in UI IMMEDIATELY');
+        console.log('   ⏱️  User sees "Loading news..." while waiting');
+
+        setIsLoadingNews(true);
+
+        console.log('\n🌐 Step 3: Making actual API call...');
+        console.log('   ⏳ Waiting for server response...');
+
         fetch(endpoint)
-            .then(res => res.json())
-            .then(json => setData4(json))
-            .catch(console.error);
+            .then(res => {
+                console.log('\n✅ Step 4: API Response received!');
+                console.log('   Response status:', res.status);
+                return res.json();
+            })
+            .then(json => {
+                console.log('\n📦 Step 5: Processing API data');
+                console.log('   Real API Data:', json);
+                console.log('   🔄 Now updating actual state with real data');
+
+                setData4(json);
+                setIsLoadingNews(false);
+
+                console.log('\n✨ Step 6: State updated!');
+                console.log('   🎯 Loading placeholder is now replaced with REAL data');
+                console.log('   👁️  User now sees actual data from server');
+                console.log('========== NEWS API CALL COMPLETED ==========\n');
+            })
+            .catch(err => {
+                console.error('\n❌ API Error:', err);
+                setIsLoadingNews(false);
+                console.log('   Loading state cleared despite error');
+            });
     }, [id]);
 
 
@@ -178,18 +241,50 @@ const Home = () => {
             .catch((err) => console.error(err));
     }, []);
 
-    // school api call
+    // 🏫 School API Call with Optimistic UI Pattern
     useEffect(() => {
+        console.log('\n🚀 ========== SCHOOLS API CALL STARTED ==========');
+        console.log('📍 Step 1: useEffect triggered for schools data');
+        console.log('   API Endpoint:', `${URL}/api/v1/schools/schools/`);
+        console.log('\n⚡ Step 2: Setting loading state to TRUE');
+        console.log('   🎨 Loading placeholders will show IMMEDIATELY in UI');
+        console.log('   ⏱️  Better UX - user sees "Loading schools..." while waiting');
+
+        setIsLoadingSchools(true);
+
+        console.log('\n🌐 Step 3: Making actual schools API call...');
+        console.log('   ⏳ Fetching real schools data from server...');
+
         fetch(`${URL}/api/v1/schools/schools/`)
-            .then((res) => res.json())
+            .then((res) => {
+                console.log('\n✅ Step 4: Schools API Response received!');
+                console.log('   Response status:', res.status);
+                return res.json();
+            })
             .then((json) => {
+                console.log('\n📦 Step 5: Processing schools API data');
+                console.log('   Real Schools Data:', json);
+                console.log('   Number of schools:', json.data?.length || 0);
+
                 setData1(json);
                 setFilteredData1(json);
+                setIsLoadingSchools(false);
+
                 // Extract unique school types from the data
                 const types = [...new Set(json.data?.map(school => school.school_type).filter(Boolean))].sort();
+                console.log('   Extracted school types:', types);
                 setSchoolTypes(types);
+
+                console.log('\n✨ Step 6: Schools state updated!');
+                console.log('   🎯 Loading placeholders replaced with REAL schools');
+                console.log('   👁️  User now sees actual schools from database');
+                console.log('========== SCHOOLS API CALL COMPLETED ==========\n');
             })
-            .catch((err) => console.error(err));
+            .catch((err) => {
+                console.error('\n❌ Schools API Error:', err);
+                setIsLoadingSchools(false);
+                console.log('   Loading state cleared despite error');
+            });
     }, []);
     useEffect(() => {
         const all = data1?.data || [];
@@ -307,6 +402,15 @@ const Home = () => {
     };
 
     const itemsArr = filteredData1?.data || [];
+
+    // 🎯 OPTIONAL: You can also use displaySchools data here for loading placeholders
+    // const itemsArr = displaySchools?.data || [];
+    // This would show loading placeholders immediately while fetching real schools
+    console.log('\n🏫 Schools Data for Carousel:');
+    console.log('   Using filteredData1:', filteredData1);
+    console.log('   Available displaySchools (with loading state):', displaySchools);
+    console.log('   💡 Switch to displaySchools for instant loading feedback!\n');
+
     const cardWindowsDesktop = makeSlidingWindows(itemsArr, 4);
     const cardWindowsMobile = makeSlidingWindows(itemsArr, 4);
 
@@ -366,7 +470,17 @@ const Home = () => {
     ];
 
     // const truncate = (t, a) => t && t.length > a ? t.slice(0, a) + "…" : t || ""
-    const items = Array.isArray(data4?.data) ? data4.data : [];
+
+    // 🎯 HOW TO USE DISPLAY DATA IN UI:
+    // Instead of using data4 directly, use displayNews
+    // This will show loading placeholders first, then automatically update to real data
+    console.log('\n📺 UI Data Sources:');
+    console.log('   Regular news data (data4):', data4);
+    console.log('   Display news data (displayNews with loading state):', displayNews);
+    console.log('   💡 Use displayNews in your JSX for better UX!\n');
+
+    // For news items - use displayNews instead of data4
+    const items = Array.isArray(displayNews?.data) ? displayNews.data : [];
 
     return (
         <>
@@ -740,47 +854,36 @@ const Home = () => {
                                                         }}
                                                     >
 
-                                                        {data.logo ? (
-                                                            // <img
-                                                            //     src={secureUrl(data.logo)}
-                                                            //     alt="logo School"
-                                                            //     className="rounded-1 mb-3 school-logo-img"
-                                                            //     width="250"
-                                                            //     height="150"
-                                                            //     style={{ objectFit: "contain" }}
-                                                            //     loading="lazy"
-                                                            // />
-                                                            // <img
-                                                            //     src={secureUrl(data.logo)}
-                                                            //     alt="logo School"
-                                                            //     className="rounded-1 mb-3"
-                                                            //     style={{ height: "150px", width: "100%", objectFit: "contain" }}
-                                                            //     loading="lazy"
-                                                            // />
-                                                            <picture>
-                                                                <source
-                                                                    srcSet={secureUrl(data.logo).replace(/\.(png|jpg|jpeg)$/i, '.webp')}
-                                                                    type="image/webp"
-                                                                />
-                                                                <img
-                                                                    src={secureUrl(data.logo)}
-                                                                    alt="logo School"
-                                                                    width="250"
-                                                                    height="150"
-                                                                    loading="lazy"
-                                                                    style={{ height: "150px", width: "100%", objectFit: "contain" }}
-                                                                />
-                                                            </picture>
+                                                        {data.logo && data.logo.trim() !== "" ? (
+                                                            // <picture className="mb-3">
+                                                            //     <source
+                                                            //         srcSet={secureUrl(data.logo).replace(/\.(png|jpg|jpeg)$/i, '.webp')}
+                                                            //         type="image/webp"
+                                                            //     />
+                                                            <img
+                                                                src={secureUrl(data.logo)}
+                                                                alt={`${data.name} logo`}
+                                                                width="250"
+                                                                height="150"
+                                                                loading="lazy"
+                                                                className="rounded-1"
+                                                                style={{ height: "150px", width: "100%", objectFit: "contain" }}
+                                                                onError={(e) => {
+                                                                    e.target.style.display = 'none';
+                                                                    e.target.parentElement.nextElementSibling?.classList.remove('d-none');
+                                                                }}
+                                                            />
+                                                            // </picture>
                                                         ) : (
                                                             <div
                                                                 className="rounded-1 d-flex align-items-center justify-content-center mb-3"
                                                                 style={{
                                                                     width: "100%",
                                                                     height: "150px",
-                                                                    background: "#ffffff",
+                                                                    background: "#f0f0f0",
                                                                     color: "#067C71",
                                                                     fontWeight: 700,
-                                                                    fontSize: "30px",
+                                                                    fontSize: "24px",
                                                                     borderRadius: "8px",
                                                                 }}
                                                             >
@@ -1090,27 +1193,42 @@ const Home = () => {
                                 {items.map((data) => (
                                     <div className="col-md-6 col-lg-3" key={data.id}>
                                         <div className="Main-Card_1 shadow-sm p-1 h-100 d-flex flex-column">
-                                            <picture>
-                                                <source
-                                                    srcSet={secureUrl(data.images[0].image).replace(/\.(png|jpg|jpeg)$/i, '.webp')}
-                                                    type="images/webp"
-                                                />
-                                                <img
-                                                    src={secureUrl(data.images[0].image)}
-                                                    className="Main-Card_2 mb-2"
-                                                    alt="Desktop View Img"
-                                                    width="300"
-                                                    height="200"
-                                                    loading="lazy"
+                                            {data.images && data.images.length > 0 ? (
+                                                <picture>
+                                                    <source
+                                                        srcSet={secureUrl(data.images[0].image).replace(/\.(png|jpg|jpeg)$/i, '.webp')}
+                                                        type="images/webp"
+                                                    />
+                                                    <img
+                                                        src={secureUrl(data.images[0].image)}
+                                                        className="Main-Card_2 mb-2"
+                                                        alt="Desktop View Img"
+                                                        width="300"
+                                                        height="200"
+                                                        loading="lazy"
+                                                        style={{
+                                                            objectFit: "contain",
+                                                            backgroundColor: "#ffffff",
+                                                            borderRadius: "20px",
+                                                            width: "100%",
+                                                            height: 200,
+                                                        }}
+                                                    />
+                                                </picture>
+                                            ) : (
+                                                <div
+                                                    className="Main-Card_2 mb-2 d-flex align-items-center justify-content-center"
                                                     style={{
-                                                        objectFit: "contain",
-                                                        backgroundColor: "#ffffff",  // ✅ Correct
-                                                        borderRadius: "20px",        // ✅ Correct
-                                                        width: "100%",               // ✅ Correct
+                                                        backgroundColor: "#f0f0f0",
+                                                        borderRadius: "20px",
+                                                        width: "100%",
                                                         height: 200,
+                                                        color: "#999",
                                                     }}
-                                                />
-                                            </picture>
+                                                >
+                                                    No Image
+                                                </div>
+                                            )}
 
                                             <div className="card-body1 d-flex flex-column" style={{ minHeight: 200 }}>
                                                 <p className="text-start text-muted mb-2" style={{ fontSize: 14 }}>
@@ -1160,27 +1278,43 @@ const Home = () => {
                                     <div className="col-6" key={data.id}>
                                         <div className="Main-Card_1 p-1 shadow-sm d-flex flex-column">
                                             <div>
-                                                <picture>
-                                                    <source
-                                                        srcSet={secureUrl(data.images[0].image).replace(/\.(png|jpg|jpeg)$/i, '.webp')}
-                                                        type="images/webp"
-                                                    />
-                                                    <img
-                                                        src={secureUrl(data.images[0].image)}
-                                                        className="Main-Card_2 mb-1"
-                                                        alt="Mobile view img"
-                                                        width="180"
-                                                        height="110"
-                                                        loading="lazy"
+                                                {data.images && data.images.length > 0 ? (
+                                                    <picture>
+                                                        <source
+                                                            srcSet={secureUrl(data.images[0].image).replace(/\.(png|jpg|jpeg)$/i, '.webp')}
+                                                            type="images/webp"
+                                                        />
+                                                        <img
+                                                            src={secureUrl(data.images[0].image)}
+                                                            className="Main-Card_2 mb-1"
+                                                            alt="Mobile view img"
+                                                            width="180"
+                                                            height="110"
+                                                            loading="lazy"
+                                                            style={{
+                                                                objectFit: "contain",
+                                                                backgroundColor: "#ffffff",
+                                                                borderRadius: "22px",
+                                                                width: "100%",
+                                                                height: 110,
+                                                            }}
+                                                        />
+                                                    </picture>
+                                                ) : (
+                                                    <div
+                                                        className="Main-Card_2 mb-1 d-flex align-items-center justify-content-center"
                                                         style={{
-                                                            objectFit: "contain",
-                                                            backgroundColor: "#ffffff",  // ✅ Correct
-                                                            borderRadius: "22px",        // ✅ Correct
-                                                            width: "100%",               // ✅ Correct
-                                                            height: 110,                 // ✅ Correct
+                                                            backgroundColor: "#f0f0f0",
+                                                            borderRadius: "22px",
+                                                            width: "100%",
+                                                            height: 110,
+                                                            color: "#999",
+                                                            fontSize: "12px",
                                                         }}
-                                                    />
-                                                </picture>
+                                                    >
+                                                        No Image
+                                                    </div>
+                                                )}
 
                                             </div>
                                             <div className="card-body1 d-flex flex-column" style={{ padding: "8px" }}>
