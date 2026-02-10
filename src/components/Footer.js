@@ -1,4 +1,3 @@
-import React from 'react'
 import { CiMail } from "react-icons/ci";
 import SamajLogo from '../images/ahir_samaj_logo1.jpg';
 // import { GiFemaleVampire } from "react-icons/gi";

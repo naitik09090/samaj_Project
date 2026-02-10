@@ -7,109 +7,42 @@ import { useParams } from 'react-router-dom';
 import calendar from "../images/calendar.png"
 import { FaArrowRightLong } from "react-icons/fa6";
 import { SimpleCarousel } from './SimpleCarousel';
-// Bootstrap JS removed - using minimal custom carousel styles instead
+import defaultNewsList from '../data/newsData.json';
 
 
 const About_us = () => {
-    const [data4, setData4] = useState([]);
+    // All data is loaded directly from JSON files in src/data directory
     const { id } = useParams();
-    const [data, setData] = useState(null);
-    const [featuredId, setFeaturedId] = useState(null);
 
-    // 🎯 OPTIMISTIC UI PATTERN - Loading States
-    const [isLoadingNewsList, setIsLoadingNewsList] = useState(true);
-    const [isLoadingSingleNews, setIsLoadingSingleNews] = useState(false);
+    const [data4, setData4] = useState(defaultNewsList);
 
-    const URL = "https://ahirsamajbe-gnapdbcbbzdcabc2.centralindia-01.azurewebsites.net";
-
-    // Helper to create loading placeholders
-    const createLoadingNewsList = () => ({
-        data: [
-            { id: 'loading-1', title: '⏳ Loading news...', content: 'Fetching latest news...', isLoading: true, images: [] },
-            { id: 'loading-2', title: '⏳ Please wait...', content: 'Loading content...', isLoading: true, images: [] },
-            { id: 'loading-3', title: '⏳ Fetching data...', content: 'Almost there...', isLoading: true, images: [] },
-            { id: 'loading-4', title: '⏳ Loading...', content: 'Getting data...', isLoading: true, images: [] },
-        ]
+    // Find single news item from the list based on URL id parameter
+    const [data, setData] = useState(() => {
+        const targetId = id || 1; // Default to 1 if no ID
+        if (defaultNewsList?.data && Array.isArray(defaultNewsList.data)) {
+            // loose equality for string/number id mismatch
+            return defaultNewsList.data.find(item => item.id == targetId) || null;
+        }
+        return null;
     });
 
-    // Display data: show loading placeholders while loading, then real data
-    const displayNewsList = isLoadingNewsList ? createLoadingNewsList() : data4;
+    const [featuredId, setFeaturedId] = useState(() => {
+        // Set default featured to first item on initial load
+        return defaultNewsList?.data?.[0]?.id || null;
+    });
 
-    // 📰 Fetch all news with Optimistic UI Pattern
+    // Update data when id changes (client-side lookup)
     useEffect(() => {
-        console.log('\n🚀 ========== NEWS LIST API CALL STARTED (Latest.js) ==========');
-        console.log('📍 Step 1: useEffect triggered for news list');
-        console.log('   API Endpoint:', `${URL}/api/v1/news/`);
-        console.log('\n⚡ Step 2: Setting loading state to TRUE');
-        console.log('   🎨 Loading placeholders will show IMMEDIATELY in UI');
-
-        setIsLoadingNewsList(true);
-
-        console.log('\n🌐 Step 3: Making actual API call...');
-
-        fetch(`${URL}/api/v1/news/`)
-            .then((res) => {
-                console.log('\n✅ Step 4: API Response received!');
-                console.log('   Response status:', res.status);
-                return res.json();
-            })
-            .then((json) => {
-                console.log('\n📦 Step 5: Processing API data');
-                console.log('   Real API Data:', json);
-                console.log('   Number of news items:', json.data?.length || 0);
-
-                setData4(json);
-                setIsLoadingNewsList(false);
-
-                // set default featured to first item on initial load
-                if (!featuredId && json?.data && json.data.length > 0) {
-                    setFeaturedId(json.data[0].id);
-                }
-
-                console.log('\n✨ Step 6: State updated!');
-                console.log('   🎯 Loading placeholders replaced with REAL news');
-                console.log('========== NEWS LIST API CALL COMPLETED ==========\n');
-            })
-            .catch((err) => {
-                console.error('\n❌ API Error:', err);
-                setIsLoadingNewsList(false);
-            });
-    }, [featuredId]);
-
-    useEffect(() => {
-        // Use id from URL, or default to 1
         const newsId = id || 1;
-
-        console.log('\n🚀 ========== SINGLE NEWS API CALL STARTED (Latest.js) ==========');
-        console.log('📍 News ID:', newsId);
-        console.log('   API Endpoint:', `${URL}/api/v1/news/${newsId}`);
-
-        setIsLoadingSingleNews(true);
-
-        fetch(`${URL}/api/v1/news/${newsId}`)
-            .then(res => {
-                console.log('\n✅ Single News API Response received!');
-                console.log('   Response status:', res.status);
-                return res.json();
-            })
-            .then(result => {
-                console.log('\n📦 Processing single news data');
-                console.log('   Single news:', result);
-
-                setData(result?.data);
-                setIsLoadingSingleNews(false);
-
-                console.log('\n✨ Single news state updated!');
-                console.log('========== SINGLE NEWS API CALL COMPLETED ==========\n');
-            })
-            .catch(err => {
-                console.error('\n❌ Single News API Error:', err);
-                setIsLoadingSingleNews(false);
-            });
+        if (defaultNewsList?.data && Array.isArray(defaultNewsList.data)) {
+            const foundNews = defaultNewsList.data.find(item => item.id == newsId);
+            setData(foundNews || null);
+        }
     }, [id]);
 
     // Prepare news list with featured item first
-    const newsList = Array.isArray(displayNewsList?.data) ? [...displayNewsList.data] : [];
+    // Prepare news list with featured item first
+    const newsList = Array.isArray(data4?.data) ? [...data4.data] : [];
     if (featuredId) {
         const idx = newsList.findIndex(n => n.id === featuredId);
         if (idx > 0) {
@@ -118,10 +51,7 @@ const About_us = () => {
         }
     }
 
-    console.log('\n📺 UI Data Sources (Latest.js):');
-    console.log('   Regular news data (data4):', data4);
-    console.log('   Display news data (displayNewsList with loading state):', displayNewsList);
-    console.log('   💡 Using displayNewsList in JSX for better UX!\n');
+    const displayNewsList = { data: newsList };
     const handleSchoolClick = (item) => {
         setData(item);
 
@@ -164,7 +94,7 @@ const About_us = () => {
                                                 data-bs-slide-to={idx}
                                                 className={idx === 0 ? "active" : ""}
                                                 aria-current={idx === 0 ? "true" : undefined}
-                                                aria-label={`Slide ${idx + 1}`}
+                                                aria-label={`Slide ${idx + 1} `}
                                             />
                                         ))}
                                     </div>
@@ -260,7 +190,7 @@ const About_us = () => {
                                                 <h3 className="mt-3 text-center mb-3">{data.category_name}</h3>
                                                 <img
                                                     src={secureUrl(data.images[idx]?.image)}
-                                                    alt={`${data.name} image`}
+                                                    alt={`${ data.name } image`}
                                                     style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
                                                 />
                                                 <h5 className="mt-3 text-start">{data.title}</h5>
@@ -283,62 +213,85 @@ const About_us = () => {
                     <div className="d-none d-md-block">
                         <div className="row justify-content-center g-3">
 
-                            {Array.isArray(data4?.data) && data4.data.length > 0 ? (
-                                data4.data.slice(0, 4).map((item) => (
+                            {Array.isArray(displayNewsList?.data) && displayNewsList.data.length > 0 ? (
+                                displayNewsList.data.slice(0, 4).map((item) => (
                                     <div className="col-auto" key={item.id}> {/* auto width for side-by-side */}
                                         <div
-                                            onClick={() => handleSchoolClick(item)}
+                                            onClick={() => !item.isLoading && handleSchoolClick(item)}
                                             className="card shadow-sm rounded-4 p-2"
-                                            style={{ width: "220px" }}  // card width
+                                            style={{ width: "220px", cursor: item.isLoading ? "default" : "pointer" }}
                                         >
 
-                                            <img
-                                                src={secureUrl(item.images?.[0]?.image)}
-                                                alt="Latest News"
-                                                loading="lazy"
-                                                decoding="async"
-                                                style={{
-                                                    height: "140px",
-                                                    width: "100%",
-                                                    objectFit: "contain",
-                                                    borderRadius: "15px"
-                                                }}
-                                                className="mb-2"
-                                            />
+                                            {!item.isLoading && item.images?.[0]?.image ? (
+                                                <img
+                                                    src={secureUrl(item.images[0].image)}
+                                                    alt="Latest News"
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    style={{
+                                                        height: "140px",
+                                                        width: "100%",
+                                                        objectFit: "contain",
+                                                        borderRadius: "15px"
+                                                    }}
+                                                    className="mb-2"
+                                                />
+                                            ) : (
+                                                <div
+                                                    className="mb-2 d-flex align-items-center justify-content-center"
+                                                    style={{
+                                                        height: "140px",
+                                                        width: "100%",
+                                                        backgroundColor: "#f0f0f0",
+                                                        borderRadius: "15px",
+                                                        color: "#999",
+                                                    }}
+                                                >
+                                                    {item.isLoading ? "⏳" : "No Image"}
+                                                </div>
+                                            )}
 
                                             <div className="card-body d-flex flex-column">
-                                                <p className="text-start text-muted mt-1 d-flex align-items-center">
-                                                    <img
-                                                        src={calendar}
-                                                        alt="calendar"
-                                                        className="me-2"
-                                                        height={18}
-                                                        width={18}
-                                                    />
-                                                    {new Date(item?.published_at).toLocaleDateString("en-GB", {
-                                                        day: "2-digit",
-                                                        month: "short",
-                                                        year: "numeric"
-                                                    })}
-                                                </p>
+                                                {!item.isLoading && item.published_at && (
+                                                    <p className="text-start text-muted mt-1 d-flex align-items-center">
+                                                        <img
+                                                            src={calendar}
+                                                            alt="calendar"
+                                                            className="me-2"
+                                                            height={18}
+                                                            width={18}
+                                                        />
+                                                        {new Date(item.published_at).toLocaleDateString("en-GB", {
+                                                            day: "2-digit",
+                                                            month: "short",
+                                                            year: "numeric"
+                                                        })}
+                                                    </p>
+                                                )}
 
                                                 <h6 className="m-1 text-start title-line-1" style={{ color: "#067C71" }}>{item.title}</h6>
                                                 <p className="m-1 text-muted text-start title-content-2">{item.content}</p>
 
                                                 <div className="mt-auto">
-                                                    <Link
-                                                        to={`/latest/${item.id}`}
-                                                        className="text-decoration-none w-100"
-                                                        aria-label={`Read article: ${item.title}`}
-                                                    >
+                                                    {!item.isLoading ? (
+                                                        <Link
+                                                            to={`/latest/${item.id}`}
+                                                            className="text-decoration-none w-100"
+                                                            aria-label={`Read article: ${item.title}`}
+                                                        >
+                                                            <div className="d-flex align-items-center justify-content-between px-3 py-2">
+                                                                <span className="text-dark fw-semibold">
+                                                                    Learn More
+                                                                    <span className="visually-hidden"> about {item.title}</span>
+                                                                </span>
+                                                                <FaArrowRightLong className="text-dark" aria-hidden="true" />
+                                                            </div>
+                                                        </Link>
+                                                    ) : (
                                                         <div className="d-flex align-items-center justify-content-between px-3 py-2">
-                                                            <span className="text-dark fw-semibold">
-                                                                Learn More
-                                                                <span className="visually-hidden"> about {item.title}</span>
-                                                            </span>
-                                                            <FaArrowRightLong className="text-dark" aria-hidden="true" />
+                                                            <span className="text-muted">Loading...</span>
                                                         </div>
-                                                    </Link>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
@@ -356,59 +309,82 @@ const About_us = () => {
                     {/* ------------------ MOBILE VIEW (xs–sm) ------------------ */}
                     <div className="d-block d-md-none">
                         <div className='row g-3'>
-                            {Array.isArray(data4?.data) && data4.data.length > 0 ? (
-                                data4.data.map((item) => (
+                            {Array.isArray(displayNewsList?.data) && displayNewsList.data.length > 0 ? (
+                                displayNewsList.data.map((item) => (
                                     <div className="col-6" key={item.id}>
-                                        <div className="Main-Card_1 p-1 h-100 d-flex flex-column">
-                                            <img
-                                                src={secureUrl(item.images?.[0]?.image)}
-                                                className="Main-Card_2 mb-2"
-                                                // alt={`${item.name} image`}
-                                                alt='Mobile View Latest News'
-                                                loading="lazy"
-                                                decoding="async"
-                                                style={{
-                                                    objectFit: "contain",
-                                                    backgroundColor: "#067C71",
-                                                    borderRadius: "22px",
-                                                    width: "100%",
-                                                    height: 110,       // smaller fixed height on mobile
-                                                }}
-                                            />
+                                        <div className="Main-Card_1 p-1 h-100 d-flex flex-column"
+                                            onClick={() => !item.isLoading && handleSchoolClick(item)}>
+                                            {!item.isLoading && item.images?.[0]?.image ? (
+                                                <img
+                                                    src={secureUrl(item.images[0].image)}
+                                                    className="Main-Card_2 mb-2"
+                                                    alt='Mobile View Latest News'
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                    style={{
+                                                        objectFit: "contain",
+                                                        backgroundColor: "#067C71",
+                                                        borderRadius: "22px",
+                                                        width: "100%",
+                                                        height: 110,
+                                                    }}
+                                                />
+                                            ) : (
+                                                <div
+                                                    className="Main-Card_2 mb-2 d-flex align-items-center justify-content-center"
+                                                    style={{
+                                                        backgroundColor: "#f0f0f0",
+                                                        borderRadius: "22px",
+                                                        width: "100%",
+                                                        height: 110,
+                                                        color: "#999",
+                                                    }}
+                                                >
+                                                    {item.isLoading ? "⏳" : "No Image"}
+                                                </div>
+                                            )}
                                             <div className="card-body1 d-flex flex-column" style={{ padding: "8px" }}>
-                                                <p className="text-start text-muted mb-1" style={{ fontSize: 12 }}>
-                                                    <img src={calendar} className="claendar_Icon" height={16} width={16} alt="calendar" />
-                                                    {new Date(item?.published_at).toLocaleDateString("en-GB", {
-                                                        day: "2-digit",
-                                                        month: "short",
-                                                        year: "numeric"
-                                                    })}
-                                                </p>
+                                                {!item.isLoading && item.published_at && (
+                                                    <p className="text-start text-muted mb-1" style={{ fontSize: 12 }}>
+                                                        <img src={calendar} className="claendar_Icon" height={16} width={16} alt="calendar" />
+                                                        {new Date(item.published_at).toLocaleDateString("en-GB", {
+                                                            day: "2-digit",
+                                                            month: "short",
+                                                            year: "numeric"
+                                                        })}
+                                                    </p>
+                                                )}
 
                                                 <h6 className="text-start title-line-1" style={{ fontSize: 14, color: "#067C71" }}>
-                                                    {item.title.length > 60 ? item.title.slice(0, 60) + "…" : item.title}
+                                                    {item.title && item.title.length > 60 ? item.title.slice(0, 60) + "…" : item.title}
                                                 </h6>
 
                                                 <p className="text-muted text-start small" style={{ fontSize: 12 }}>
-                                                    {typeof item.content === "string" ? (item.content.length > 40 ? item.content.slice(0, 30) + "…" : item.content) : ""}
+                                                    {typeof (item.content || item.description) === "string" ? ((item.content || item.description).length > 40 ? (item.content || item.description).slice(0, 30) + "…" : (item.content || item.description)) : ""}
                                                 </p>
 
                                                 <div className="mt-auto">
                                                     <hr />
                                                     <div className="mt-auto">
-                                                        <Link
-                                                            to={`/latest/${item.id}`}
-                                                            className="text-decoration-none w-100"
-                                                            aria-label={`Read article: ${item.title}`}
-                                                        >
+                                                        {!item.isLoading ? (
+                                                            <Link
+                                                                to={`/latest/${item.id}`}
+                                                                className="text-decoration-none w-100"
+                                                                aria-label={`Read article: ${item.title}`}
+                                                            >
+                                                                <div className="d-flex align-items-center justify-content-between">
+                                                                    <span className="text-dark fw-semibold">
+                                                                        Learn More
+                                                                        <span className="visually-hidden"> about {item.title}</span>
+                                                                    </span>
+                                                                    <FaArrowRightLong className="text-dark" aria-hidden="true" />
+                                                                </div>
+                                                            </Link>
+                                                        ) : (
                                                             <div className="d-flex align-items-center justify-content-between">
-                                                                <span className="text-dark fw-semibold">
-                                                                    Learn More
-                                                                    <span className="visually-hidden"> about {item.title}</span>
-                                                                </span>
-                                                                <FaArrowRightLong className="text-dark" aria-hidden="true" />
+                                                                <span className="text-muted" style={{ fontSize: 12 }}>Loading...</span>
                                                             </div>
-                                                        </Link>
+                                                        )}
                                                     </div>
 
                                                 </div>
@@ -418,7 +394,7 @@ const About_us = () => {
                                 ))
                             ) : (
                                 <div className="col-12">
-                                    <p className="text-center text-muted py-4">Loading news...</p>
+                                    <p className="text-center text-muted py-3">Loading news...</p>
                                 </div>
                             )}
                         </div>

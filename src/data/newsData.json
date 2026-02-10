@@ -1,0 +1,133 @@
+{
+    "status": 1,
+    "message": "News fetched successfully",
+    "data": [
+        {
+            "id": 8,
+            "title": "અખીલ ભારત વર્ષીય યાદવ મહાસભા દ્વારા રેઝાંગલા પવિત્ર કળશ યાત્રાનું અમરેલી જિલ્લા આહીર સમાજ દ્વારા ભવ્ય થી ભવ્ય સ્વાગત કરવામાં આવ્યું.",
+            "content": "જય યાદવ જય માધવ, આહીર રેજીમેન્ટ હક છે આપણો\r\n       અખીલ ભારત વર્ષીય યાદવ મહાસભા દ્વારા રેઝાંગલા પવિત્ર કળશ યાત્રાનું અમરેલી જિલ્લા આહીર સમાજ દ્વારા ભવ્ય થી ભવ્ય સ્વાગત કરવામાં આવ્યું. વિરોના વિર 114 શહીદ યદુવીરોની ગાથા,યુધ્ધ ભુમીની માટીના દર્શન અને આહીર રેજીમેન્ટની માંગ સાથે ઐતહાસિક કળશ યાત્રાને વધાવવા બોહળી સંખ્યામાં આહીર સમાજ જોડાયો એ બદલ ખુબ ખુબ અભિનંદન. ગુજરાત સહીત ભારત ભરમાં આ કળશ યાત્રાનાં આયોજન માં આહીર સમાજ દ્વારા ભવ્ય સ્વાગત કરવામાં આવેછે ત્યારે આપણી પઢીઓ સુધી ગાથા વાગોળવી એ આપણી ફરજ છે ત્યારે આવાજ ઉસ્હા સાથે 18 નવેમ્બર નાં દીવસે નાનાં નેહડાથી લઈ મહાનગરોમા આપણાં  શહીદ યદુવીરોને શ્રધાંજલિ આપવાનો કાર્યક્રમ થવો જોઈએ અને આપણી આહીર રેજીમેન્ટની \r\nમાંગને સમર્થન આપવા દિલ્હી જંતર મંતર મેદાનમાં લાખોની સંખ્યામાં આહીર સમાજ જોડાઈ તેવી લાગણી સાથે",
+            "category": 2,
+            "category_name": "આહિર રેજીમેન્ટ",
+            "published_at": "2025-09-11T10:08:49.792117Z",
+            "created_at": "2025-09-11T10:08:49.792126Z",
+            "updated_at": "2025-09-11T10:08:49.792128Z",
+            "is_active": true,
+            "images": [
+                {
+                    "id": 8,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/news/images/WhatsApp_Image_2025-09-08_at_15.41.43.jpeg",
+                    "caption": null,
+                    "order": 0
+                },
+                {
+                    "id": 9,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/news/images/WhatsApp_Image_2025-09-08_at_15.41.31.jpeg",
+                    "caption": null,
+                    "order": 1
+                },
+                {
+                    "id": 10,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/news/images/WhatsApp_Image_2025-09-08_at_15.41.30.jpeg",
+                    "caption": null,
+                    "order": 2
+                },
+                {
+                    "id": 11,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/news/images/WhatsApp_Image_2025-09-08_at_15.41.29.jpeg",
+                    "caption": null,
+                    "order": 3
+                },
+                {
+                    "id": 12,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/news/images/WhatsApp_Image_2025-09-08_at_15.41.29_1.jpeg",
+                    "caption": null,
+                    "order": 4
+                }
+            ],
+            "videos": []
+        },
+        {
+            "id": 7,
+            "title": "25 માં વિજપડી સમૂહ લગ્નોત્સવ",
+            "content": "સુરત સમૂહ લગ્ન - 25 માં વિજપડી સમૂહ લગ્નોત્સવ ની તારીખ જાહેર કરવામાં આવી છે.",
+            "category": null,
+            "published_at": "2025-09-11T10:01:07.253442Z",
+            "created_at": "2025-09-11T10:01:07.253451Z",
+            "updated_at": "2025-09-11T10:01:07.253453Z",
+            "is_active": true,
+            "images": [
+                {
+                    "id": 6,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/news/images/WhatsApp_Image_2025-08-11_at_16.50.47.jpeg",
+                    "caption": null,
+                    "order": 0
+                },
+                {
+                    "id": 7,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/news/images/WhatsApp_Image_2025-08-11_at_16.50.48.jpeg",
+                    "caption": null,
+                    "order": 1
+                }
+            ],
+            "videos": []
+        },
+        {
+            "id": 4,
+            "title": "૩૨ માં સુરત સમૂહ લગ્નોત્સવ",
+            "content": "સુરત સમૂહ લગ્ન - ૩૨ માં સુરત સમૂહ લગ્નોત્સવ ની તારીખ જાહેર કરવામાં આવી છે.",
+            "category": 1,
+            "category_name": "સમૂહ લગ્ન",
+            "published_at": "2025-09-11T08:47:08Z",
+            "created_at": "2025-09-11T08:47:16.181394Z",
+            "updated_at": "2025-09-11T09:41:33.449632Z",
+            "is_active": true,
+            "images": [
+                {
+                    "id": 1,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/news/images/WhatsApp_Image_2025-07-24_at_13.41.53.jpeg",
+                    "caption": null,
+                    "order": 0
+                }
+            ],
+            "videos": []
+        },
+        {
+            "id": 2,
+            "title": "કળશ યાત્રાનું સ્વાગત:અમરેલીમાં આહિર રેજીમેન્ટની માંગ સાથે રેઝાંગલા રજ કળશ યાત્રાનું સ્વાગત કરાયું",
+            "content": "ભારતીય સેનામાં આહિર રેજીમેન્ટની માંગ સાથે અમરેલીમાં સિનિયર સિટીઝન પાર્ક ખાતેથી 51 ઘોડા, 551 કાર અને 1001 બાઈક સાથે રેજાંગલા રજ કળશ યાત્રા નિકળી",
+            "category": 2,
+            "category_name": "આહિર રેજીમેન્ટ",
+            "published_at": "2025-09-08T08:07:42Z",
+            "created_at": "2025-09-08T08:08:48.761768Z",
+            "updated_at": "2025-09-11T09:42:48.956157Z",
+            "is_active": true,
+            "images": [
+                {
+                    "id": 2,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/news/images/WhatsApp_Image_2025-09-10_at_13.23.03.jpeg",
+                    "caption": null,
+                    "order": 0
+                },
+                {
+                    "id": 3,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/news/images/WhatsApp_Image_2025-09-10_at_13.23.08.jpeg",
+                    "caption": null,
+                    "order": 1
+                },
+                {
+                    "id": 4,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/news/images/WhatsApp_Image_2025-09-10_at_13.23.09.jpeg",
+                    "caption": null,
+                    "order": 2
+                },
+                {
+                    "id": 5,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/news/images/WhatsApp_Image_2025-09-10_at_13.23.06.jpeg",
+                    "caption": null,
+                    "order": 3
+                }
+            ],
+            "videos": []
+        }
+    ]
+}

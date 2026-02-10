@@ -2,85 +2,32 @@ import { useEffect, useRef, useState } from "react";
 import { GrFormPrevious } from "react-icons/gr";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { Link } from "react-router-dom";
+import defaultSchools from '../data/schoolData.json';
 
 const ImageSlider = () => {
-    const [data1, setData1] = useState([]);
-    const [filteredData, setFilteredData] = useState([]);
+    // All data is loaded directly from JSON files in src/data directory
+    const [data1, setData1] = useState(defaultSchools);
+    const [filteredData, setFilteredData] = useState(defaultSchools);
+
+    // Initialize specific derived states
+    const [schoolTypes, setSchoolTypes] = useState(() => {
+        return [...new Set((defaultSchools.data || []).map(s => s.school_type).filter(Boolean))].sort();
+    });
+
     const [selectedOption, setSelectedOption] = useState("All");
     const [subOption, setSubOption] = useState("");
-    const [schoolTypes, setSchoolTypes] = useState([]);
     const [selectedSchoolType, setSelectedSchoolType] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
-
-    // 🎯 OPTIMISTIC UI PATTERN - Loading States
-    const [isLoadingSchools, setIsLoadingSchools] = useState(true);
 
     const carouselRef = useRef(null);
     const [activeDesktopIndex, setActiveDesktopIndex] = useState(0);
     const [activeMobileIndex, setActiveMobileIndex] = useState(0);
 
-    const URL = "https://ahirsamajbe-gnapdbcbbzdcabc2.centralindia-01.azurewebsites.net";
     const secureUrl = (url) => url?.replace(/^http:\/\//i, "https://");
 
-    // Helper to create loading placeholders
-    const createLoadingSchools = () => ({
-        data: [
-            { id: 'loading-1', name: '⏳ Loading schools...', school_type: 'Loading', logo: null, isLoading: true },
-            { id: 'loading-2', name: '⏳ Fetching data...', school_type: 'Loading', logo: null, isLoading: true },
-            { id: 'loading-3', name: '⏳ Please wait...', school_type: 'Loading', logo: null, isLoading: true },
-            { id: 'loading-4', name: '⏳ Almost there...', school_type: 'Loading', logo: null, isLoading: true },
-        ]
-    });
 
-    // Display data: show loading placeholders while loading, then real data
-    const displaySchools = isLoadingSchools ? createLoadingSchools() : data1;
-
-    // 🏫 Fetch ALL schools with Optimistic UI Pattern
-    useEffect(() => {
-        console.log('\n🚀 ========== SCHOOLS API CALL STARTED (ImageSlider.js) ==========');
-        console.log('📍 Step 1: useEffect triggered for schools data');
-        console.log('   API Endpoint:', `${URL}/api/v1/schools/schools/`);
-        console.log('\n⚡ Step 2: Setting loading state to TRUE');
-        console.log('   🎨 Loading placeholders will show IMMEDIATELY in UI');
-        console.log('   ⏱️  User sees "Loading schools..." while waiting');
-
-        setIsLoadingSchools(true);
-
-        console.log('\n🌐 Step 3: Making actual API call...');
-        console.log('   ⏳ Waiting for server response...');
-
-        fetch(`${URL}/api/v1/schools/schools/`)
-            .then((res) => {
-                console.log('\n✅ Step 4: API Response received!');
-                console.log('   Response status:', res.status);
-                return res.json();
-            })
-            .then((json) => {
-                console.log('\n📦 Step 5: Processing API data');
-                console.log('   Real API Data:', json);
-                console.log('   Number of schools:', json.data?.length || 0);
-
-                setData1(json);
-                setFilteredData(json);
-                setIsLoadingSchools(false);
-
-                // extract unique school types for dropdown
-                const types = [...new Set((json.data || []).map(s => s.school_type).filter(Boolean))].sort();
-                setSchoolTypes(types);
-                console.log('   Extracted school types:', types);
-                console.log(setSelectedOption);
-
-                console.log('\n✨ Step 6: State updated!');
-                console.log('   🎯 Loading placeholders replaced with REAL schools');
-                console.log('   👁️  User now sees actual schools from database');
-                console.log('========== SCHOOLS API CALL COMPLETED ==========\n');
-            })
-            .catch((err) => {
-                console.error('\n❌ API Error:', err);
-                setIsLoadingSchools(false);
-                console.log('   Loading state cleared despite error');
-            });
-    }, []);
+    // All school data is loaded from defaultSchools JSON file
+    // No API call needed - data is already in state from initialization
 
     // Mapping of API school types to Gujarati display names
     const schoolTypeLabels = {
@@ -105,11 +52,12 @@ const ImageSlider = () => {
         setFilteredData({ ...data1, data: filtered });
     }, [selectedSchoolType, data1]);
 
-    // Search API call with school_type and search term
+    // Client-side search with school_type and search term
     useEffect(() => {
+        const all = data1?.data || [];
+
         if (!searchTerm.trim()) {
             // If no search term, use the type filter logic
-            const all = data1?.data || [];
             if (selectedSchoolType == null) {
                 setFilteredData({ ...data1, data: all });
             } else {
@@ -119,17 +67,25 @@ const ImageSlider = () => {
             return;
         }
 
-        // Call search API with school_type parameter
-        let searchUrl = `${URL}/api/v1/schools/schools/?search=${encodeURIComponent(searchTerm)}`;
-        if (selectedSchoolType != null) {
-            searchUrl += `&school_type=${encodeURIComponent(selectedSchoolType)}`;
+        // Client-side search filtering
+        let filtered = all;
+
+        // Filter by search term (search in name, location, etc.)
+        if (searchTerm.trim()) {
+            const searchLower = searchTerm.toLowerCase();
+            filtered = filtered.filter(item =>
+                item.name?.toLowerCase().includes(searchLower) ||
+                item.location?.toLowerCase().includes(searchLower) ||
+                item.address?.toLowerCase().includes(searchLower)
+            );
         }
 
-        fetch(searchUrl)
-            .then(res => res.json())
-            .then(json => setFilteredData(json))
-            .catch(err => console.error("Search error:", err));
-        console.log(setSearchTerm);
+        // Filter by school type if selected
+        if (selectedSchoolType != null) {
+            filtered = filtered.filter(item => item.school_type === selectedSchoolType);
+        }
+
+        setFilteredData({ ...data1, data: filtered });
     }, [searchTerm, selectedSchoolType, data1]);
 
     // Fetch single school
@@ -232,11 +188,7 @@ const ImageSlider = () => {
         if (activeMobileIndex >= cardWindowsMobile.length) setActiveMobileIndex(0);
     }, [cardWindowsMobile.length, activeMobileIndex]);
 
-    console.log('\n📺 UI Data Sources (ImageSlider.js):');
-    console.log('   Regular schools data (data1):', data1);
-    console.log('   Filtered schools data (filteredData):', filteredData);
-    console.log('   Display schools data (displaySchools with loading state):', displaySchools);
-    console.log('   💡 Using filteredData in JSX (could use displaySchools for instant loading feedback)!\n');
+
 
     return (
         <div className="container-fluid" style={{ borderRadius: "22px" }}>
@@ -379,7 +331,7 @@ const ImageSlider = () => {
                                                     >
                                                         <option value="">કેટેગરી પસંદ કરો</option>
                                                         {uniqueCategories.map((cat, i) => (
-                                                            <option key={i.id} value={cat}>{cat}</option>
+                                                            <option key={i} value={cat}>{cat}</option>
                                                         ))}
                                                     </select>
                                                 )}
@@ -392,7 +344,7 @@ const ImageSlider = () => {
                                                     >
                                                         <option value="">સ્થાન પસંદ કરો</option>
                                                         {uniqueLocations.map((loc, i) => (
-                                                            <option key={i.id} value={loc}>{loc}</option>
+                                                            <option key={i} value={loc}>{loc}</option>
                                                         ))}
                                                     </select>
                                                 )}

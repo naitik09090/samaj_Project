@@ -159,7 +159,7 @@
 
 // File: PrivacyPolicy.jsx
 
-import React, { useEffect } from "react";
+// import React, { useEffect } from "react";
 
 export default function PrivacyPolicy() {
   // Inject Bootstrap 5 and Google Font
