@@ -3,104 +3,27 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import calendar from "../images/calendar.png"
 import { FaArrowRightLong } from "react-icons/fa6";
+import defaultNewsList from '../data/newsData.json';
 
 const About_us = () => {
-    const [data4, setData4] = useState([]);
+    // All data is loaded directly from JSON files in src/data directory
+    const [data4, setData4] = useState(defaultNewsList);
     const { id } = useParams();
     const [data, setData] = useState(null);
 
-    // 🎯 OPTIMISTIC UI PATTERN - Loading States
-    const [isLoadingNewsList, setIsLoadingNewsList] = useState(true);
-    const [isLoadingSingleNews, setIsLoadingSingleNews] = useState(false);
 
-    const URL = "https://ahirsamajbe-gnapdbcbbzdcabc2.centralindia-01.azurewebsites.net";
 
-    // Helper to create loading placeholders
-    const createLoadingNewsList = () => ({
-        data: [
-            { id: 'loading-1', title: '⏳ Loading news...', content: 'Fetching latest news from server...', isLoading: true, images: [] },
-            { id: 'loading-2', title: '⏳ Please wait...', content: 'Loading content...', isLoading: true, images: [] },
-            { id: 'loading-3', title: '⏳ Fetching data...', content: 'Almost there...', isLoading: true, images: [] },
-        ]
-    });
-
-    // Display data: show loading placeholders while loading, then real data
-    const displayNewsList = isLoadingNewsList ? createLoadingNewsList() : data4;
-
-    // 📰 Fetch all news with Optimistic UI Pattern
-    useEffect(() => {
-        console.log('\n🚀 ========== NEWS LIST API CALL STARTED (LatestNews.js) ==========');
-        console.log('📍 Step 1: useEffect triggered for news list');
-        console.log('   API Endpoint:', `${URL}/api/v1/news/`);
-        console.log('\n⚡ Step 2: Setting loading state to TRUE');
-        console.log('   🎨 Loading placeholders will show IMMEDIATELY in UI');
-        console.log('   ⏱️  User sees "Loading news..." while waiting');
-
-        setIsLoadingNewsList(true);
-
-        console.log('\n🌐 Step 3: Making actual API call...');
-        console.log('   ⏳ Waiting for server response...');
-
-        fetch(`${URL}/api/v1/news/`)
-            .then((res) => {
-                console.log('\n✅ Step 4: API Response received!');
-                console.log('   Response status:', res.status);
-                return res.json();
-            })
-            .then((json) => {
-                console.log('\n📦 Step 5: Processing API data');
-                console.log('   Real API Data:', json);
-                console.log('   Number of news items:', json.data?.length || 0);
-                console.log('   🔄 Now updating actual state with real data');
-
-                setData4(json);
-                setIsLoadingNewsList(false);
-
-                console.log('\n✨ Step 6: State updated!');
-                console.log('   🎯 Loading placeholders replaced with REAL news');
-                console.log('   👁️  User now sees actual news from database');
-                console.log('========== NEWS LIST API CALL COMPLETED ==========\n');
-            })
-            .catch((err) => {
-                console.error('\n❌ API Error:', err);
-                setIsLoadingNewsList(false);
-                console.log('   Loading state cleared despite error');
-            });
-    }, []);
-
-    // Fetch single news only if id exists
+    // Find single news item from the list based on URL id parameter (client-side lookup)
     useEffect(() => {
         if (!id) {
             setData(null);
             return;
         }
 
-        console.log('\n🚀 ========== SINGLE NEWS API CALL STARTED (LatestNews.js) ==========');
-        console.log('📍 News ID:', id);
-        console.log('   API Endpoint:', `${URL}/api/v1/news/${id}`);
-
-        setIsLoadingSingleNews(true);
-
-        fetch(`${URL}/api/v1/news/${id}`)
-            .then(res => {
-                console.log('\n✅ Single News API Response received!');
-                console.log('   Response status:', res.status);
-                return res.json();
-            })
-            .then(result => {
-                console.log('\n📦 Processing single news data');
-                console.log('   Single news:', result);
-
-                setData(result?.data);
-                setIsLoadingSingleNews(false);
-
-                console.log('\n✨ Single news state updated!');
-                console.log('========== SINGLE NEWS API CALL COMPLETED ==========\n');
-            })
-            .catch(err => {
-                console.error('\n❌ Single News API Error:', err);
-                setIsLoadingSingleNews(false);
-            });
+        if (defaultNewsList?.data && Array.isArray(defaultNewsList.data)) {
+            const foundNews = defaultNewsList.data.find(item => item.id == id);
+            setData(foundNews || null);
+        }
     }, [id]);
 
     const chunkArray1 = (arr, size) => {
@@ -113,13 +36,10 @@ const About_us = () => {
 
     const secureUrl = (url) => url?.replace(/^http:\/\//i, "https://");
 
-    // 🎯 Use displayNewsList instead of data4 for optimistic UI
-    const cardChunks = chunkArray1(displayNewsList?.data || [], 5);
+    // 🎯 Use data4 directly for UI
+    const cardChunks = chunkArray1(data4?.data || [], 5);
 
-    console.log('\n📺 UI Data Sources (LatestNews.js):');
-    console.log('   Regular news data (data4):', data4);
-    console.log('   Display news data (displayNewsList with loading state):', displayNewsList);
-    console.log('   💡 Using displayNewsList in JSX for better UX!\n');
+
 
     return (
         <div className='container-fluid'>
@@ -134,7 +54,7 @@ const About_us = () => {
 
                     {/* ---------------- DESKTOP: original carousel (visible on md+) ---------------- */}
                     <div className="d-none d-md-block">
-                        <div id="newsCarousel" className="carousel slide" data-bs-ride="carousel">
+                        <div id="newsCarousel" className="carousel slide">
                             <div className="carousel-inner">
                                 {cardChunks && cardChunks.length > 0 ? (
                                     cardChunks.map((chunk, index) => (
@@ -155,52 +75,76 @@ const About_us = () => {
                                                                 backgroundColor: "#fff",
                                                             }}
                                                         >
-                                                            <img
-                                                                src={secureUrl(newsItem.images?.[0]?.image)}
-                                                                className="mb-2"
-                                                                alt={`${newsItem.title}`}
-                                                                loading='lazy'
-                                                                style={{
-                                                                    height: "180px",
-                                                                    width: "100%",
-                                                                    objectFit: "contain",
-                                                                    borderRadius: "15px",
-                                                                }}
-                                                            />
+                                                            {/* Show image only if not loading */}
+                                                            {!newsItem.isLoading && newsItem.images?.[0]?.image ? (
+                                                                <img
+                                                                    src={secureUrl(newsItem.images[0].image)}
+                                                                    className="mb-2"
+                                                                    alt={`${newsItem.title}`}
+                                                                    loading='lazy'
+                                                                    style={{
+                                                                        height: "180px",
+                                                                        width: "100%",
+                                                                        objectFit: "contain",
+                                                                        borderRadius: "15px",
+                                                                    }}
+                                                                />
+                                                            ) : (
+                                                                <div
+                                                                    className="mb-2 d-flex align-items-center justify-content-center"
+                                                                    style={{
+                                                                        height: "180px",
+                                                                        width: "100%",
+                                                                        backgroundColor: "#f0f0f0",
+                                                                        borderRadius: "15px",
+                                                                        color: "#999",
+                                                                    }}
+                                                                >
+                                                                    {newsItem.isLoading ? "⏳" : "No Image"}
+                                                                </div>
+                                                            )}
 
                                                             <div className="card-body1 d-flex flex-column flex-grow-1">
-                                                                <p className="text-start text-muted mt-1 d-flex align-items-center">
-                                                                    <img
-                                                                        src={calendar}
-                                                                        className="me-2"
-                                                                        height={20}
-                                                                        width={20}
-                                                                        alt=""
-                                                                    />
-                                                                    {new Date(newsItem?.published_at).toLocaleDateString("en-GB", {
-                                                                        day: "2-digit",
-                                                                        month: "short",
-                                                                        year: "numeric",
-                                                                    })}
-                                                                </p>
+                                                                {!newsItem.isLoading && newsItem.published_at && (
+                                                                    <p className="text-start text-muted mt-1 d-flex align-items-center">
+                                                                        <img
+                                                                            src={calendar}
+                                                                            className="me-2"
+                                                                            height={20}
+                                                                            width={20}
+                                                                            alt=""
+                                                                        />
+                                                                        {new Date(newsItem.published_at).toLocaleDateString("en-GB", {
+                                                                            day: "2-digit",
+                                                                            month: "short",
+                                                                            year: "numeric",
+                                                                        })}
+                                                                    </p>
+                                                                )}
 
                                                                 <h6 className="m-1 text-start title-line-1" style={{ color: "#067C71" }}>{newsItem.title}</h6>
-                                                                <p className="m-1 text-muted text-start title-content-2">{newsItem.content}</p>
+                                                                <p className="m-1 text-muted text-start title-content-2">{newsItem.content || newsItem.description}</p>
 
                                                                 <div className="mt-auto">
-                                                                    <Link
-                                                                        to={`/latest/${newsItem.id}`}
-                                                                        className="text-decoration-none w-100"
-                                                                        aria-label={`Read full article: ${newsItem.title}`}
-                                                                    >
+                                                                    {!newsItem.isLoading ? (
+                                                                        <Link
+                                                                            to={`/latest/${newsItem.id}`}
+                                                                            className="text-decoration-none w-100"
+                                                                            aria-label={`Read full article: ${newsItem.title}`}
+                                                                        >
+                                                                            <div className="d-flex align-items-center justify-content-between px-3 py-2">
+                                                                                <span className="text-dark fw-semibold">
+                                                                                    Learn More
+                                                                                    <span className="visually-hidden">about {newsItem.title}</span>
+                                                                                </span>
+                                                                                <FaArrowRightLong className="text-dark" aria-hidden="true" />
+                                                                            </div>
+                                                                        </Link>
+                                                                    ) : (
                                                                         <div className="d-flex align-items-center justify-content-between px-3 py-2">
-                                                                            <span className="text-dark fw-semibold">
-                                                                                Learn More
-                                                                                <span className="visually-hidden"> about {newsItem.title}</span>
-                                                                            </span>
-                                                                            <FaArrowRightLong className="text-dark" aria-hidden="true" />
+                                                                            <span className="text-muted">Loading...</span>
                                                                         </div>
-                                                                    </Link>
+                                                                    )}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -220,25 +164,29 @@ const About_us = () => {
                                 )}
                             </div>
 
-                            {/* Optional controls */}
-                            <button
-                                className="carousel-control-prev"
-                                type="button"
-                                data-bs-target="#newsCarousel"
-                                data-bs-slide="prev"
-                            >
-                                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span className="visually-hidden">Previous</span>
-                            </button>
-                            <button
-                                className="carousel-control-next"
-                                type="button"
-                                data-bs-target="#newsCarousel"
-                                data-bs-slide="next"
-                            >
-                                <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span className="visually-hidden">Next</span>
-                            </button>
+                            {/* Carousel controls - only show if we have multiple slides */}
+                            {cardChunks && cardChunks.length > 1 && (
+                                <>
+                                    <button
+                                        className="carousel-control-prev"
+                                        type="button"
+                                        data-bs-target="#newsCarousel"
+                                        data-bs-slide="prev"
+                                    >
+                                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span className="visually-hidden">Previous</span>
+                                    </button>
+                                    <button
+                                        className="carousel-control-next"
+                                        type="button"
+                                        data-bs-target="#newsCarousel"
+                                        data-bs-slide="next"
+                                    >
+                                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span className="visually-hidden">Next</span>
+                                    </button>
+                                </>
+                            )}
                         </div>
                     </div>
 
@@ -256,49 +204,72 @@ const About_us = () => {
                                             {pair.map((newsItem) => (
                                                 <div className="col-6" key={newsItem.id}>
                                                     <div className="Main-Card_1 p-1 h-100 shadow-sm d-flex flex-column">
-                                                        <img
-                                                            src={secureUrl(newsItem.images?.[0]?.image)}
-                                                            className="Main-Card_2"
-                                                            loading="lazy"
-                                                            style={{
-                                                                objectFit: "contain",
-                                                                borderRadius: '22px'
-                                                            }}
-                                                            alt={newsItem.title || ""}
-                                                        />
+                                                        {/* Show image only if not loading */}
+                                                        {!newsItem.isLoading && newsItem.images?.[0]?.image ? (
+                                                            <img
+                                                                src={secureUrl(newsItem.images[0].image)}
+                                                                className="Main-Card_2"
+                                                                loading="lazy"
+                                                                style={{
+                                                                    objectFit: "contain",
+                                                                    borderRadius: '22px'
+                                                                }}
+                                                                alt={newsItem.title || ""}
+                                                            />
+                                                        ) : (
+                                                            <div
+                                                                className="Main-Card_2 d-flex align-items-center justify-content-center"
+                                                                style={{
+                                                                    backgroundColor: "#f0f0f0",
+                                                                    borderRadius: '22px',
+                                                                    minHeight: "120px",
+                                                                    color: "#999",
+                                                                }}
+                                                            >
+                                                                {newsItem.isLoading ? "⏳" : "No Image"}
+                                                            </div>
+                                                        )}
 
                                                         <div className="card-body1 d-flex flex-column" style={{ padding: "8px" }}>
-                                                            <p className="text-start text-muted mb-1" style={{ fontSize: 12 }}>
-                                                                <img src={calendar} className="claendar_Icon" height={16} width={16} alt="calender" />
-                                                                {new Date(newsItem?.published_at).toLocaleDateString("en-GB", {
-                                                                    day: "2-digit",
-                                                                    month: "short",
-                                                                    year: "numeric"
-                                                                })}
-                                                            </p>
+                                                            {!newsItem.isLoading && newsItem.published_at && (
+                                                                <p className="text-start text-muted mb-1" style={{ fontSize: 12 }}>
+                                                                    <img src={calendar} className="claendar_Icon" height={16} width={16} alt="calender" />
+                                                                    {new Date(newsItem.published_at).toLocaleDateString("en-GB", {
+                                                                        day: "2-digit",
+                                                                        month: "short",
+                                                                        year: "numeric"
+                                                                    })}
+                                                                </p>
+                                                            )}
 
                                                             <h2 className="h6" style={{ fontSize: 14 }}>
-                                                                {newsItem.title.length > 60 ? newsItem.title.slice(0, 20) + "…" : newsItem.title}
+                                                                {newsItem.title && newsItem.title.length > 60 ? newsItem.title.slice(0, 20) + "…" : newsItem.title}
                                                             </h2>
 
                                                             <p className="text-muted small" style={{ fontSize: 12 }}>
-                                                                {typeof newsItem.content === "string" ? (newsItem.content.length > 40 ? newsItem.content.slice(0, 30) + "…" : newsItem.content) : ""}
+                                                                {typeof (newsItem.content || newsItem.description) === "string" ? ((newsItem.content || newsItem.description).length > 40 ? (newsItem.content || newsItem.description).slice(0, 30) + "…" : (newsItem.content || newsItem.description)) : ""}
                                                             </p>
 
                                                             <div className="mt-auto">
-                                                                <Link
-                                                                    to={`/latest/${newsItem.id}`}
-                                                                    className="text-decoration-none w-100"
-                                                                    aria-label={`Read full article: ${newsItem.title}`}
-                                                                >
+                                                                {!newsItem.isLoading ? (
+                                                                    <Link
+                                                                        to={`/latest/${newsItem.id}`}
+                                                                        className="text-decoration-none w-100"
+                                                                        aria-label={`Read full article: ${newsItem.title}`}
+                                                                    >
+                                                                        <div className="d-flex align-items-center justify-content-between">
+                                                                            <span className="text-dark fw-semibold">
+                                                                                Learn More
+                                                                                <span className="visually-hidden"> about {newsItem.title}</span>
+                                                                            </span>
+                                                                            <FaArrowRightLong className="text-dark" aria-hidden="true" />
+                                                                        </div>
+                                                                    </Link>
+                                                                ) : (
                                                                     <div className="d-flex align-items-center justify-content-between">
-                                                                        <span className="text-dark fw-semibold">
-                                                                            Learn More
-                                                                            <span className="visually-hidden"> about {newsItem.title}</span>
-                                                                        </span>
-                                                                        <FaArrowRightLong className="text-dark" aria-hidden="true" />
+                                                                        <span className="text-muted" style={{ fontSize: 12 }}>Loading...</span>
                                                                     </div>
-                                                                </Link>
+                                                                )}
                                                             </div>
                                                         </div>
                                                     </div>

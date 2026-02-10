@@ -15,24 +15,45 @@ import email_1 from "../images/Mail_icon.png";
 import phone_1 from "../images/Call_icon.png";
 import Location_icon from "../images/Location_icon.png";
 import { Link, useParams } from "react-router-dom";
+import defaultData1 from '../data/schoolData.json';
 
 const ImageSlider = () => {
-    const [data1, setData1] = useState([]);
-    const [selectedData, setSelectedData] = useState([]);
-    const [index, setIndex] = useState(0);
-    const [filteredData, setFilteredData] = useState([]);
-    // const [autoSlide, setAutoSlide] = useState(true);
-    // const sliderRef = useRef(null);
-    const carouselRef = useRef(null);
+    // All data is loaded directly from JSON files in src/data directory
     const { id } = useParams();
-    const [school, setSchool] = useState(null);
+
+    const [data1, setData1] = useState(defaultData1);
+    const [filteredData, setFilteredData] = useState(defaultData1);
+
+    // Find school from the list based on URL id parameter
+    const [school, setSchool] = useState(() => {
+        if (!id) return null;
+        if (defaultData1?.data && Array.isArray(defaultData1.data)) {
+            return defaultData1.data.find(item =>
+                String(item.id) === String(id) ||
+                String(item._id) === String(id) ||
+                String(item.schoolId) === String(id)
+            ) || null;
+        }
+        return null;
+    });
+
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
     const secureUrl = (url) => url?.replace(/^http:\/\//i, "https://");
-    const [schoolTypes, setSchoolTypes] = useState([]);
+
+    // Initialize school types from JSON data
+    const [schoolTypes, setSchoolTypes] = useState(() => {
+        return [...new Set((defaultData1?.data || []).map(s => s.school_type).filter(Boolean))].sort();
+    });
+
     const [selectedSchoolType, setSelectedSchoolType] = useState(null);
     const [activeDesktopIndex, setActiveDesktopIndex] = useState(0);
     const [activeMobileIndex, setActiveMobileIndex] = useState(0);
     const [searchTerm, setSearchTerm] = useState("");
+
+    // Restored missing state for Carousel
+    const [index, setIndex] = useState(0);
+    const carouselRef = useRef(null);
+
     // Mapping of API school types to Gujarati display names
     const schoolTypeLabels = {
         "Ahir Boarding": "આહીર બોર્ડિંગ",
@@ -45,13 +66,9 @@ const ImageSlider = () => {
         "Ahir Kalyan Mandal": "આહિર કેળવણી મંડળ",
     };
 
-    // const getSchoolLabel = (type) => {
-    //     if (!type) return "";
-    //     const foundKey = Object.keys(schoolTypeLabels).find(k => k.toLowerCase() === String(type).toLowerCase());
-    //     return schoolTypeLabels[foundKey] || type;
-    // };
-
-    const URL = "https://ahirsamajbe-gnapdbcbbzdcabc2.centralindia-01.azurewebsites.net";
+    // Direct data access
+    const displaySchool = school;
+    const displaySchoolsList = data1; // Variable kept for compatibility if used elsewhere, else we use data1/filteredData
 
     const [formData, setFormData] = useState({
         FirstName: "",
@@ -88,7 +105,7 @@ const ImageSlider = () => {
 
     const handleThumbnailClick = (idx) => {
         setIndex(idx);
-        console.log(setSelectedData);
+        // console.log(setSelectedData); // Removed undefined log
         // setAutoSlide(false);
     };
 
@@ -107,33 +124,22 @@ const ImageSlider = () => {
     //         .catch((err) => console.error(err));
     // }, []);
 
+    // Update school when id changes (client-side lookup)
     useEffect(() => {
-        fetch(`${URL}/api/v1/schools/schools/`)
-            .then(res => res.json())
-            .then(result => {
-                const list = Array.isArray(result.data) ? result.data : [];
-                const found = list.find(item => {
-                    return String(item.id) === String(id) ||
-                        String(item._id) === String(id) ||
-                        String(item.schoolId) === String(id);
-                });
-                console.log("Found:-", found)
-                setSchool(found)
-            })
-            .catch(err => console.error(err));
+        if (!id) return;
+
+        if (defaultData1?.data && Array.isArray(defaultData1.data)) {
+            const found = defaultData1.data.find(item => {
+                return String(item.id) === String(id) ||
+                    String(item._id) === String(id) ||
+                    String(item.schoolId) === String(id);
+            });
+
+            if (found) {
+                setSchool(found);
+            }
+        }
     }, [id]);
-    useEffect(() => {
-        fetch(`${URL}/api/v1/schools/schools/`)
-            .then((res) => res.json())
-            .then((json) => {
-                setData1(json);
-                setFilteredData(json);
-                // extract unique school_type values for filter buttons
-                const types = [...new Set(json.data?.map(s => s.school_type).filter(Boolean))].sort();
-                setSchoolTypes(types);
-            })
-            .catch((err) => console.error(err));
-    }, []);
 
     useEffect(() => {
         const all = data1?.data || [];
@@ -145,12 +151,13 @@ const ImageSlider = () => {
         setFilteredData({ ...data1, data: filtered });
     }, [selectedSchoolType, data1]);
 
-    // Search API call with school_type and search term
+    // Client-side search with school_type and search term
     useEffect(() => {
+        const all = data1?.data || [];
+
         if (!searchTerm.trim()) {
             console.log(setSearchTerm);
             // If no search term, use the type filter logic
-            const all = data1?.data || [];
             if (selectedSchoolType == null) {
                 setFilteredData({ ...data1, data: all });
             } else {
@@ -160,16 +167,25 @@ const ImageSlider = () => {
             return;
         }
 
-        // Call search API with school_type parameter
-        let searchUrl = `${URL}/api/v1/schools/schools/?search=${encodeURIComponent(searchTerm)}`;
-        if (selectedSchoolType != null) {
-            searchUrl += `&school_type=${encodeURIComponent(selectedSchoolType)}`;
+        // Client-side search filtering
+        let filtered = all;
+
+        // Filter by search term (search in name, location, etc.)
+        if (searchTerm.trim()) {
+            const searchLower = searchTerm.toLowerCase();
+            filtered = filtered.filter(item =>
+                item.name?.toLowerCase().includes(searchLower) ||
+                item.location?.toLowerCase().includes(searchLower) ||
+                item.address?.toLowerCase().includes(searchLower)
+            );
         }
 
-        fetch(searchUrl)
-            .then(res => res.json())
-            .then(json => setFilteredData(json))
-            .catch(err => console.error("Search error:", err));
+        // Filter by school type if selected
+        if (selectedSchoolType != null) {
+            filtered = filtered.filter(item => item.school_type === selectedSchoolType);
+        }
+
+        setFilteredData({ ...data1, data: filtered });
     }, [searchTerm, selectedSchoolType, data1]);
 
     // 1) Fetch single school by id (safer than fetching whole list and .find)
@@ -198,8 +214,8 @@ const ImageSlider = () => {
 
     // 3) build combined media array (photos + videos) with stable ordering & keys
     const combined = useMemo(() => {
-        const photos = Array.isArray(school?.photos) ? school.photos : [];
-        const videos = Array.isArray(school?.videos) ? school.videos : [];
+        const photos = Array.isArray(displaySchool?.photos) ? displaySchool.photos : [];
+        const videos = Array.isArray(displaySchool?.videos) ? displaySchool.videos : [];
 
         const arr = [
             ...photos.map((p) => ({ ...p, _type: "image", _key: `photo-${p.id}` })),
@@ -217,7 +233,7 @@ const ImageSlider = () => {
 
         console.log("DEBUG combined media:", arr, "length:", arr.length);
         return arr;
-    }, [school]);
+    }, [displaySchool]);
 
     // 4) helper to extract youtube id
     // function getYouTubeId(url = "") {
@@ -349,7 +365,7 @@ const ImageSlider = () => {
 
     return (
         <div className="container-fluid w-100">
-            {school && (
+            {displaySchool && (
                 <h3
                     className="text-center mb-3"
                     id="school_Logo"
@@ -359,7 +375,7 @@ const ImageSlider = () => {
                         color: "#067C71",
                     }}
                 >
-                    {school.name}
+                    {displaySchool.name}
                 </h3>
             )}
 
@@ -590,54 +606,54 @@ const ImageSlider = () => {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-6 Location_Details">
-                        {selectedData && (
+                        {displaySchool && (
                             <>
                                 <h1 className="fw-bold mb-2">Contact Us</h1>
                                 <div>
-                                    {school?.email && (
-                                        <a href={school?.email} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-black">
+                                    {displaySchool?.email && (
+                                        <a href={displaySchool?.email} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-black">
                                             <img src={email_1?.replace("http://", "https://")} alt="email" height={25} width={25} />
-                                            {school?.email}
+                                            {displaySchool?.email}
                                         </a>
                                     )}
                                 </div>
                                 <div>
-                                    {school?.contact_number && (
-                                        <a href={school?.contact_number} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-black">
+                                    {displaySchool?.contact_number && (
+                                        <a href={displaySchool?.contact_number} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-black">
                                             <img src={phone_1?.replace("http://", "https://")} alt="phone" height={25} width={25} />
-                                            +91 {school?.contact_number}
+                                            +91 {displaySchool?.contact_number}
                                         </a>
                                     )}
                                 </div>
                                 <div>
-                                    {school?.address && (
-                                        <a href={school?.address} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-black">
+                                    {displaySchool?.address && (
+                                        <a href={displaySchool?.address} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-black">
                                             <img src={Location_icon?.replace("http://", "https://")} alt="location" height={25} width={25} />
-                                            {school?.address}
+                                            {displaySchool?.address}
                                         </a>
                                     )}
                                 </div>
                                 <div>
-                                    {school?.website && (
-                                        <a href={school?.website} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-black">
+                                    {displaySchool?.website && (
+                                        <a href={displaySchool?.website} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-black">
                                             <img src={wd?.replace("http://", "https://")} alt="website" height={25} width={25} />
-                                            {school?.website}
+                                            {displaySchool?.website}
                                         </a>
                                     )}
                                 </div>
                                 <div>
-                                    {school?.facebook && (
-                                        <a href={school?.facebook} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-black">
+                                    {displaySchool?.facebook && (
+                                        <a href={displaySchool?.facebook} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-black">
                                             <img src={fb?.replace("http://", "https://")} alt="facebook" height={25} width={25} />
-                                            {school?.facebook}
+                                            {displaySchool?.facebook}
                                         </a>
                                     )}
                                 </div>
                                 <div>
-                                    {school?.instagram && (
-                                        <a href={school?.instagram} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-black">
+                                    {displaySchool?.instagram && (
+                                        <a href={displaySchool?.instagram} target="_blank" rel="noopener noreferrer" className="text-decoration-none text-black">
                                             <img src={ig?.replace("http://", "https://")} alt="instagram" height={20} width={20} />
-                                            {school?.instagram}
+                                            {displaySchool?.instagram}
                                         </a>
                                     )}
                                 </div>
@@ -689,7 +705,7 @@ const ImageSlider = () => {
                     </div>
                 </div>
             </div>
-            {school?.map && (
+            {displaySchool?.map && (
                 <div className='container'>
                     <div className='row'>
                         <div className='col-md-12 mb-3'>
@@ -698,7 +714,7 @@ const ImageSlider = () => {
                                 style={{ maxWidth: '1600px', width: '100%', borderRadius: '12px', overflow: 'hidden' }}
                             >
                                 <iframe
-                                    src={getMapSrc(school.map)}
+                                    src={getMapSrc(displaySchool.map)}
                                     title="Map showing store locations"
                                     style={{ border: '1px solid #ccc', borderRadius: '30px' }}
                                     allowFullScreen

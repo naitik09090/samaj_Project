@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useMemo, useCallback, useOptimistic, useTransition } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 // import { useRef } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Kano from '../images/Kano.webp'
+import Kano1 from '../images/kano1.png'
 import { PiBuildingsBold } from "react-icons/pi";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
@@ -10,61 +11,72 @@ import calendar from "../images/calendar.png"
 
 
 
+import defaultSlideshow from '../data/sliderData.json';
+import defaultSloka from '../data/slokaData.json';
+import defaultNews from '../data/newsData.json';
+import defaultSchools from '../data/schoolData.json';
+
 const Home = () => {
-    const [data1, setData1] = useState([]),
-        [data2, setData2] = useState([]),
-        [slock, setSlock] = useState([]),
-        [index, setIndex] = useState(0),
-        [data4, setData4] = useState([]),
-        [schoolTypes, setSchoolTypes] = useState([]),
-        [selectedSchoolType, setSelectedSchoolType] = useState(null),
-        [activeDesktopIndex, setActiveDesktopIndex] = useState(0),
-        [activeMobileIndex, setActiveMobileIndex] = useState(0),
-        [filteredData1, setFilteredData1] = useState([]),
-        [counter, setCounter] = useState(0), // Counter for animation
-        { id } = useParams();
-
-    // 🎯 OPTIMISTIC UI PATTERN (Compatible with React 19)
-    // Instead of useOptimistic hook (which is for user actions), we use loading states
-    // This shows placeholder data immediately while API calls are in progress
-    const [isLoadingNews, setIsLoadingNews] = useState(true);
-    const [isLoadingSchools, setIsLoadingSchools] = useState(true);
-
-    // Helper to create optimistic/loading data
-    const createLoadingNews = () => ({
-        data: [{
-            id: 'loading-1',
-            title: '⏳ Loading news...',
-            description: 'Fetching latest news from server...',
-            isLoading: true
-        }]
+    // All data is loaded directly from JSON files in src/data directory
+    const [data1, setData1] = useState(defaultSchools);
+    const [data2, setData2] = useState(() => {
+        // Filter slideshow based on initial viewport
+        const isMobile = window.innerWidth < 768;
+        const viewType = isMobile ? "mobile" : "desktop";
+        const allSlides = defaultSlideshow.data || defaultSlideshow;
+        return allSlides.filter(slide => slide.viewtype === viewType);
     });
-
-    const createLoadingSchools = () => ({
-        data: [
-            { id: 'loading-1', name: '⏳ Loading schools...', school_type: 'Loading', logo: null, isLoading: true },
-            { id: 'loading-2', name: '⏳ Fetching data...', school_type: 'Loading', logo: null, isLoading: true },
-            { id: 'loading-3', name: '⏳ Please wait...', school_type: 'Loading', logo: null, isLoading: true }
-        ]
+    const [slock, setSlock] = useState(defaultSloka);
+    const [index, setIndex] = useState(0);
+    const [data4, setData4] = useState(defaultNews);
+    const [schoolTypes, setSchoolTypes] = useState(() => {
+        return [...new Set(defaultSchools.data?.map(school => school.school_type).filter(Boolean))].sort();
     });
+    const [selectedSchoolType, setSelectedSchoolType] = useState(null);
+    const [activeDesktopIndex, setActiveDesktopIndex] = useState(0);
+    const [activeMobileIndex, setActiveMobileIndex] = useState(0);
+    const [filteredData1, setFilteredData1] = useState(defaultSchools);
+    const [counter, setCounter] = useState(0); // Counter for animation
+    const { id } = useParams();
 
-    // Display data: show loading placeholders while loading, then real data
-    const displayNews = isLoadingNews ? createLoadingNews() : data4;
-    const displaySchools = isLoadingSchools ? createLoadingSchools() : data1;
+    // Display data directly using state (leveraging background updates and initial cache)
+    const displayNews = data4;
+    const displaySchools = data1;
+    const displaySlokas = slock;
 
     const { pathname } = useLocation();
 
     useEffect(() => {
         window.scrollTo(0, 0); // 👈 NO smooth, direct jump
     }, [pathname]);
-    // carouselRef = useRef(null),
-    // const [searchTerm, setSearchTerm] = useState("");
-    // const [selectedOption, setSelectedOption] = useState("All");
-    // const [subOption, setSubOption] = useState("");
+
+    // Filter slideshow based on viewport and handle resize
+    useEffect(() => {
+        const updateSlideshow = () => {
+            const isMobile = window.innerWidth < 768;
+            const viewType = isMobile ? "mobile" : "desktop";
+            const allSlides = defaultSlideshow.data || defaultSlideshow;
+            const filteredSlides = allSlides.filter(slide => slide.viewtype === viewType);
+            setData2(filteredSlides);
+        };
+
+        // Debounce resize handler to reduce main-thread work
+        let resizeTimeout;
+        const debouncedUpdateSlideshow = () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(updateSlideshow, 300);
+        };
+
+        window.addEventListener("resize", debouncedUpdateSlideshow);
+        return () => {
+            window.removeEventListener("resize", debouncedUpdateSlideshow);
+            clearTimeout(resizeTimeout);
+        };
+    }, []);
 
     const filteredData = useMemo(() =>
-        slock?.data?.filter(t => t.id >= 1 && t.id <= 4) ?? [],
-        [slock?.data]
+        displaySlokas?.data?.filter(t => t.id >= 1 && t.id <= 4) ?? [],
+        [displaySlokas?.data]
     );
 
     // Counter animation from 1 to 100 (deferred for better performance)
@@ -109,183 +121,67 @@ const Home = () => {
         }, 4000);
         return () => clearInterval(interval);
     }, [filteredData.length]);
-    // const slideCarousel = (direction) => {
-    //     const isMobile = window.innerWidth < 768;
-    //     const carouselId = isMobile
-    //         ? "mobileSchoolCarousel"
-    //         : "desktopSchoolCarousel";
 
-    //     const el = document.getElementById(carouselId);
-    //     if (!el) return;
+    // All data is now loaded from JSON files in src/data directory
+    // No API calls needed
 
-    //     const carousel = Carousel.getOrCreateInstance(el, {
-    //         interval: false,
-    //         ride: false,
+
+
+    // News data is loaded from defaultNews JSON file
+    // No API call needed - data is already in state from initialization
+
+
+    // Sloka data is loaded from defaultSloka JSON file
+    // No API call needed - data is already in state from initialization
+
+    // School data is loaded from defaultSchools JSON file
+    // No API call needed - data is already in state from initialization
+    //     console.log('\n🚀 ========== SCHOOLS API CALL STARTED (Home.js) ==========');
+    //     console.log('📍 Step 1: useEffect triggered for schools data');
+    //     console.log('   API Endpoint:', `${URL}/api/v1/schools/schools/`);
+
+    //     startTransition(() => {
+    //         // Only show "Loading..." if no cached data
+    //         const hasCachedSchools = data1 && ((Array.isArray(data1) && data1.length > 0) || (data1.data && data1.data.length > 0));
+
+    //         if (!hasCachedSchools) {
+    //             console.log('   🎨 Setting optimistic loading data (No cache found)');
+    //             setOptimisticSchools(createLoadingSchools());
+    //         } else {
+    //             console.log('   🎨 Using cached data immediately (skipping skeleton)');
+    //         }
+
+    //         console.log('\n🌐 Step 3: Making actual schools API call inside startTransition...');
+
+    //         fetch(`${URL}/api/v1/schools/schools/`)
+    //             .then((res) => {
+    //                 console.log('\n✅ Step 4: Schools API Response received!');
+    //                 return res.json();
+    //             })
+    //             .then((json) => {
+    //                 console.log('\n📦 Step 5: Processing schools API data');
+
+    //                 // Update state
+    //                 setData1(json);
+    //                 setFilteredData1(json);
+
+    //                 // Cache the data
+    //                 localStorage.setItem('home_schools', JSON.stringify(json));
+    //                 console.log('   💾 Schools data cached to localStorage');
+
+    //                 // Extract unique school types from the data
+    //                 const types = [...new Set(json.data?.map(school => school.school_type).filter(Boolean))].sort();
+    //                 setSchoolTypes(types);
+
+    //                 console.log('\n✨ Step 6: Schools state updated!');
+    //                 console.log('========== SCHOOLS API CALL COMPLETED ==========\n');
+    //             })
+    //             .catch((err) => {
+    //                 console.error('\n❌ Schools API Error:', err);
+    //             });
     //     });
-
-    //     direction === "next" ? carousel.next() : carousel.prev();
-    // };
-
-
-
-
-    const URL = "https://ahirsamajbe-gnapdbcbbzdcabc2.centralindia-01.azurewebsites.net";
-
-    useEffect(() => {
-        const fetchSlides = () => {
-            const isMobile = window.innerWidth < 768;
-            const viewType = isMobile ? "mobile" : "desktop";
-
-            fetch(`${URL}/api/v1/slideshow?viewtype=${viewType}`)
-                .then((res) => res.json())
-                .then((json) => setData2(json.data))
-                .catch((err) => console.error(err));
-        };
-
-        // Fetch on first load
-        fetchSlides();
-
-        // Debounce resize handler to reduce main-thread work
-        let resizeTimeout;
-        const debouncedFetchSlides = () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(fetchSlides, 300);
-        };
-
-        window.addEventListener("resize", debouncedFetchSlides);
-        return () => {
-            window.removeEventListener("resize", debouncedFetchSlides);
-            clearTimeout(resizeTimeout);
-        };
-    }, []);
-
-
-
-    // news api call
-    /* The above code is written in JavaScript and utilizes the useEffect hook from React. */
-    // useEffect(() => {
-    //     fetch(`${URL}/api/v1/news/${id}`).then((res) => res.json())
-    //         .then((json) => {
-    //             console.log(json);
-    //             setData4(json);
-    //             console.log("News Data:-", json.data[0])
-    //         })
-    //         .catch((err) => console.error(err));
-    // }, [id]);
-
-    // useEffect(() => {
-    //     fetch(`${URL}/api/v1/news/`)
-    //         .then((res) => res.json())
-    //         .then((json) => {
-    //             console.log("News list:", json);
-    //             setData4(json);
-    //         })
-    //         .catch((err) => console.error(err));
     // }, []);
 
-    // 📰 News API Call with Optimistic UI Pattern
-    useEffect(() => {
-        console.log('\n🚀 ========== NEWS API CALL STARTED ==========');
-        console.log('📍 Step 1: useEffect triggered for news data');
-        console.log('   ID parameter:', id || 'No ID (fetching all news)');
-
-        const endpoint = id
-            ? `${URL}/api/v1/news/${id}`
-            : `${URL}/api/v1/news/`;
-
-        console.log('   API Endpoint:', endpoint);
-        console.log('\n⚡ Step 2: Setting loading state to TRUE');
-        console.log('   🎨 Loading placeholder will show in UI IMMEDIATELY');
-        console.log('   ⏱️  User sees "Loading news..." while waiting');
-
-        setIsLoadingNews(true);
-
-        console.log('\n🌐 Step 3: Making actual API call...');
-        console.log('   ⏳ Waiting for server response...');
-
-        fetch(endpoint)
-            .then(res => {
-                console.log('\n✅ Step 4: API Response received!');
-                console.log('   Response status:', res.status);
-                return res.json();
-            })
-            .then(json => {
-                console.log('\n📦 Step 5: Processing API data');
-                console.log('   Real API Data:', json);
-                console.log('   🔄 Now updating actual state with real data');
-
-                setData4(json);
-                setIsLoadingNews(false);
-
-                console.log('\n✨ Step 6: State updated!');
-                console.log('   🎯 Loading placeholder is now replaced with REAL data');
-                console.log('   👁️  User now sees actual data from server');
-                console.log('========== NEWS API CALL COMPLETED ==========\n');
-            })
-            .catch(err => {
-                console.error('\n❌ API Error:', err);
-                setIsLoadingNews(false);
-                console.log('   Loading state cleared despite error');
-            });
-    }, [id]);
-
-
-    // slock api call
-    useEffect(() => {
-        fetch(`${URL}/api/v1/slokas/`)
-            .then((res) => res.json())
-            .then((json) => {
-                console.log(json);
-                setSlock(json);
-            })
-            .catch((err) => console.error(err));
-    }, []);
-
-    // 🏫 School API Call with Optimistic UI Pattern
-    useEffect(() => {
-        console.log('\n🚀 ========== SCHOOLS API CALL STARTED ==========');
-        console.log('📍 Step 1: useEffect triggered for schools data');
-        console.log('   API Endpoint:', `${URL}/api/v1/schools/schools/`);
-        console.log('\n⚡ Step 2: Setting loading state to TRUE');
-        console.log('   🎨 Loading placeholders will show IMMEDIATELY in UI');
-        console.log('   ⏱️  Better UX - user sees "Loading schools..." while waiting');
-
-        setIsLoadingSchools(true);
-
-        console.log('\n🌐 Step 3: Making actual schools API call...');
-        console.log('   ⏳ Fetching real schools data from server...');
-
-        fetch(`${URL}/api/v1/schools/schools/`)
-            .then((res) => {
-                console.log('\n✅ Step 4: Schools API Response received!');
-                console.log('   Response status:', res.status);
-                return res.json();
-            })
-            .then((json) => {
-                console.log('\n📦 Step 5: Processing schools API data');
-                console.log('   Real Schools Data:', json);
-                console.log('   Number of schools:', json.data?.length || 0);
-
-                setData1(json);
-                setFilteredData1(json);
-                setIsLoadingSchools(false);
-
-                // Extract unique school types from the data
-                const types = [...new Set(json.data?.map(school => school.school_type).filter(Boolean))].sort();
-                console.log('   Extracted school types:', types);
-                setSchoolTypes(types);
-
-                console.log('\n✨ Step 6: Schools state updated!');
-                console.log('   🎯 Loading placeholders replaced with REAL schools');
-                console.log('   👁️  User now sees actual schools from database');
-                console.log('========== SCHOOLS API CALL COMPLETED ==========\n');
-            })
-            .catch((err) => {
-                console.error('\n❌ Schools API Error:', err);
-                setIsLoadingSchools(false);
-                console.log('   Loading state cleared despite error');
-            });
-    }, []);
     useEffect(() => {
         const all = data1?.data || [];
         if (selectedSchoolType == null) {
@@ -295,6 +191,20 @@ const Home = () => {
         const filtered = all.filter(item => item.school_type === selectedSchoolType);
         setFilteredData1({ ...data1, data: filtered });
     }, [selectedSchoolType, data1]);
+
+    // 📺 Console logging moved to useEffect to prevent multiple renders
+    // Uncomment below if you need to debug data sources
+    // useEffect(() => {
+    //     console.log('\n📺 UI Data Sources (Home.js):');
+    //     console.log('   isPending (useTransition):', isPending);
+    //     console.log('   Regular news data (data4):', data4);
+    //     console.log('   Optimistic news data (optimisticNews):', optimisticNews);
+    //     console.log('   Display news data (displayNews):', displayNews);
+    //     console.log('   Regular schools data (data1):', data1);
+    //     console.log('   Optimistic schools data (optimisticSchools):', optimisticSchools);
+    //     console.log('   Display schools data (displaySchools):', displaySchools);
+    //     console.log('   💡 Using displayNews and displaySchools in JSX for instant UX!\n');
+    // }, [isPending, data4, optimisticNews, data1, optimisticSchools]);
 
     // Search API call with school_type and search term
     // useEffect(() => {
@@ -406,10 +316,12 @@ const Home = () => {
     // 🎯 OPTIONAL: You can also use displaySchools data here for loading placeholders
     // const itemsArr = displaySchools?.data || [];
     // This would show loading placeholders immediately while fetching real schools
-    console.log('\n🏫 Schools Data for Carousel:');
-    console.log('   Using filteredData1:', filteredData1);
-    console.log('   Available displaySchools (with loading state):', displaySchools);
-    console.log('   💡 Switch to displaySchools for instant loading feedback!\n');
+
+    // 📺 Console logging commented out to prevent re-renders
+    // console.log('\n🏫 Schools Data for Carousel:');
+    // console.log('   Using filteredData1:', filteredData1);
+    // console.log('   Available displaySchools (with loading state):', displaySchools);
+    // console.log('   💡 Switch to displaySchools for instant loading feedback!\n');
 
     const cardWindowsDesktop = makeSlidingWindows(itemsArr, 4);
     const cardWindowsMobile = makeSlidingWindows(itemsArr, 4);
@@ -474,10 +386,12 @@ const Home = () => {
     // 🎯 HOW TO USE DISPLAY DATA IN UI:
     // Instead of using data4 directly, use displayNews
     // This will show loading placeholders first, then automatically update to real data
-    console.log('\n📺 UI Data Sources:');
-    console.log('   Regular news data (data4):', data4);
-    console.log('   Display news data (displayNews with loading state):', displayNews);
-    console.log('   💡 Use displayNews in your JSX for better UX!\n');
+
+    // 📺 Console logging commented out to prevent re-renders
+    // console.log('\n📺 UI Data Sources:');
+    // console.log('   Regular news data (data4):', data4);
+    // console.log('   Display news data (displayNews with loading state):', displayNews);
+    // console.log('   💡 Use displayNews in your JSX for better UX!\n');
 
     // For news items - use displayNews instead of data4
     const items = Array.isArray(displayNews?.data) ? displayNews.data : [];
@@ -1230,7 +1144,7 @@ const Home = () => {
                                                 </div>
                                             )}
 
-                                            <div className="card-body1 d-flex flex-column" style={{ minHeight: 200 }}>
+                                            <div className="card-body1 d-flex p-2 flex-column" style={{ minHeight: 200 }}>
                                                 <p className="text-start text-muted mb-2" style={{ fontSize: 14 }}>
                                                     <img src={calendar} className="claendar_Icon" loading="lazy" height={18} width={18} alt="calendar" />
 
@@ -1254,7 +1168,7 @@ const Home = () => {
                                                         className="text-decoration-none w-100"
                                                         aria-label={`Read article: ${data.title}`}
                                                     >
-                                                        <div className="d-flex align-items-center justify-content-between px-2 py-3">
+                                                        <div className="d-flex align-items-center justify-content-between px-2 py-auto">
                                                             <span className="text-dark fw-semibold">
                                                                 Learn More
                                                                 <span className="visually-hidden"> about {data.title}</span>

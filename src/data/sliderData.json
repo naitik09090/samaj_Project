@@ -1,0 +1,20 @@
+{
+    "status": 1,
+    "message": "Slideshow banners fetched successfully",
+    "data": [
+        {
+            "id": 4,
+            "title": "આપણું ગૌરવ, આપણો સમાજ - આહિર સમાજ Mobile",
+            "image": "https://ahirsamaj.blob.core.windows.net/media/slideshow/We_Are_Hiring_Instagram_Post_1.png",
+            "viewtype": "mobile",
+            "order": 0
+        },
+        {
+            "id": 3,
+            "title": "આપણું ગૌરવ, આપણો સમાજ - આહિર સમાજ",
+            "image": "https://ahirsamaj.blob.core.windows.net/media/slideshow/Orange_And_Blue_Traditional_Janmashtami_Banner_1.png",
+            "viewtype": "desktop",
+            "order": 1
+        }
+    ]
+}

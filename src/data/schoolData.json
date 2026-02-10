@@ -1,0 +1,459 @@
+{
+    "status": 1,
+    "message": "Schools fetched successfully",
+    "count": 8,
+    "data": [
+        {
+            "id": 10,
+            "name": "શ્રી આહિર કન્યા શૈક્ષણિક સંકુલ - જામનગર",
+            "description": "શ્રી આહિર કન્યા શૈક્ષણિક સંકુલ - જામનગર",
+            "school_type": "KANYA CHHATRALAYA",
+            "address": "Swaminarayan Nagar, Jamnagar, Gujarat 361006",
+            "city": "Jamanagar",
+            "taluka": "Jamanagar",
+            "district": "Jamanagar",
+            "state": "Gujarat",
+            "pincode": null,
+            "contact_number": "9104434488",
+            "email": "shreeahirkanyakelavanimandal@gmail.com",
+            "map": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27309.955869309197!2d70.02048994751532!3d22.450834356240666!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395714d4b3bac0ad%3A0x26a6d3433adcd9b!2sAhir%20Kanya%20Chhatralay%20Jamnagar!5e1!3m2!1sen!2sin!4v1766555550751!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+            "logo": "https://ahirsamaj.blob.core.windows.net/media/schools/logos/359844522_778920014020758_4835414132515209048_n.jpg",
+            "established_year": null,
+            "opening_time": null,
+            "closing_time": null,
+            "admission_details": "",
+            "fee_structure": "",
+            "website": null,
+            "facebook": "https://www.facebook.com/akvschool/",
+            "instagram": null,
+            "is_active": true,
+            "trustees": [],
+            "amenities": [],
+            "photos": [
+                {
+                    "id": 30,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/unnamed.webp",
+                    "caption": null,
+                    "order": 0
+                },
+                {
+                    "id": 31,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/unnamed_1.webp",
+                    "caption": null,
+                    "order": 1
+                },
+                {
+                    "id": 32,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/unnamed_2.webp",
+                    "caption": null,
+                    "order": 2
+                },
+                {
+                    "id": 33,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/unnamed_3.webp",
+                    "caption": null,
+                    "order": 3
+                },
+                {
+                    "id": 34,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/482009229_3998199463794037_4818331687773516269_n.jpg",
+                    "caption": null,
+                    "order": 4
+                },
+                {
+                    "id": 35,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/41416058_2167258143554854_6477325344004112384_n.jpg",
+                    "caption": null,
+                    "order": 5
+                },
+                {
+                    "id": 36,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/39304892_2150244025256266_811257698023636992_n.jpg",
+                    "caption": null,
+                    "order": 6
+                }
+            ],
+            "videos": []
+        },
+        {
+            "id": 9,
+            "name": "શ્રી સુરત જીલ્લા આહીર સમાજ સાર્વજનિક ટ્રસ્ટ - પલસાણા",
+            "description": "શ્રી સુરત જીલ્લા આહીર સમાજ સાર્વજનિક ટ્રસ્ટ - પલસાણા",
+            "school_type": "Ahir Samaj",
+            "address": "Palsana, Surat district, Gujarat",
+            "city": "Palsana",
+            "taluka": "Palsana",
+            "district": "Surat",
+            "state": "Gujarat",
+            "pincode": "394315",
+            "contact_number": "9106518881",
+            "email": null,
+            "map": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d119126.65008700857!2d72.84485834335936!3d21.084329000000015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be05b20db726037%3A0x8d0ec632d4ff2af!2sManiba%20Ahir%20Samaj%20Vadi%20-%20Palsana!5e0!3m2!1sen!2sin!4v1766304088241!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+            "logo": "https://ahirsamaj.blob.core.windows.net/media/schools/logos/22c.png",
+            "established_year": null,
+            "opening_time": null,
+            "closing_time": null,
+            "admission_details": "",
+            "fee_structure": "",
+            "website": null,
+            "facebook": null,
+            "instagram": null,
+            "is_active": true,
+            "trustees": [],
+            "amenities": [],
+            "photos": [
+                {
+                    "id": 27,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/Banner-one.jpg",
+                    "caption": null,
+                    "order": 1
+                },
+                {
+                    "id": 28,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/Screenshot_2025-12-21_at_1.33.19PM.png",
+                    "caption": null,
+                    "order": 2
+                },
+                {
+                    "id": 29,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/Screenshot_2025-12-21_at_1.33.29PM.png",
+                    "caption": null,
+                    "order": 3
+                }
+            ],
+            "videos": []
+        },
+        {
+            "id": 8,
+            "name": "આહીર સમાજ વાડી - વરાછા સુરત",
+            "description": "આહીર સમાજ વાડી ( વાળાકી ગોળ) - વરાછા સુરત",
+            "school_type": "Ahir Samaj",
+            "address": "Shilpa Park Society, Ishwar Krupa Society-2, Punagam, Varachha, Varachha Road, Surat-395006, Gujarat",
+            "city": "Surat",
+            "taluka": "Surat",
+            "district": "Surat",
+            "state": "Gujarat",
+            "pincode": "395006",
+            "contact_number": "9876543210",
+            "email": null,
+            "map": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3719.7623732045927!2d72.8541039!3d21.201596699999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjHCsDEyJzA1LjgiTiA3MsKwNTEnMTQuOCJF!5e0!3m2!1sen!2sin!4v1766303609578!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+            "logo": "https://ahirsamaj.blob.core.windows.net/media/schools/logos/Untitled_design_1.png",
+            "established_year": null,
+            "opening_time": null,
+            "closing_time": null,
+            "admission_details": "",
+            "fee_structure": "",
+            "website": null,
+            "facebook": null,
+            "instagram": null,
+            "is_active": true,
+            "trustees": [],
+            "amenities": [],
+            "photos": [
+                {
+                    "id": 24,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/Screenshot_2025-12-21_at_1.22.05PM.png",
+                    "caption": null,
+                    "order": 1
+                },
+                {
+                    "id": 25,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/Screenshot_2025-12-21_at_1.22.16PM.png",
+                    "caption": null,
+                    "order": 2
+                },
+                {
+                    "id": 26,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/Screenshot_2025-12-21_at_1.22.24PM.png",
+                    "caption": null,
+                    "order": 3
+                }
+            ],
+            "videos": []
+        },
+        {
+            "id": 7,
+            "name": "શ્રી મુરલીધર વિદ્યા મંદિર (કચ્છ આહીર બોર્ડિંગ અંજાર)",
+            "description": "શ્રી મુરલીધર વિદ્યા મંદિર (કચ્છ આહીર બોર્ડિંગ અંજાર)",
+            "school_type": "Ahir Boarding",
+            "address": null,
+            "city": "Anjar",
+            "taluka": "Anjar",
+            "district": "Kutch",
+            "state": "Gujarat",
+            "pincode": "370110",
+            "contact_number": "9586610888",
+            "email": null,
+            "map": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3669.6361954961126!2d70.03366508296531!3d23.110409933201836!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3950c79e0ad216ad%3A0x9b00cc3aba435a4d!2sAhir%20Boarding!5e0!3m2!1sen!2sin!4v1757600419078!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+            "logo": "https://ahirsamaj.blob.core.windows.net/media/schools/logos/725002828557420676_n.jpg",
+            "established_year": null,
+            "opening_time": null,
+            "closing_time": null,
+            "admission_details": "",
+            "fee_structure": "",
+            "website": null,
+            "facebook": "https://www.facebook.com/p/Ahir-boarding-anjar-100063835865176/",
+            "instagram": "https://www.instagram.com/ahir_boarding_anjar/?hl=en",
+            "is_active": true,
+            "trustees": [],
+            "amenities": [],
+            "photos": [
+                {
+                    "id": 13,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/3131661371442350525_n.jpg",
+                    "caption": null,
+                    "order": 0
+                },
+                {
+                    "id": 14,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/2249117880166151652_n.jpg",
+                    "caption": null,
+                    "order": 1
+                },
+                {
+                    "id": 16,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/6605784072321134201_n.webp",
+                    "caption": null,
+                    "order": 2
+                }
+            ],
+            "videos": [
+                {
+                    "id": 5,
+                    "video_url": "https://www.youtube.com/live/O6EnoWsSKIo?si=epaw1O6Y1dHJHmvz",
+                    "title": null,
+                    "order": 0
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "name": "શ્રી યદુનંદન જનરલ ચેરીટેબલ ટ્રસ્ટ(SYG) અમદાવાદ",
+            "description": "શ્રી યદુનંદન જનરલ ચેરીટેબલ ટ્રસ્ટ(SYG) અમદાવાદ (રજીસ્ટ્રેશન નંબર:એફ/૧૯૭૧૨/અમદાવાદ)\r\n\r\n\r\nશ્રી યદુનંદન ગ્રુપની સ્થાપના તારીખ 10/09/2015 ને દશેરાનાં દિવસે કરવામાં આવી. શ્રી યદુનંદન ગ્રુપ - અમદાવાદ છેલ્લા એક વર્ષથી  શૈક્ષણિક-આરોગ્ય-સામાજિક પ્રવુતિઓથી સંકળાયેલા છે, આ ગ્રુપનો મુખ્ય ધ્યેય શેક્ષણિક સ્તરે  સમાજના વધારેમાં વધારે વિદ્યાર્થીઓ યુવાનો દરેક શેત્રમાં આગળ આવે તે માટે SYG ગ્રૂપે છેલ્લા એક વર્ષમાં અનેક ગ્રુપ મીટિંગ, જનરલ મીટિંગ , સ્કૂલ અને કોલેજમાં ભણતા વિદ્યાર્થીઓ તેમજ બહારગામથી આવીને UPSC,ગપસક, બેંકની પરીક્ષાઓ   અને બીજી ઘણી સ્પર્ધાત્મક પરીક્ષાઓની તૈયારી કરતા દરેક વિદ્યાર્થીઓને સાથે રાખીને અનેકવાર મીટીંગો પણ કરેલ છે.\r\n\r\n SYG ગ્રુપ દ્વારા હાલમાં ધોરણ- 1 થી 12 ના જે વિદ્યાર્થીઓ અભ્યાસમાં નબળા હોય તેને ટ્યુશન દ્વારા શિક્ષણ આપી વિદ્યાર્થી કોઈ વિષયમાં કાચો ન રહે તે માટેના કલાસિસ પણ ચાલુ છે.તેમજ ધોરણ-12 કે Graduate  લેવલના વિદ્યાર્થીઓ માટે નવરંગપુરા વિસ્તારમાં GPSC તેમજ UPSC  પરીક્ષાની તૈયારી માટેના કલાસિસ પણ ચાલુ કરવામાં આવેલ છે.\r\n\r\nસહર્ષ ખુશાલી સાથ જણાવતા આનંદ થાય છે કે અમદાવાદના પૂર્વ વિસ્તારમાં આપણા આહીર સમાજની જે ખુબજ ઉંડાણનાં અંતરની ઈચ્છા હતી કે બીજા સમાજની જેમ આપણા સમાજની પણ એક આપણી પોતાની કહી શકાય એવી આપણા સમાજની વાડી હોય, તે ઈચ્છાને પુરી કરવા માટેની જે એક હામ SYG ગ્રૂપે ઉપાડેલ હતી તે હામ ને શ્રી યદુનંદન જનરલ ચેરીટેબલ ટ્રસ્ટ SYG - અમદાવાદ દ્વારા સરદાર પટેલ(SP) રિંગ રોડ - દેહગામ રોડ  પર રાયપુર ગામ ખાતેની જમીન સર્વે નં.૧૨૩૪૫૬૭૮૯ ની જમીન જે અઢી વીઘા અંદાજે ૮૦૦૦ આઠ હજાર વાર જગ્યા SYG ગ્રૂપે સમાજની વાડી બનાવવાના ભાગરૂપે રાખેલ છે.\r\n\r\n\r\n                                                        આહિર એક પ્રાચીન લડાયક જાતિ છે, કે જે અભીરા અથવા અભીર તરીકે પણ ઓળખાય છે. ભારતની આહિર જાતિ પ્રાચીન કાળથી ભારત અને નેપાળના વિભિન્ન ભાગોના શાસનકર્તાઓ પૈકીની એક છે. અભીરાનો અર્થ નિડર થાય છે. શાક્યો, હૂણો અને સાયથિઅન્સ (૬૦૦૦ઈ.પૂ.)ના સમયમાં, આહિરો લડાયક યોદ્ધાઓ હતા. એ પૈકીના કેટલાક ખેડુતો તેમ જ પશુપાલકો પણ હતા. આહિર જનજાતિના લોકો પરંપરાગત રીતે ગૌપાલક તેમ જ ગોવાળો છે. પવિત્ર ગાયો સાથેના આ સંબંધે એમને વિશેષ દરજ્જો આપ્યો છે. તેઓ સૌરાષ્ટ્ર -કચ્છ વિસ્તારમાં મોટી સંખ્યામાં જોવા મળે છે. આમ તો તેઓ પશ્ચિમ ગુજરાતના ક્ષેત્રમાં જ નહીં પરંતુ રાજસ્થાન, મહારાષ્ટ્ર, પંજાબ, ઉત્તર પ્રદેશ, બિહાર અને નેપાળમાં પણ જોવા મળે છે. આહિરો ભારતના ધનગર જાતિની પેટા જ્ઞાતિ ગણાય છે. આહીર સમુદાય તરાઈમાં મોટી સંખ્યામાં મોજુદ છે, જે દક્ષિણ ભાગમાં આવે છે. આહિરોનો જાટ સાથે નજીકનો ગોત્ર સંબંધ જોવા મળે છે. તેઓનો શારિરીક બાંધો પણ એકસરખો જોવા મળે છે. આહિરોનો મુખ્ય તહેવાર દિવાળી અને જન્માષ્ટમી છે. ભારત માં આશરે ૪ કરોડ આહિરો છે. ગુજરાતમાં આહીર મુખ્ય જ્ઞાતિમાં ઓળખાય છે, તેમની પેટા જ્ઞાતિઓ પૈકી,મચ્છુ નદી ને કાંઠે વસ્યા તેથી મચ્છોયા કહેવાયા.સોરઠમાં રહેવા લાગ્યા તેથી સોરઠીયા કહેવાયા. કચ્છના વાગડ વિસ્તારના પરાવથર પંથકમાં વસ્યા તે પરાવથરિયા કહેવાયા. પાંચાલ મા વસ્યા તે પંચોળી કહેવાયા.",
+            "school_type": "Ahir Charitable Trust",
+            "address": null,
+            "city": "Ahmedabad",
+            "taluka": "Ahmedabad",
+            "district": "Ahmedabad",
+            "state": "Gujarat",
+            "pincode": "382305",
+            "contact_number": "9824862466",
+            "email": "contact@sygamd.com",
+            "map": "",
+            "logo": "https://ahirsamaj.blob.core.windows.net/media/schools/logos/SYG_Logo.png",
+            "established_year": null,
+            "opening_time": null,
+            "closing_time": null,
+            "admission_details": "",
+            "fee_structure": "",
+            "website": "https://sygamd.com/",
+            "facebook": "https://www.facebook.com/groups/940684732680686/",
+            "instagram": null,
+            "is_active": true,
+            "trustees": [],
+            "amenities": [],
+            "photos": [
+                {
+                    "id": 17,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/11.jpeg",
+                    "caption": null,
+                    "order": 0
+                },
+                {
+                    "id": 18,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/4_6936397016019032575_n.jpg",
+                    "caption": null,
+                    "order": 1
+                },
+                {
+                    "id": 20,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/41_5781581895619291876_n.jpg",
+                    "caption": null,
+                    "order": 2
+                },
+                {
+                    "id": 19,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/6_8330557179088974573_n.jpg",
+                    "caption": null,
+                    "order": 3
+                },
+                {
+                    "id": 21,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/25_7598539758846382253_n.jpg",
+                    "caption": null,
+                    "order": 4
+                }
+            ],
+            "videos": []
+        },
+        {
+            "id": 3,
+            "name": "ગુજરાત આહીર કન્યા છાત્રાલય અને શૈક્ષણિક સંકુલ - અમદાવાદ",
+            "description": "ગુજરાત આહીર કન્યા છાત્રાલય અને શૈક્ષણિક સંકુલ - અમદાવાદ",
+            "school_type": "KANYA CHHATRALAYA",
+            "address": "",
+            "city": "Ahmedabad",
+            "taluka": "Ahmedabad",
+            "district": "Ahmedabad",
+            "state": "Gujarat",
+            "pincode": "380060",
+            "contact_number": "+91 98240 77386",
+            "email": null,
+            "map": "https://maps.app.goo.gl/4zzWtLh1syzQ93Wy5",
+            "logo": "https://ahirsamaj.blob.core.windows.net/media/schools/logos/We_Are_Hiring_Instagram_Post.png",
+            "established_year": null,
+            "opening_time": null,
+            "closing_time": null,
+            "admission_details": "",
+            "fee_structure": "",
+            "website": null,
+            "facebook": null,
+            "instagram": "https://www.instagram.com/p/CxViQFGJ7Zn/",
+            "is_active": true,
+            "trustees": [
+                {
+                    "id": 1,
+                    "name": "Varjangbhai Jilariya",
+                    "position": "Trustee"
+                },
+                {
+                    "id": 2,
+                    "name": "Mulubhai Kandoriya",
+                    "position": "Trustee"
+                },
+                {
+                    "id": 3,
+                    "name": "Devaytbhai Vaghamashi",
+                    "position": "Trustee"
+                },
+                {
+                    "id": 4,
+                    "name": "Narendrabhai Bhetariya",
+                    "position": "Trustee"
+                },
+                {
+                    "id": 5,
+                    "name": "Hiteshbhai Jogal",
+                    "position": "Trustee"
+                }
+            ],
+            "amenities": [],
+            "photos": [],
+            "videos": [
+                {
+                    "id": 2,
+                    "video_url": "https://youtu.be/FDXwil9Kpfk?si=7crHuDoiw5wt1C-J",
+                    "title": null,
+                    "order": 0
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "શ્રી યદુનંદન વિદ્યાર્થી આશ્રમ ટ્રસ્ટ જૂનાગઢ",
+            "description": "શ્રી યદુનંદન વિદ્યાર્થી આશ્રમ ટ્રસ્ટ જૂનાગઢ",
+            "school_type": "Ahir Charitable Trust",
+            "address": "Baypass Chokdi Khamdhrol Chokdi, Junagadh - 362001",
+            "city": "Junagadh",
+            "taluka": "Junagadh",
+            "district": "Junagadh",
+            "state": "Gujarat",
+            "pincode": "362001",
+            "contact_number": "9825228888",
+            "email": "pnchavda2610007@gmail.com",
+            "map": "",
+            "logo": "https://ahirsamaj.blob.core.windows.net/media/schools/logos/ddnysaAY5nsas.jpeg",
+            "established_year": 2012,
+            "opening_time": null,
+            "closing_time": null,
+            "admission_details": "",
+            "fee_structure": "",
+            "website": null,
+            "facebook": null,
+            "instagram": null,
+            "is_active": true,
+            "trustees": [
+                {
+                    "id": 6,
+                    "name": "Javaharbhai Chavda",
+                    "position": "Trustee"
+                },
+                {
+                    "id": 7,
+                    "name": "Balubhai Jadav",
+                    "position": "Trustee"
+                },
+                {
+                    "id": 8,
+                    "name": "Harkantbhai Herbha",
+                    "position": "Trustee"
+                }
+            ],
+            "amenities": [],
+            "photos": [
+                {
+                    "id": 23,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/aAY5nsas.jpg",
+                    "caption": null,
+                    "order": 0
+                },
+                {
+                    "id": 22,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/77ddnysaAY5nsas.jpg",
+                    "caption": null,
+                    "order": 1
+                }
+            ],
+            "videos": []
+        },
+        {
+            "id": 1,
+            "name": "શ્રી આહીર કન્યા વિદ્યાલય ભુજોડી",
+            "description": "શ્રી આહીર કન્યા વિદ્યાલય ભુજોડી, ભુજ",
+            "school_type": "KANYA CHHATRALAYA",
+            "address": null,
+            "city": "Bhujodi",
+            "taluka": "Bhuj",
+            "district": "Kutch",
+            "state": "Gujarat",
+            "pincode": "370020",
+            "contact_number": "91575 70895",
+            "email": null,
+            "map": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20184.65979883855!2d69.73112833277818!3d23.222611109118088!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3950e118f901b27d%3A0x81f75cc1813c2d8c!2sBhujodi%2C%20Gujarat%20370020!5e0!3m2!1sen!2sin!4v1753952461169!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+            "logo": "https://ahirsamaj.blob.core.windows.net/media/schools/logos/167378285883714959_n.jpg",
+            "established_year": 2014,
+            "opening_time": null,
+            "closing_time": null,
+            "admission_details": "",
+            "fee_structure": "",
+            "website": "https://www.instagram.com/kanyavidhyalay/",
+            "facebook": "https://www.instagram.com/kanyavidhyalay/",
+            "instagram": "https://www.instagram.com/kanyavidhyalay/",
+            "is_active": true,
+            "trustees": [],
+            "amenities": [],
+            "photos": [
+                {
+                    "id": 15,
+                    "image": "https://ahirsamaj.blob.core.windows.net/media/schools/photos/images.jpeg",
+                    "caption": null,
+                    "order": 0
+                }
+            ],
+            "videos": [
+                {
+                    "id": 3,
+                    "video_url": "https://youtu.be/6IPo4BUfDko?si=3QwBB8OqRrQdx7gW",
+                    "title": null,
+                    "order": 0
+                },
+                {
+                    "id": 4,
+                    "video_url": "https://youtu.be/TZQtiuQNtMk?si=uv8W76LLh5JfvcV9",
+                    "title": null,
+                    "order": 0
+                }
+            ]
+        }
+    ]
+}

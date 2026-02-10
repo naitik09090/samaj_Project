@@ -160,7 +160,7 @@ const Navbar = () => {
                   // borderTopLeftRadius: 10,
                   // borderTopRightRadius: 10,
                   backgroundColor: isScrolled ? "#067C71" : "#ffffff",
-                  width: isScrolled ? "295px" : "295px",
+                  width: isScrolled ? "400px" : "400px",
                   height: isScrolled ? "auto" : "auto",
                   borderRadius: isScrolled ? "0px 0px 22px 22px" : "0px 0px 22px 22px",
                 }}
