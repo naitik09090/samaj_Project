@@ -24,7 +24,7 @@ const ImageSlider = () => {
     const [activeDesktopIndex, setActiveDesktopIndex] = useState(0);
     const [activeMobileIndex, setActiveMobileIndex] = useState(0);
 
-    const secureUrl = (url) => url?.replace(/^http:\/\//i, "https://");
+
 
 
     // All school data is loaded from defaultSchools JSON file

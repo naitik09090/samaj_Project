@@ -104,9 +104,11 @@ export const getResponsiveSizes = (url) => {
     return { srcSet, sizes: sizesAttr };
 };
 
-export default {
+const imageOptimization = {
     getOptimizedImageUrl,
     OptimizedImage,
     preloadImage,
     getResponsiveSizes
 };
+
+export default imageOptimization;

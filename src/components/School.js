@@ -39,7 +39,6 @@ const ImageSlider = () => {
     });
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-    const secureUrl = (url) => url?.replace(/^http:\/\//i, "https://");
 
     // Initialize school types from JSON data
     const [schoolTypes] = useState(() => {
