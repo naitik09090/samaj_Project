@@ -33,8 +33,6 @@ const Navbar = () => {
     border: isScrolled ? "1px solid #057c71" : "1px solid #ffffff",
     borderRadius: isScrolled ? "0px 0px 22px 22px" : "22px",
     height: isScrolled ? "55px" : "auto",
-    paddingLeft: "0px",
-    paddingRight: "20px",
     transition: "all 0.3s ease"
   };
 
@@ -97,7 +95,7 @@ const Navbar = () => {
 
       {/* ---------------------- MOBILE BACKDROP ---------------------- */}
       <div
-        className={`position-fixed h-100 top-0 start-0 d-md-none`}
+        className={`position-fixed h-100 top-0 text-center start-0 d-md-none`}
         style={{
           zIndex: menuOpen ? 2999 : -1000,
           opacity: menuOpen ? 1 : 0,
@@ -152,20 +150,19 @@ const Navbar = () => {
             </div>
 
             {/* ---------------------- MOBILE DROPDOWN ---------------------- */}
-            <div className="col-12 d-md-none">
+            <div className="col-12 col-sm-12 d-md-none d-flex justify-content-center">
               <div
-                className="text-center p-4"
+                className="text-center py-3 px-3"
                 style={{
                   display: menuOpen ? "block" : "none",
-                  // borderTopLeftRadius: 10,
-                  // borderTopRightRadius: 10,
                   backgroundColor: isScrolled ? "#067C71" : "#ffffff",
-                  width: isScrolled ? "400px" : "400px",
                   height: isScrolled ? "auto" : "auto",
                   borderRadius: isScrolled ? "0px 0px 22px 22px" : "0px 0px 22px 22px",
+                  width: "100%",
+                  maxWidth: "400px",
                 }}
               >
-                <ul className="list-unstyled mb-2">
+                <ul className="list-unstyled ">
                   <li className="mb-2"><a href="/" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>હોમ</a></li>
                   <li className="mb-2"><a href="/Our_Schools" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>સ્કૂલ</a></li>
                   <li className="mb-2"><a href="/LatestNews" style={{ color: isScrolled ? "#FFFFFF" : "#067C71", textDecoration: "none" }} onClick={() => setMenuOpen(false)}>લેટેસ્ટ ન્યૂઝ</a></li>

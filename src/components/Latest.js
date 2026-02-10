@@ -33,7 +33,7 @@ const About_us = () => {
 
     // Update data when id changes (client-side lookup)
     useEffect(() => {
-        const newsId = id || 1;
+        const newsId = Number(id) || 1;
         if (defaultNewsList?.data && Array.isArray(defaultNewsList.data)) {
             const foundNews = defaultNewsList.data.find(item => item.id === newsId);
             setData(foundNews || null);

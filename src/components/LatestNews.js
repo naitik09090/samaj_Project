@@ -21,7 +21,7 @@ const About_us = () => {
         }
 
         if (defaultNewsList?.data && Array.isArray(defaultNewsList.data)) {
-            const foundNews = defaultNewsList.data.find(item => item.id === id);
+            const foundNews = defaultNewsList.data.find(item => item.id === Number(id));
             setData(foundNews || null);
         }
     }, [id]);

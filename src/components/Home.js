@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 // import { useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Kano from '../images/Kano.webp'
-// import Kano1 from '../images/kano1.png' // Unused import
 import { PiBuildingsBold } from "react-icons/pi";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
@@ -15,6 +14,7 @@ import defaultSlideshow from '../data/sliderData.json';
 import defaultSloka from '../data/slokaData.json';
 import defaultNews from '../data/newsData.json';
 import defaultSchools from '../data/schoolData.json';
+import { OptimizedImage } from '../utils/imageOptimization';
 
 const Home = () => {
     // All data is loaded directly from JSON files in src/data directory
@@ -37,11 +37,11 @@ const Home = () => {
     const [activeMobileIndex, setActiveMobileIndex] = useState(0);
     const [filteredData1, setFilteredData1] = useState(defaultSchools);
     const [counter, setCounter] = useState(0); // Counter for animation
-    // const { id } = useParams(); // Unused variable
+    // const { id } = useParams(); // Unused variable commented out
 
     // Display data directly using state (leveraging background updates and initial cache)
     const displayNews = data4;
-    // const displaySchools = data1; // Unused variable
+    // const displaySchools = data1;
     const displaySlokas = slock;
 
     const { pathname } = useLocation();
@@ -400,7 +400,7 @@ const Home = () => {
         <>
             <div className='container-fluid'>
                 {/* img_Slider */}
-                <div className="container-fluid mb-3">
+                <div className="container-fluid mb-3" >
                     {Array.isArray(data2) &&
                         data2.map((data, idx) => (
                             <div className="d-flex flex-column justify-content-center align-items-center" key={data?.id ?? idx}>
@@ -417,26 +417,20 @@ const Home = () => {
                                         borderRadius: "22px"
                                     }}
                                 /> */}
-                                <picture>
-                                    <source
-                                        srcSet={secureUrl(data.image).replace(/\.(png|jpg|jpeg)$/i, '.webp')}
-                                        type="images/webp"
-                                    />
-                                    <img
-                                        src={secureUrl(data.image)}
-                                        alt={data.title}
-                                        className="d-block"
-                                        loading="eager"
-                                        width="364"
-                                        height="364"
-                                        style={{
-                                            width: "100%",
-                                            height: "auto",
-                                            objectFit: "cover",
-                                            borderRadius: "22px"
-                                        }}
-                                    />
-                                </picture>
+                                <OptimizedImage
+                                    src={data.image}
+                                    alt={data.title}
+                                    className="d-block"
+                                    width={364}
+                                    height={364}
+                                    loading="eager"
+                                    style={{
+                                        width: "100%",
+                                        height: "auto",
+                                        objectFit: "cover",
+                                        borderRadius: "22px"
+                                    }}
+                                />
                                 {/* <picture>
                                     <source srcSet={secureUrl(data.image_webp)} type="image/webp" />
                                     <img
@@ -935,15 +929,17 @@ const Home = () => {
                                                                 }}
                                                             >
                                                                 {data.logo ? (
-                                                                    <img
-                                                                        src={secureUrl(data.logo)}
+                                                                    <OptimizedImage
+                                                                        src={data.logo}
                                                                         alt={`${data.name} logo`}
-                                                                        width="120"
-                                                                        height="120"
+                                                                        width={120}
+                                                                        height={120}
                                                                         loading="lazy"
                                                                         style={{
                                                                             objectFit: "contain",
                                                                             display: "block",
+                                                                            maxWidth: "100%",
+                                                                            height: "auto"
                                                                         }}
                                                                     />
                                                                 ) : (
@@ -1090,8 +1086,8 @@ const Home = () => {
             <div className="container-fluid text-center p-3" >
                 <div className="row">
                     <div className="col-12 d-flex justify-content-center">
-                        <div className="ratio ratio-16x9" style={{ maxWidth: '1600px', width: '100%', borderRadius: '12px', overflow: 'hidden' }}>
-                            <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/4m79KoSpfck?si=extlUtA2DZDIHY8L" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                        <div className="ratio ratio-16x9" style={{ maxWidth: '1600px', width: '100%' }}>
+                            <iframe className='youtube_Data' width="560" height="315" src="https://www.youtube-nocookie.com/embed/4m79KoSpfck?si=extlUtA2DZDIHY8L" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
                         </div>
                     </div>
                 </div>

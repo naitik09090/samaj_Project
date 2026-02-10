@@ -3,6 +3,7 @@ import { GrFormPrevious } from "react-icons/gr";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { Link } from "react-router-dom";
 import defaultSchools from '../data/schoolData.json';
+import { OptimizedImage } from '../utils/imageOptimization';
 
 const ImageSlider = () => {
     // All data is loaded directly from JSON files in src/data directory
@@ -423,11 +424,13 @@ const ImageSlider = () => {
                                                             }}
                                                         >
                                                             {data.logo ? (
-                                                                <img
-                                                                    src={secureUrl(data.logo)}
+                                                                <OptimizedImage
+                                                                    src={data.logo}
                                                                     alt="logo School"
                                                                     className="rounded-1 mb-3"
-                                                                    style={{ height: "150px", objectFit: "contain" }}
+                                                                    width={150}
+                                                                    height={150}
+                                                                    style={{ height: "150px", objectFit: "contain", maxWidth: "100%" }}
                                                                     loading="lazy"
                                                                 />
                                                             ) : (
@@ -555,15 +558,17 @@ const ImageSlider = () => {
                                                                 }}
                                                             >
                                                                 {data.logo ? (
-                                                                    <img
-                                                                        src={secureUrl(data.logo)}
+                                                                    <OptimizedImage
+                                                                        src={data.logo}
                                                                         alt={`${data.name} logo`}
-                                                                        width="120"
-                                                                        height="120"
+                                                                        width={120}
+                                                                        height={120}
                                                                         loading="lazy"
                                                                         style={{
                                                                             objectFit: "contain",
                                                                             display: "block",
+                                                                            maxWidth: "100%",
+                                                                            height: "auto"
                                                                         }}
                                                                     />
                                                                 ) : (

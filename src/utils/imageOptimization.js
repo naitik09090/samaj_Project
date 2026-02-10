@@ -55,26 +55,17 @@ export const OptimizedImage = ({
 
     const secureUrl = src.replace(/^http:\/\//i, 'https://');
 
-    // For Azure Blob Storage, try to use WebP if available
-    const webpUrl = secureUrl.replace(/\.(jpg|jpeg|png)$/i, '.webp');
-
     return (
-        <picture>
-            {/* Try WebP first for better compression */}
-            <source srcSet={webpUrl} type="image/webp" />
-
-            {/* Fallback to original format */}
-            <img
-                src={secureUrl}
-                alt={alt}
-                width={width}
-                height={height}
-                className={className}
-                style={style}
-                loading={loading}
-                decoding="async"
-            />
-        </picture>
+        <img
+            src={secureUrl}
+            alt={alt}
+            width={width}
+            height={height}
+            className={className}
+            style={style}
+            loading={loading}
+            decoding="async"
+        />
     );
 };
 

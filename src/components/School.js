@@ -16,6 +16,7 @@ import phone_1 from "../images/Call_icon.png";
 import Location_icon from "../images/Location_icon.png";
 import { Link, useParams } from "react-router-dom";
 import defaultData1 from '../data/schoolData.json';
+import { OptimizedImage } from '../utils/imageOptimization';
 
 const ImageSlider = () => {
     // All data is loaded directly from JSON files in src/data directory
@@ -68,7 +69,7 @@ const ImageSlider = () => {
 
     // Direct data access
     const displaySchool = school;
-    // const displaySchoolsList = data1; // Unused variable
+    // const displaySchoolsList = data1; // Variable kept for compatibility if used elsewhere, else we use data1/filteredData
 
     const [formData, setFormData] = useState({
         FirstName: "",
@@ -479,7 +480,7 @@ const ImageSlider = () => {
                                             cursor: "pointer",
                                             position: "relative",
                                             bottom: isMobile ? "80px" : "120px",
-                                            right: isMobile ? "35px" : "20px",
+                                            right: isMobile ? "0px" : "20px",
                                         }}
                                     />
 
@@ -498,7 +499,7 @@ const ImageSlider = () => {
                                             cursor: "pointer",
                                             position: "relative",
                                             bottom: isMobile ? "80px" : "120px",
-                                            right: isMobile ? "35px" : "20px",
+                                            right: isMobile ? "0px" : "20px",
                                         }}
                                     />
 
@@ -801,11 +802,13 @@ const ImageSlider = () => {
                                                             }}
                                                         >
                                                             {data.logo ? (
-                                                                <img
-                                                                    src={secureUrl(data.logo)}
-                                                                    alt="logo School"
+                                                                <OptimizedImage
+                                                                    src={data.logo}
+                                                                    alt={`${data.name} logo`}
                                                                     className="rounded-1 mb-3"
-                                                                    style={{ height: "150px", objectFit: "contain" }}
+                                                                    width={150}
+                                                                    height={150}
+                                                                    style={{ height: "150px", objectFit: "contain", maxWidth: "100%" }}
                                                                     loading="lazy"
                                                                 />
                                                             ) : (
@@ -935,15 +938,17 @@ const ImageSlider = () => {
                                                                     }}
                                                                 >
                                                                     {data.logo ? (
-                                                                        <img
-                                                                            src={secureUrl(data.logo)}
+                                                                        <OptimizedImage
+                                                                            src={data.logo}
                                                                             alt={`${data.name} logo`}
-                                                                            width="120"
-                                                                            height="120"
+                                                                            width={120}
+                                                                            height={120}
                                                                             loading="lazy"
                                                                             style={{
                                                                                 objectFit: "contain",
                                                                                 display: "block",
+                                                                                maxWidth: "100%",
+                                                                                height: "auto"
                                                                             }}
                                                                         />
                                                                     ) : (

@@ -47,7 +47,9 @@ const Footer = () => {
 
                         {/* Logo & Contact */}
                         <div className="mb-4">
-                            <img src={SamajLogo} alt='Samaj Logo' style={{ borderRadius: "22px" }} height={40} width={105} />
+                            <a href="/">
+                                <img src={SamajLogo} alt='Samaj Logo' style={{ borderRadius: "22px" }} height={40} width={105} />
+                            </a>
                             <p className="small text-white mt-2">
                                 <CiMail /> contact@ahirsamaj.in
                             </p>
