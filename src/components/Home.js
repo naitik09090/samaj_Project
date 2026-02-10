@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 // import { useRef } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Kano from '../images/Kano.webp'
 // import Kano1 from '../images/kano1.png' // Unused import
 import { PiBuildingsBold } from "react-icons/pi";
@@ -41,7 +41,7 @@ const Home = () => {
 
     // Display data directly using state (leveraging background updates and initial cache)
     const displayNews = data4;
-    const displaySchools = data1;
+    // const displaySchools = data1; // Unused variable
     const displaySlokas = slock;
 
     const { pathname } = useLocation();
