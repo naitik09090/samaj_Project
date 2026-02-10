@@ -21,7 +21,7 @@ const ImageSlider = () => {
     // All data is loaded directly from JSON files in src/data directory
     const { id } = useParams();
 
-    const [data1, setData1] = useState(defaultData1);
+    const [data1] = useState(defaultData1);
     const [filteredData, setFilteredData] = useState(defaultData1);
 
     // Find school from the list based on URL id parameter
@@ -41,7 +41,7 @@ const ImageSlider = () => {
     const secureUrl = (url) => url?.replace(/^http:\/\//i, "https://");
 
     // Initialize school types from JSON data
-    const [schoolTypes, setSchoolTypes] = useState(() => {
+    const [schoolTypes] = useState(() => {
         return [...new Set((defaultData1?.data || []).map(s => s.school_type).filter(Boolean))].sort();
     });
 
@@ -68,7 +68,7 @@ const ImageSlider = () => {
 
     // Direct data access
     const displaySchool = school;
-    const displaySchoolsList = data1; // Variable kept for compatibility if used elsewhere, else we use data1/filteredData
+    // const displaySchoolsList = data1; // Unused variable
 
     const [formData, setFormData] = useState({
         FirstName: "",

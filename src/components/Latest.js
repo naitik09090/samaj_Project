@@ -14,19 +14,19 @@ const About_us = () => {
     // All data is loaded directly from JSON files in src/data directory
     const { id } = useParams();
 
-    const [data4, setData4] = useState(defaultNewsList);
+    const [data4] = useState(defaultNewsList);
 
     // Find single news item from the list based on URL id parameter
     const [data, setData] = useState(() => {
         const targetId = id || 1; // Default to 1 if no ID
         if (defaultNewsList?.data && Array.isArray(defaultNewsList.data)) {
             // loose equality for string/number id mismatch
-            return defaultNewsList.data.find(item => item.id == targetId) || null;
+            return defaultNewsList.data.find(item => item.id === targetId) || null;
         }
         return null;
     });
 
-    const [featuredId, setFeaturedId] = useState(() => {
+    const [featuredId] = useState(() => {
         // Set default featured to first item on initial load
         return defaultNewsList?.data?.[0]?.id || null;
     });
@@ -35,7 +35,7 @@ const About_us = () => {
     useEffect(() => {
         const newsId = id || 1;
         if (defaultNewsList?.data && Array.isArray(defaultNewsList.data)) {
-            const foundNews = defaultNewsList.data.find(item => item.id == newsId);
+            const foundNews = defaultNewsList.data.find(item => item.id === newsId);
             setData(foundNews || null);
         }
     }, [id]);

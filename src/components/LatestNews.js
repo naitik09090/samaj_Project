@@ -7,7 +7,7 @@ import defaultNewsList from '../data/newsData.json';
 
 const About_us = () => {
     // All data is loaded directly from JSON files in src/data directory
-    const [data4, setData4] = useState(defaultNewsList);
+    const [data4] = useState(defaultNewsList);
     const { id } = useParams();
     const [data, setData] = useState(null);
 
@@ -21,7 +21,7 @@ const About_us = () => {
         }
 
         if (defaultNewsList?.data && Array.isArray(defaultNewsList.data)) {
-            const foundNews = defaultNewsList.data.find(item => item.id == id);
+            const foundNews = defaultNewsList.data.find(item => item.id === id);
             setData(foundNews || null);
         }
     }, [id]);

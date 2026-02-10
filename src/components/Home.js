@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 // import { useRef } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Kano from '../images/Kano.webp'
-import Kano1 from '../images/kano1.png'
+// import Kano1 from '../images/kano1.png' // Unused import
 import { PiBuildingsBold } from "react-icons/pi";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
@@ -18,7 +18,7 @@ import defaultSchools from '../data/schoolData.json';
 
 const Home = () => {
     // All data is loaded directly from JSON files in src/data directory
-    const [data1, setData1] = useState(defaultSchools);
+    const [data1] = useState(defaultSchools);
     const [data2, setData2] = useState(() => {
         // Filter slideshow based on initial viewport
         const isMobile = window.innerWidth < 768;
@@ -26,10 +26,10 @@ const Home = () => {
         const allSlides = defaultSlideshow.data || defaultSlideshow;
         return allSlides.filter(slide => slide.viewtype === viewType);
     });
-    const [slock, setSlock] = useState(defaultSloka);
+    const [slock] = useState(defaultSloka);
     const [index, setIndex] = useState(0);
-    const [data4, setData4] = useState(defaultNews);
-    const [schoolTypes, setSchoolTypes] = useState(() => {
+    const [data4] = useState(defaultNews);
+    const [schoolTypes] = useState(() => {
         return [...new Set(defaultSchools.data?.map(school => school.school_type).filter(Boolean))].sort();
     });
     const [selectedSchoolType, setSelectedSchoolType] = useState(null);
@@ -37,7 +37,7 @@ const Home = () => {
     const [activeMobileIndex, setActiveMobileIndex] = useState(0);
     const [filteredData1, setFilteredData1] = useState(defaultSchools);
     const [counter, setCounter] = useState(0); // Counter for animation
-    const { id } = useParams();
+    // const { id } = useParams(); // Unused variable
 
     // Display data directly using state (leveraging background updates and initial cache)
     const displayNews = data4;

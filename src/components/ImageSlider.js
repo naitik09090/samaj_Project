@@ -6,18 +6,18 @@ import defaultSchools from '../data/schoolData.json';
 
 const ImageSlider = () => {
     // All data is loaded directly from JSON files in src/data directory
-    const [data1, setData1] = useState(defaultSchools);
+    const [data1] = useState(defaultSchools);
     const [filteredData, setFilteredData] = useState(defaultSchools);
 
     // Initialize specific derived states
-    const [schoolTypes, setSchoolTypes] = useState(() => {
+    const [schoolTypes] = useState(() => {
         return [...new Set((defaultSchools.data || []).map(s => s.school_type).filter(Boolean))].sort();
     });
 
-    const [selectedOption, setSelectedOption] = useState("All");
+    const [selectedOption] = useState("All");
     const [subOption, setSubOption] = useState("");
     const [selectedSchoolType, setSelectedSchoolType] = useState(null);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchTerm] = useState("");
 
     const carouselRef = useRef(null);
     const [activeDesktopIndex, setActiveDesktopIndex] = useState(0);

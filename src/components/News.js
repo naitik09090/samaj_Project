@@ -10,7 +10,7 @@ export default function LatestDetails() {
     // Find news item from the list based on URL id parameter (client-side lookup)
     useEffect(() => {
         if (defaultNewsList?.data && Array.isArray(defaultNewsList.data)) {
-            const foundNews = defaultNewsList.data.find(item => item.id == id);
+            const foundNews = defaultNewsList.data.find(item => item.id === id);
             setData(foundNews || null);
         }
     }, [id]);
